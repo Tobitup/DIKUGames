@@ -3,3 +3,4 @@
 **/obj/
 .ionide/
 .DS_Store
+**/nuget.config
