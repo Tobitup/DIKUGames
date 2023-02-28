@@ -21,6 +21,7 @@ namespace Galaga {
 
         public void Move() {
         // TODO: move the shape and guard against the window borders
+
             if (shape.Position.X > 0.0f && shape.Position.X + shape.Extent.X< 1.0f ) {
                 shape.Move();   
                 System.Console.WriteLine(shape.Position.X);
@@ -29,9 +30,7 @@ namespace Galaga {
             } else if (shape.Position.X + shape.Extent.X > 1.0f && moveLeft != 0.0f) {
                 shape.Move();
             }
-            
 
-            System.Console.WriteLine(shape.Position.X);
         }
         public void SetMoveLeft(bool val) {
         // TODO:set moveLeft appropriately and call UpdateDirection()
