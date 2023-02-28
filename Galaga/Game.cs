@@ -13,10 +13,16 @@ public class Game : DIKUGame , IGameEventProcessor{
     private GameEventBus eventBus;
     private Player player;
     private EntityContainer<Enemy> enemies;
+
+    private EntityContainer<PlayerShot> playerShots;
+    private IBaseImage playerShotImage;
     public Game(WindowArgs windowArgs) : base(windowArgs) {
         player = new Player(
         new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
         new Image(Path.Combine("Assets", "Images", "Player.png")));
+
+        playerShots = new EntityContainer<PlayerShot>();
+        playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
 
         eventBus = new GameEventBus();
         eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent });
@@ -35,6 +41,21 @@ public class Game : DIKUGame , IGameEventProcessor{
         }
     }
 
+    private void IterateShots() {
+        playerShots.Iterate(shot => {
+        shot.Move();
+        // TODO: move the shot's shape
+
+        //if ( /* TODO: guard against window borders */ ) {
+        // TODO: delete shot
+        //} else {
+        //enemies.Iterate(enemy => {
+        // TODO: if collision btw shot and enemy -> delete both entities
+        //});
+        //}
+        });
+        }
+
     private void KeyPress(KeyboardKey key) {
         if (key == KeyboardKey.Escape) {
             window.CloseWindow();
@@ -44,7 +65,9 @@ public class Game : DIKUGame , IGameEventProcessor{
         }
         if (key == KeyboardKey.Right) {
             player.SetMoveRight(true);
-
+        }
+        if (key == KeyboardKey.Space) {
+            playerShots.AddEntity(new PlayerShot(new Vec2F(player.GetPosition().X+PlayerShot.Extent.X,player.GetPosition().Y),playerShotImage));
         }
         // TODO: switch on key string and set the player's move direction
         }
@@ -73,10 +96,13 @@ public class Game : DIKUGame , IGameEventProcessor{
 
     public override void Render() {
         player.Render();
+        enemies.RenderEntities();
+        playerShots.RenderEntities();
     }
     public override void Update() {
         window.PollEvents();
         eventBus.ProcessEventsSequentially();
         player.Move();
+        IterateShots();
     }
 }

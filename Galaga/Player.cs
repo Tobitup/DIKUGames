@@ -1,5 +1,6 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
+using DIKUArcade.Math;
 namespace Galaga {
     public class Player {
         // TODO: Add private fields
@@ -23,8 +24,7 @@ namespace Galaga {
         // TODO: move the shape and guard against the window borders
 
             if (shape.Position.X > 0.0f && shape.Position.X + shape.Extent.X< 1.0f ) {
-                shape.Move();   
-                System.Console.WriteLine(shape.Position.X);
+                shape.Move();
             } else if (shape.Position.X < 0.0f && moveRight != 0.0f) {
                 shape.Move();
             } else if (shape.Position.X + shape.Extent.X > 1.0f && moveLeft != 0.0f) {
@@ -56,8 +56,11 @@ namespace Galaga {
             }
         }
 
+        public Vec2F GetPosition() {
+            return shape.Position;
+        }
+
         private void UpdateDirection(float val) {
-            System.Console.WriteLine(shape.Position);
             shape.Direction.X = val;
         }
     }
