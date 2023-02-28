@@ -12,6 +12,7 @@ namespace Galaga;
 public class Game : DIKUGame , IGameEventProcessor{
     private GameEventBus eventBus;
     private Player player;
+    private EntityContainer<Enemy> enemies;
     public Game(WindowArgs windowArgs) : base(windowArgs) {
         player = new Player(
         new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
@@ -21,6 +22,17 @@ public class Game : DIKUGame , IGameEventProcessor{
         eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent });
         window.SetKeyEventHandler(KeyHandler);
         eventBus.Subscribe(GameEventType.InputEvent, this);
+
+
+        List<Image> images = ImageStride.CreateStrides
+            (4, Path.Combine("Assets", "Images", "BlueMonster.png"));
+        const int numEnemies = 8;
+        enemies = new EntityContainer<Enemy>(numEnemies);
+        for (int i = 0; i < numEnemies; i++) {
+            enemies.AddEntity(new Enemy(
+            new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            new ImageStride(80, images)));
+        }
     }
 
     private void KeyPress(KeyboardKey key) {
@@ -61,13 +73,10 @@ public class Game : DIKUGame , IGameEventProcessor{
 
     public override void Render() {
         player.Render();
-        //throw new System.NotImplementedException("Galaga game has nothing to render yet.");
     }
     public override void Update() {
         window.PollEvents();
         eventBus.ProcessEventsSequentially();
         player.Move();
-        
-        //throw new System.NotImplementedException("Galaga game has no entities to update yet.");
     }
 }
