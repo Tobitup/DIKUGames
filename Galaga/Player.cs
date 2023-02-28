@@ -21,11 +21,13 @@ namespace Galaga {
 
         public void Move() {
         // TODO: move the shape and guard against the window borders
-            if (shape.Position.X >= 0.0 && shape.Position.X <= 1.0 && shape.Extent.X <= 1.0) {
-                shape.Move();
+
+            if (shape.Position.X > 0.0f && shape.Position.X + shape.Extent.X< 1.0f ) {
+                shape.Move();   
                 System.Console.WriteLine(shape.Position.X);
-            } else {
-                UpdateDirection(0f);
+            } else if (shape.Position.X < 0.0f && moveRight != 0.0f) {
+                shape.Move();
+            } else if (shape.Position.X + shape.Extent.X > 1.0f && moveLeft != 0.0f) {
                 shape.Move();
             }
 
@@ -55,6 +57,7 @@ namespace Galaga {
         }
 
         private void UpdateDirection(float val) {
+            System.Console.WriteLine(shape.Position);
             shape.Direction.X = val;
         }
     }
