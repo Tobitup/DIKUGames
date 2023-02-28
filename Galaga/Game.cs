@@ -5,6 +5,7 @@ using DIKUArcade.Math;
 using DIKUArcade;
 using DIKUArcade.GUI;
 using DIKUArcade.Events;
+using DIKUArcade.Physics;
 using DIKUArcade.Input;
 using System.Collections.Generic;
 
@@ -46,13 +47,22 @@ public class Game : DIKUGame , IGameEventProcessor{
         shot.Move();
         // TODO: move the shot's shape
 
-        //if ( /* TODO: guard against window borders */ ) {
-        // TODO: delete shot
-        //} else {
-        //enemies.Iterate(enemy => {
+        if (shot.Shape.Position.Y > 1.5f) {
+            shot.DeleteEntity();
+        } else {
+        enemies.Iterate(enemy => {
         // TODO: if collision btw shot and enemy -> delete both entities
-        //});
-        //}
+
+        /// VIRKER IKKE ####
+        System.Console.WriteLine(CollisionDetection.Aabb(shot.Shape.AsDynamicShape(),enemy.Shape).Collision);
+        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(),enemy.Shape).Collision) {
+            shot.DeleteEntity();
+            enemy.DeleteEntity();
+        }
+        
+        
+        });
+        }
         });
         }
 
@@ -67,7 +77,10 @@ public class Game : DIKUGame , IGameEventProcessor{
             player.SetMoveRight(true);
         }
         if (key == KeyboardKey.Space) {
-            playerShots.AddEntity(new PlayerShot(new Vec2F(player.GetPosition().X+PlayerShot.Extent.X,player.GetPosition().Y),playerShotImage));
+            playerShots.AddEntity(
+                new PlayerShot(
+                    new Vec2F(player.GetPosition().X+player.Extent().X/2.0f
+                    ,player.GetPosition().Y),playerShotImage));
         }
         // TODO: switch on key string and set the player's move direction
         }

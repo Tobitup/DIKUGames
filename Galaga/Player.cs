@@ -8,7 +8,6 @@ namespace Galaga {
         private float moveRight = 0.0f;
         const float MOVEMENT_SPEED = 0.01f;
 
-
         private Entity entity;
         private DynamicShape shape;
         public Player(DynamicShape shape, IBaseImage image) {
@@ -17,6 +16,10 @@ namespace Galaga {
         }
         public void Render() {
             entity.RenderEntity();
+        }
+
+        public Vec2F Extent() {
+            return shape.Extent;
         }
 
 
