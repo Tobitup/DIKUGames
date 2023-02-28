@@ -21,12 +21,17 @@ namespace Galaga {
 
         public void Move() {
         // TODO: move the shape and guard against the window borders
+            //if (shape.Position.X == )
             shape.Move();
         }
         public void SetMoveLeft(bool val) {
         // TODO:set moveLeft appropriately and call UpdateDirection()
             if (val) {
                 moveLeft -= MOVEMENT_SPEED;
+                UpdateDirection(moveLeft);
+            }
+            else {
+                moveLeft = 0f;
                 UpdateDirection(moveLeft);
             }
         
@@ -37,15 +42,14 @@ namespace Galaga {
                 moveRight += MOVEMENT_SPEED;
                 UpdateDirection(moveRight);
             }
+            else {
+                moveRight = 0f;
+                UpdateDirection(moveRight);
+            }
         }
 
         private void UpdateDirection(float val) {
             shape.Direction.X = val;
         }
     }
-}
-
-public class Player {
-    
-    
 }
