@@ -38,11 +38,22 @@ public class Game : DIKUGame , IGameEventProcessor{
         }
     private void KeyRelease(KeyboardKey key) {
         // TODO: switch on key string and disable the player's move direction
-        
+        if (key == KeyboardKey.Left) {
+            player.SetMoveLeft(false);
         }
+        if (key == KeyboardKey.Right) {
+            player.SetMoveRight(false);
+        }
+    }
 
     private void KeyHandler(KeyboardAction action, KeyboardKey key) {
         // TODO: Switch on KeyBoardAction and call proper method
+        if (action == KeyboardAction.KeyPress) {
+            KeyPress(key);
+        }
+        if (action == KeyboardAction.KeyRelease) {
+            KeyRelease(key);
+        }
     }
     public void ProcessEvent(GameEvent gameEvent) {
         // Leave this empty for now
@@ -54,6 +65,9 @@ public class Game : DIKUGame , IGameEventProcessor{
     }
     public override void Update() {
         window.PollEvents();
+        eventBus.ProcessEventsSequentially();
+        player.Move();
+        
         //throw new System.NotImplementedException("Galaga game has no entities to update yet.");
     }
 }
