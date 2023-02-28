@@ -15,7 +15,7 @@ namespace Galaga {
             this.shape = shape;
         }
         public void Render() {
-        entity.RenderEntity();
+            entity.RenderEntity();
         }
 
 
@@ -25,7 +25,7 @@ namespace Galaga {
         }
         public void SetMoveLeft(bool val) {
         // TODO:set moveLeft appropriately and call UpdateDirection()
-            if (val == true) {
+            if (val) {
                 moveLeft -= MOVEMENT_SPEED;
                 UpdateDirection(moveLeft);
             }
@@ -33,7 +33,7 @@ namespace Galaga {
         }
         public void SetMoveRight(bool val) {
         // TODO:set moveRight appropriately and call UpdateDirection()
-            if(val == true) {
+            if (val) {
                 moveRight += MOVEMENT_SPEED;
                 UpdateDirection(moveRight);
             }
