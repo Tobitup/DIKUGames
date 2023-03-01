@@ -18,7 +18,6 @@ public class Game : DIKUGame , IGameEventProcessor{
     private EntityContainer<PlayerShot> playerShots;
     private IBaseImage playerShotImage;
 
-
     private AnimationContainer enemyExplosions;
     private List<Image> explosionStrides;
     private const int EXPLOSION_LENGTH_MS = 500;
@@ -57,60 +56,56 @@ public class Game : DIKUGame , IGameEventProcessor{
     }
 
     public void AddExplosion(Vec2F position, Vec2F extent) {
-        // TODO: add explosion to the AnimationContainer
-        enemyExplosions.AddAnimation(new StationaryShape(position,extent), EXPLOSION_LENGTH_MS, new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides));
+        enemyExplosions.AddAnimation(
+            new StationaryShape(position,extent), EXPLOSION_LENGTH_MS, 
+            new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides));
     }
 
     private void IterateShots() {
         playerShots.Iterate(shot => {
-        shot.Move();
-        // TODO: move the shot's shape
+            shot.Move();
 
-        if (shot.Shape.Position.Y > 1.5f) {
-            shot.DeleteEntity();
-        } else {
-        enemies.Iterate(enemy => {
-        // TODO: if collision btw shot and enemy -> delete both entities
-
-        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(),enemy.Shape).Collision) {
-            AddExplosion(enemy.Shape.Position,enemy.Shape.Extent);
-            score.incrementScore();
-            shot.DeleteEntity();
-            enemy.DeleteEntity();
-        }
-        
-        
+            if (shot.Shape.Position.Y > 1.0f) {
+                shot.DeleteEntity();
+            } else {
+                enemies.Iterate(enemy => {
+                    if(CollisionDetection.Aabb(shot.Shape.AsDynamicShape(),enemy.Shape).Collision){
+                        AddExplosion(enemy.Shape.Position,enemy.Shape.Extent);
+                        score.incrementScore();
+                        shot.DeleteEntity();
+                        enemy.DeleteEntity();
+                    }
+                });
+            }
         });
-        }
-        });
-        }
+    }
 
     private void KeyPress(KeyboardKey key) {
-        if (key == KeyboardKey.Escape) {
-            window.CloseWindow();
-        }
-        if (key == KeyboardKey.Left) {
-            player.SetMoveLeft(true);
-        }
-        if (key == KeyboardKey.Right) {
-            player.SetMoveRight(true);
-        }
-        if (key == KeyboardKey.Up) {
-            player.SetMoveUp(true);
-        }
-        if (key == KeyboardKey.Down) {
-            player.SetMoveDown(true);
-        }
-        if (key == KeyboardKey.Space) {
-            playerShots.AddEntity(
+        switch(key) {
+            case KeyboardKey.Escape:
+                window.CloseWindow();
+                break;
+            case KeyboardKey.Left:
+                player.SetMoveLeft(true);
+                break;
+            case KeyboardKey.Right:
+                player.SetMoveRight(true);
+                break;
+            case KeyboardKey.Up:
+                player.SetMoveUp(true);
+                break;
+            case KeyboardKey.Down:
+                player.SetMoveDown(true);
+                break;
+            case KeyboardKey.Space:
+                playerShots.AddEntity(
                 new PlayerShot(
                     new Vec2F(player.GetPosition().X+player.Extent().X/2.0f
                     ,player.GetPosition().Y),playerShotImage));
+                break;
         }
-        // TODO: switch on key string and set the player's move direction
-        }
+    }
     private void KeyRelease(KeyboardKey key) {
-        // TODO: switch on key string and disable the player's move direction
         if (key == KeyboardKey.Left) {
             player.SetMoveLeft(false);
         }
@@ -126,7 +121,6 @@ public class Game : DIKUGame , IGameEventProcessor{
     }
 
     private void KeyHandler(KeyboardAction action, KeyboardKey key) {
-        // TODO: Switch on KeyBoardAction and call proper method
         if (action == KeyboardAction.KeyPress) {
             KeyPress(key);
         }

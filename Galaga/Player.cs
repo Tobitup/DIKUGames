@@ -30,7 +30,6 @@ namespace Galaga {
 
 
         public void Move() {
-        // TODO: move the shape and guard against the window borders
 
             if (shape.Position.X > 0.0f && shape.Position.X + shape.Extent.X< 1.0f
             && shape.Position.Y > 0.0f && shape.Position.Y + shape.Extent.Y< 1.0f ) {
@@ -46,7 +45,7 @@ namespace Galaga {
             }
         }
         public void SetMoveLeft(bool val) {
-        // TODO:set moveLeft appropriately and call UpdateDirection()
+
             if (val) {
                 moveLeft -= MOVEMENT_SPEED;
                 UpdateDirection(moveLeft, axis.X);
@@ -58,7 +57,7 @@ namespace Galaga {
         }
 
         public void SetMoveRight(bool val) {
-        // TODO:set moveRight appropriately and call UpdateDirection()
+
             if (val) {
                 moveRight += MOVEMENT_SPEED;
                 UpdateDirection(moveRight, axis.X);
@@ -70,7 +69,7 @@ namespace Galaga {
         }
 
         public void SetMoveUp(bool val) {
-        // TODO:set moveRight appropriately and call UpdateDirection()
+
             if (val) {
                 moveUp += MOVEMENT_SPEED;
                 UpdateDirection(moveUp, axis.Y);
@@ -81,7 +80,7 @@ namespace Galaga {
             }
         }
         public void SetMoveDown(bool val) {
-        // TODO:set moveRight appropriately and call UpdateDirection()
+
             if (val) {
                 moveDown -= MOVEMENT_SPEED;
                 UpdateDirection(moveDown, axis.Y);
