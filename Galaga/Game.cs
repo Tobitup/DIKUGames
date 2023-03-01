@@ -23,6 +23,8 @@ public class Game : DIKUGame , IGameEventProcessor{
     private List<Image> explosionStrides;
     private const int EXPLOSION_LENGTH_MS = 500;
 
+    private Score score;
+
     public Game(WindowArgs windowArgs) : base(windowArgs) {
         player = new Player(
         new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
@@ -45,6 +47,8 @@ public class Game : DIKUGame , IGameEventProcessor{
             enemies.AddEntity(new Enemy(
             new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, images)));
+        
+        score = new Score("0", new Vec2F(0.5f,0.5f), new Vec2F(0.3f,0.3f));
         }
 
         enemyExplosions = new AnimationContainer(numEnemies);
@@ -70,6 +74,7 @@ public class Game : DIKUGame , IGameEventProcessor{
 
         if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(),enemy.Shape).Collision) {
             AddExplosion(enemy.Shape.Position,enemy.Shape.Extent);
+            score.incrementScore();
             shot.DeleteEntity();
             enemy.DeleteEntity();
         }
@@ -90,6 +95,12 @@ public class Game : DIKUGame , IGameEventProcessor{
         if (key == KeyboardKey.Right) {
             player.SetMoveRight(true);
         }
+        if (key == KeyboardKey.Up) {
+            player.SetMoveUp(true);
+        }
+        if (key == KeyboardKey.Down) {
+            player.SetMoveDown(true);
+        }
         if (key == KeyboardKey.Space) {
             playerShots.AddEntity(
                 new PlayerShot(
@@ -105,6 +116,12 @@ public class Game : DIKUGame , IGameEventProcessor{
         }
         if (key == KeyboardKey.Right) {
             player.SetMoveRight(false);
+        }
+        if (key == KeyboardKey.Up) {
+            player.SetMoveUp(false);
+        }
+        if (key == KeyboardKey.Down) {
+            player.SetMoveDown(false);
         }
     }
 
@@ -126,6 +143,7 @@ public class Game : DIKUGame , IGameEventProcessor{
         enemies.RenderEntities();
         playerShots.RenderEntities();
         enemyExplosions.RenderAnimations();
+        score.RenderText();
     }
     public override void Update() {
         window.PollEvents();
