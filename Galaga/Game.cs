@@ -17,6 +17,13 @@ public class Game : DIKUGame , IGameEventProcessor{
 
     private EntityContainer<PlayerShot> playerShots;
     private IBaseImage playerShotImage;
+
+    private AnimationContainer enemyExplosions;
+    private List<Image> explosionStrides;
+    private const int EXPLOSION_LENGTH_MS = 500;
+
+    private Score score;
+
     public Game(WindowArgs windowArgs) : base(windowArgs) {
         player = new Player(
         new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
@@ -39,63 +46,81 @@ public class Game : DIKUGame , IGameEventProcessor{
             enemies.AddEntity(new Enemy(
             new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
             new ImageStride(80, images)));
+        
+        score = new Score("0", new Vec2F(0.5f,0.5f), new Vec2F(0.3f,0.3f));
         }
+
+        enemyExplosions = new AnimationContainer(numEnemies);
+        explosionStrides = ImageStride.CreateStrides(8,
+            Path.Combine("Assets", "Images", "Explosion.png"));
+    }
+
+    public void AddExplosion(Vec2F position, Vec2F extent) {
+        enemyExplosions.AddAnimation(
+            new StationaryShape(position,extent), EXPLOSION_LENGTH_MS, 
+            new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides));
     }
 
     private void IterateShots() {
         playerShots.Iterate(shot => {
-        shot.Move();
-        // TODO: move the shot's shape
+            shot.Move();
 
-        if (shot.Shape.Position.Y > 1.5f) {
-            shot.DeleteEntity();
-        } else {
-        enemies.Iterate(enemy => {
-        // TODO: if collision btw shot and enemy -> delete both entities
-
-        /// VIRKER IKKE ####
-        System.Console.WriteLine(CollisionDetection.Aabb(shot.Shape.AsDynamicShape(),enemy.Shape).Collision);
-        if (CollisionDetection.Aabb(shot.Shape.AsDynamicShape(),enemy.Shape).Collision) {
-            shot.DeleteEntity();
-            enemy.DeleteEntity();
-        }
-        
-        
+            if (shot.Shape.Position.Y > 1.0f) {
+                shot.DeleteEntity();
+            } else {
+                enemies.Iterate(enemy => {
+                    if(CollisionDetection.Aabb(shot.Shape.AsDynamicShape(),enemy.Shape).Collision){
+                        AddExplosion(enemy.Shape.Position,enemy.Shape.Extent);
+                        score.incrementScore();
+                        shot.DeleteEntity();
+                        enemy.DeleteEntity();
+                    }
+                });
+            }
         });
-        }
-        });
-        }
+    }
 
     private void KeyPress(KeyboardKey key) {
-        if (key == KeyboardKey.Escape) {
-            window.CloseWindow();
-        }
-        if (key == KeyboardKey.Left) {
-            player.SetMoveLeft(true);
-        }
-        if (key == KeyboardKey.Right) {
-            player.SetMoveRight(true);
-        }
-        if (key == KeyboardKey.Space) {
-            playerShots.AddEntity(
+        switch(key) {
+            case KeyboardKey.Escape:
+                window.CloseWindow();
+                break;
+            case KeyboardKey.Left:
+                player.SetMoveLeft(true);
+                break;
+            case KeyboardKey.Right:
+                player.SetMoveRight(true);
+                break;
+            case KeyboardKey.Up:
+                player.SetMoveUp(true);
+                break;
+            case KeyboardKey.Down:
+                player.SetMoveDown(true);
+                break;
+            case KeyboardKey.Space:
+                playerShots.AddEntity(
                 new PlayerShot(
                     new Vec2F(player.GetPosition().X+player.Extent().X/2.0f
                     ,player.GetPosition().Y),playerShotImage));
+                break;
         }
-        // TODO: switch on key string and set the player's move direction
-        }
+    }
     private void KeyRelease(KeyboardKey key) {
-        // TODO: switch on key string and disable the player's move direction
         if (key == KeyboardKey.Left) {
             player.SetMoveLeft(false);
         }
         if (key == KeyboardKey.Right) {
             player.SetMoveRight(false);
         }
+        if (key == KeyboardKey.Up) {
+            player.SetMoveUp(false);
+        }
+        if (key == KeyboardKey.Down) {
+            player.SetMoveDown(false);
+        }
     }
 
     private void KeyHandler(KeyboardAction action, KeyboardKey key) {
-        // TODO: Switch on KeyBoardAction and call proper method
         if (action == KeyboardAction.KeyPress) {
             KeyPress(key);
         }
@@ -111,6 +136,8 @@ public class Game : DIKUGame , IGameEventProcessor{
         player.Render();
         enemies.RenderEntities();
         playerShots.RenderEntities();
+        enemyExplosions.RenderAnimations();
+        score.RenderText();
     }
     public override void Update() {
         window.PollEvents();
