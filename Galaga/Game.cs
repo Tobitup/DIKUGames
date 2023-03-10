@@ -84,7 +84,8 @@ public class Game : DIKUGame , IGameEventProcessor{
     private void KeyPress(KeyboardKey key) {
         switch(key) {
             case KeyboardKey.Escape:
-                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.WindowEvent, Message = "close"});
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.WindowEvent, 
+                                                                        Message = "close"});
                 break;
             case KeyboardKey.Left:
                 player.SetMoveLeft(true);
