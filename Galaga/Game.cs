@@ -33,9 +33,10 @@ public class Game : DIKUGame , IGameEventProcessor{
         playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
 
         eventBus = new GameEventBus();
-        eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent });
+        eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.WindowEvent });
         window.SetKeyEventHandler(KeyHandler);
         eventBus.Subscribe(GameEventType.InputEvent, this);
+        eventBus.Subscribe(GameEventType.WindowEvent, this);
 
 
         List<Image> images = ImageStride.CreateStrides
@@ -83,7 +84,7 @@ public class Game : DIKUGame , IGameEventProcessor{
     private void KeyPress(KeyboardKey key) {
         switch(key) {
             case KeyboardKey.Escape:
-                window.CloseWindow();
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.WindowEvent, Message = "close"});
                 break;
             case KeyboardKey.Left:
                 player.SetMoveLeft(true);
@@ -130,6 +131,16 @@ public class Game : DIKUGame , IGameEventProcessor{
     }
     public void ProcessEvent(GameEvent gameEvent) {
         // Leave this empty for now
+        switch (gameEvent.EventType) {
+            case GameEventType.WindowEvent:
+                if (gameEvent.Message == "close") {
+                    window.CloseWindow();
+                }
+            break;
+        }
+
+        
+        
     }
 
     public override void Render() {
