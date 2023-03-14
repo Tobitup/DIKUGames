@@ -10,7 +10,7 @@ class Score : Text{
         this.SetColor(new Vec3I(255,255,255));
     }
 
-    public void incrementScore() {
+    public void IncrementScore() {
         count += 1;
         this.SetText($"{count}");
     }
