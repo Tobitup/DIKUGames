@@ -9,6 +9,7 @@ using DIKUArcade.Physics;
 using DIKUArcade.Input;
 using System.Collections.Generic;
 using Galaga.Squadron;
+using Galaga.MovementStrategy;
 
 namespace Galaga;
 public class Game : DIKUGame , IGameEventProcessor{
@@ -18,6 +19,7 @@ public class Game : DIKUGame , IGameEventProcessor{
 
     private EntityContainer<PlayerShot> playerShots;
     private IBaseImage playerShotImage;
+    private ZigZagDown strategy;
 
     private AnimationContainer enemyExplosions;
     private List<Image> explosionStrides;
@@ -53,6 +55,8 @@ public class Game : DIKUGame , IGameEventProcessor{
         CrossSquadron Firkant = new CrossSquadron();
         Firkant.CreateEnemies(images,enemyStridesRed);
         enemies = Firkant.Enemies;
+
+        strategy = new ZigZagDown();
 
         score = new Score("0", new Vec2F(0.5f,0.5f), new Vec2F(0.3f,0.3f));
         
@@ -171,6 +175,7 @@ public class Game : DIKUGame , IGameEventProcessor{
         window.PollEvents();
         eventBus.ProcessEventsSequentially();
         player.Move();
+        strategy.MoveEnemies(enemies);
         IterateShots();
     }
 }

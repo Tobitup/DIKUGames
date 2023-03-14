@@ -5,7 +5,11 @@ using System.Collections.Generic;
 namespace Galaga;
 public class Enemy : Entity {
     private int hitpoints;
-    private float movementSpeed = 0.01f;
+    private float movementSpeed = 0.001f;
+    public float MovementSpeed {
+        get {return movementSpeed;}
+    }
+
     private IBaseImage redEnemies;
 
     private int enrageHPThreshold = 1;
@@ -28,7 +32,7 @@ public class Enemy : Entity {
 
     public void EnrageEnemy() {
         base.Image = redEnemies;
-        movementSpeed -= 0.001f;
+        movementSpeed += 0.01f;
     }
 
 }
