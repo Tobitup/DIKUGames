@@ -11,6 +11,8 @@ namespace Galaga {
         private float moveUp = 0.0f;
         private float moveDown = 0.0f;
         const float MOVEMENT_SPEED = 0.01f;
+
+        private Health health = new Health(new Vec2F(0.3f,0.3f), new Vec2F(0.3f,0.3f));
         private enum axis {
             X,
             Y
@@ -24,6 +26,7 @@ namespace Galaga {
         }
         public void Render() {
             entity.RenderEntity();
+            health.RenderHealth();
         }
 
         public Vec2F Extent() {
