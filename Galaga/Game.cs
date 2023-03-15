@@ -19,7 +19,7 @@ public class Game : DIKUGame , IGameEventProcessor{
 
     private EntityContainer<PlayerShot> playerShots;
     private IBaseImage playerShotImage;
-    private ZigZagDown strategy;
+    private Down strategy;
 
     private AnimationContainer enemyExplosions;
     private List<Image> explosionStrides;
@@ -52,11 +52,11 @@ public class Game : DIKUGame , IGameEventProcessor{
                                                                     "Images", "RedMonster.png"));
 
         const int numEnemies = 8;
-        CrossSquadron Firkant = new CrossSquadron();
+        SmileySquadron Firkant = new SmileySquadron();
         Firkant.CreateEnemies(images,enemyStridesRed);
         enemies = Firkant.Enemies;
 
-        strategy = new ZigZagDown();
+        strategy = new Down();
 
         score = new Score("0", new Vec2F(0.5f,0.5f), new Vec2F(0.3f,0.3f));
         

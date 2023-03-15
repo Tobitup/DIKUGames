@@ -14,7 +14,7 @@ public class Health {
     }
     // Remember to explaination your choice as to what happens //when losing health.
     public void LoseHealth () {
-        
+        health--;
     }
     public void RenderHealth () {
         display.RenderText();
