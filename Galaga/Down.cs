@@ -6,9 +6,6 @@ using System.Collections.Generic;
 namespace Galaga.MovementStrategy;
 
 public class Down : IMovementStrategy {
-
-    private EntityContainer<Enemy> enemies;
-
     public void MoveEnemies(EntityContainer<Enemy> enemies)
     {
         foreach (Enemy enemy in enemies) {

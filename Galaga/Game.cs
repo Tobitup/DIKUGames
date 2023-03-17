@@ -19,13 +19,14 @@ public class Game : DIKUGame , IGameEventProcessor{
 
     private EntityContainer<PlayerShot> playerShots;
     private IBaseImage playerShotImage;
-    private Down strategy;
+    private WaveControl wave;
 
     private AnimationContainer enemyExplosions;
     private List<Image> explosionStrides;
     private const int EXPLOSION_LENGTH_MS = 500;
 
-    private Score score;
+    private bool isGameover = false;
+
 
     private List<Image> enemyStridesRed;
     public Game(WindowArgs windowArgs) : base(windowArgs) {
@@ -41,8 +42,7 @@ public class Game : DIKUGame , IGameEventProcessor{
                                                             GameEventType.WindowEvent });
         window.SetKeyEventHandler(KeyHandler);
         eventBus.Subscribe(GameEventType.InputEvent, player);
-        eventBus.Subscribe(GameEventType.WindowEvent, this);
-        
+        eventBus.Subscribe(GameEventType.WindowEvent, this);        
 
 
         List<Image> images = ImageStride.CreateStrides
@@ -52,16 +52,13 @@ public class Game : DIKUGame , IGameEventProcessor{
                                                                     "Images", "RedMonster.png"));
 
         const int numEnemies = 8;
-        SmileySquadron Firkant = new SmileySquadron();
-        Firkant.CreateEnemies(images,enemyStridesRed);
-        enemies = Firkant.Enemies;
 
-        strategy = new Down();
+        wave = new WaveControl(images,enemyStridesRed);
+        enemies = wave.ActiveSquadron.Enemies;
 
-        score = new Score("0", new Vec2F(0.5f,0.5f), new Vec2F(0.3f,0.3f));
         
-
         enemyExplosions = new AnimationContainer(numEnemies);
+
         explosionStrides = ImageStride.CreateStrides(8,
             Path.Combine("Assets", "Images", "Explosion.png"));
     }
@@ -70,6 +67,18 @@ public class Game : DIKUGame , IGameEventProcessor{
         enemyExplosions.AddAnimation(
             new StationaryShape(position,extent), EXPLOSION_LENGTH_MS, 
             new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides));
+    }
+
+    public void PlayerCollideWithEnemy(EntityContainer<Enemy> enemies) {
+        enemies.Iterate(enemy => {
+            if (CollisionDetection.Aabb(player.Shape,enemy.Shape).Collision) {
+                player.Health.LoseHealth();
+            }
+
+            if (enemy.Shape.Position.Y <= 0.0f) {
+                isGameover = true;
+            }
+        });
     }
 
     private void IterateShots() {
@@ -86,7 +95,6 @@ public class Game : DIKUGame , IGameEventProcessor{
                         } else {
                             enemy.DeleteEntity();
                             AddExplosion(enemy.Shape.Position,enemy.Shape.Extent);
-                            score.IncrementScore();
                             shot.DeleteEntity();
                         }
                     }
@@ -164,18 +172,34 @@ public class Game : DIKUGame , IGameEventProcessor{
         }
     }
 
+    public void isDead() {
+        if (player.Health.IsDead) {
+            isGameover = true;
+        }
+    }
     public override void Render() {
-        player.Render();
-        enemies.RenderEntities();
-        playerShots.RenderEntities();
-        enemyExplosions.RenderAnimations();
-        score.RenderText();
+
+        if (!isGameover) {
+            player.Render();
+            enemies.RenderEntities();
+            playerShots.RenderEntities();
+            enemyExplosions.RenderAnimations();
+            player.Health.RenderHealth();
+        }
+        wave.Scoreboard.RenderText();
     }
     public override void Update() {
         window.PollEvents();
         eventBus.ProcessEventsSequentially();
-        player.Move();
-        strategy.MoveEnemies(enemies);
-        IterateShots();
+
+        if (!isGameover) {
+            player.Move();
+            enemies = wave.ActiveSquadron.Enemies;
+            wave.generateWave(enemies);
+            wave.ActiveStrategy.MoveEnemies(enemies);
+            PlayerCollideWithEnemy(enemies);
+            IterateShots();
+            isDead();
+        }
     }
 }

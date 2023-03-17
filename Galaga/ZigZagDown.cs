@@ -7,8 +7,6 @@ using System.Collections.Generic;
 namespace Galaga.MovementStrategy;
 
 public class ZigZagDown : IMovementStrategy {
-
-    private EntityContainer<Enemy> enemies;
     const float s = 0.0003f;
     const float p = 0.045f;
     const float a = 0.05f;
@@ -23,7 +21,6 @@ public class ZigZagDown : IMovementStrategy {
 
     public void MoveEnemy(Enemy enemy)
     {
-        //float newPosition = currentPosition - enemy.MovementSpeed;
         enemy.Shape.Position = calculateNextPosition(enemy);
     }
 
@@ -47,8 +44,10 @@ public class ZigZagDown : IMovementStrategy {
     }
 
     private float calculateNextXPosition(Enemy enemy, float nextYPos) {
-        float nextXPosition = 0.5f + a*(float)Math.Sin((2.0f*pi*(0.0f - nextYPos))/p);
+        float startPosX = enemy.Startposition.X;
+        float startPosY = enemy.Startposition.Y;
 
+        float nextXPosition = startPosX + a*(float)Math.Sin((2.0f*pi*(startPosY - nextYPos))/p);
         return nextXPosition;
     }
 }
