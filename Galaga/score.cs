@@ -2,7 +2,7 @@ namespace Galaga;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 
-class Score : Text{
+public class Score : Text{
     private int count = 0;
 
     public Score(string text, Vec2F pos, Vec2F extent) : base(text, pos, extent)
@@ -12,6 +12,6 @@ class Score : Text{
 
     public void IncrementScore() {
         count += 1;
-        this.SetText($"{count}");
+        this.SetText($"Level: {count}");
     }
 }

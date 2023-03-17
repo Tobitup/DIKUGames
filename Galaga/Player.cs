@@ -5,12 +5,16 @@ using DIKUArcade.Events;
 
 namespace Galaga {
     public class Player : IGameEventProcessor {
-        // TODO: Add private fields
         private float moveLeft = 0.0f;
         private float moveRight = 0.0f;
         private float moveUp = 0.0f;
         private float moveDown = 0.0f;
         const float MOVEMENT_SPEED = 0.01f;
+
+        private Health health = new Health(new Vec2F(0.05f,0.4f), new Vec2F(0.3f,0.3f));
+        public Health Health {
+            get {return health;}
+        }
         private enum axis {
             X,
             Y
@@ -18,12 +22,16 @@ namespace Galaga {
 
         private Entity entity;
         private DynamicShape shape;
+        public DynamicShape Shape {
+            get {return shape;}
+        }
         public Player(DynamicShape shape, IBaseImage image) {
             entity = new Entity(shape, image);
             this.shape = shape;
         }
         public void Render() {
             entity.RenderEntity();
+            health.RenderHealth();
         }
 
         public Vec2F Extent() {
@@ -132,7 +140,6 @@ namespace Galaga {
                 case "MOVE_DOWN_STOP":
                 this.SetMoveDown(false);
                 break;
-
             }
         }
         }
