@@ -69,7 +69,7 @@ public class Game : DIKUGame , IGameEventProcessor{
             new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides));
     }
 
-    public void PlayerCollideWithEnemy(EntityContainer<Enemy> enemies) {
+    private void playerCollideWithEnemy(EntityContainer<Enemy> enemies) {
         enemies.Iterate(enemy => {
             if (CollisionDetection.Aabb(player.Shape,enemy.Shape).Collision) {
                 player.Health.LoseHealth();
@@ -197,7 +197,7 @@ public class Game : DIKUGame , IGameEventProcessor{
             enemies = wave.ActiveSquadron.Enemies;
             wave.generateWave(enemies);
             wave.ActiveStrategy.MoveEnemies(enemies);
-            PlayerCollideWithEnemy(enemies);
+            playerCollideWithEnemy(enemies);
             IterateShots();
             isDead();
         }
