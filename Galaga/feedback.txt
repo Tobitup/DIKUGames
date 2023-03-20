@@ -1,0 +1,60 @@
+  * General Notes
+
+    * Hitpoint is always 3, please look into this
+
+    * Consider changing enraged speed for a better gameplay experience, but that is up to you.
+
+
+  * Enraged enemies
+
+    * increaseDifficulty() name according to style guide
+
+    * Look at constructor logic. IBaseImage image, List<Image> imageStride. Consider if it wouldnt make better sense to take two IBaseImages as args.
+
+    * Looks like EnemyIsTakingDamage() has multiple responsibilities. Consider Single responsibility (SRP) and refactoring here. Also does it have to return bool?
+
+    * I am unsure what the responsibilies of increaseDifficulty() are. The best is if code is self-explanatory, and otherwise it should be appropiately documented, e.g. using XML. When I see a metod such as increaseDifficulty() I am unsure about what its responsibilities are, and it should me made more obvious to the reader of your code, e.g. through refactoring.
+
+  * Squadrons
+
+    * Put in separate folder for better structure
+
+  * Movement
+
+    * Put in separate folder for better structure
+
+    * Naming of methods not complying with style guide, e.g calculateNextPosition
+
+  * Objectives
+
+    * score.cs please name uppercase
+
+  * Additionally in Game.cs
+
+    * Consider Single responsibility (SRP). KeyboardKey.Space: here you do some math, perhaps make a separate method for that.
+
+    * I think you are on the right track with regards to your WaveControl. I would like to hear about your design considerations here in the 7G technichal report. Still consider using a factory to create the instances of squadrons and movmeentstrategies.
+
+    * Does PlayerCollideWithEnemy() have to be public?
+
+    * Also consider things such as what the intent behind providing two lists as arg to WaveControl is.
+
+ 
+
+  * To sum up
+
+    * Good overal! Keep up the good work.
+
+    * From now and on in this course it is of utmost importance that you spend time designing before you start coding. Get together in the group and consider class responsibilities and relations between classess, keeping the SOLID principles and design patterns in mind. This will help you implement code of much higher quality! Designing is often more important than the actual coding and it will help you avoid making spaghetti code. Also it will often bee much easier to do the actual implementation once you have agreed on a good design in the group.
+
+ 
+
+  * For Assignment 7G please
+
+  * Fix the things mentioned about conforming to style guide. Now is week 6 of the course so you should master these things!
+
+    * Fix such that hitpoint is not always 3
+
+    * Look at the things I ask you to consider, get together and think about your design and refactor your code.
+
+               
