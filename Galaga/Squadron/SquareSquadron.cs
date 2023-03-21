@@ -26,21 +26,21 @@ public class SquareSquadron : ISquadron {
             // TOP LEFT
             enemyContainer.AddEntity(new Enemy(
             new DynamicShape(new Vec2F(0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
-            new ImageStride(80, enemyStride), alternativeEnemyStride));
+            new ImageStride(80, enemyStride), new ImageStride(80 ,alternativeEnemyStride)));
 
             // TOP RIGHT
             enemyContainer.AddEntity(new Enemy(
             new DynamicShape(new Vec2F(0.2f, 0.9f), new Vec2F(0.1f, 0.1f)),
-            new ImageStride(80, enemyStride), alternativeEnemyStride));
+            new ImageStride(80, enemyStride), new ImageStride(80 ,alternativeEnemyStride)));
 
             // BOTTOM LEFT
             enemyContainer.AddEntity(new Enemy(
             new DynamicShape(new Vec2F(0.1f, 0.8f), new Vec2F(0.1f, 0.1f)),
-            new ImageStride(80, enemyStride), alternativeEnemyStride));
+            new ImageStride(80, enemyStride), new ImageStride(80 ,alternativeEnemyStride)));
 
             // BOTTOM RIGHT
             enemyContainer.AddEntity(new Enemy(
             new DynamicShape(new Vec2F(0.2f, 0.8f), new Vec2F(0.1f, 0.1f)),
-            new ImageStride(80, enemyStride), alternativeEnemyStride));
+            new ImageStride(80, enemyStride), new ImageStride(80 ,alternativeEnemyStride)));
     }
 }

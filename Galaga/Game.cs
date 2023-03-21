@@ -42,7 +42,8 @@ public class Game : DIKUGame , IGameEventProcessor{
                                                             GameEventType.WindowEvent });
         window.SetKeyEventHandler(KeyHandler);
         eventBus.Subscribe(GameEventType.InputEvent, player);
-        eventBus.Subscribe(GameEventType.WindowEvent, this);        
+        eventBus.Subscribe(GameEventType.WindowEvent, this);      
+        eventBus.Subscribe(GameEventType.InputEvent, this);
 
 
         List<Image> images = ImageStride.CreateStrides
@@ -69,7 +70,7 @@ public class Game : DIKUGame , IGameEventProcessor{
             new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides));
     }
 
-    public void PlayerCollideWithEnemy(EntityContainer<Enemy> enemies) {
+    private void PlayerCollideWithEnemy(EntityContainer<Enemy> enemies) {
         enemies.Iterate(enemy => {
             if (CollisionDetection.Aabb(player.Shape,enemy.Shape).Collision) {
                 player.Health.LoseHealth();
@@ -90,7 +91,8 @@ public class Game : DIKUGame , IGameEventProcessor{
             } else {
                 enemies.Iterate(enemy => {
                     if(CollisionDetection.Aabb(shot.Shape.AsDynamicShape(),enemy.Shape).Collision) {  
-                        if (enemy.EnemyIsTakingDamage()) {
+                        if (!enemy.IsDead()) {
+                            enemy.GetsShot();
                             shot.DeleteEntity();
                         } else {
                             enemy.DeleteEntity();
@@ -126,10 +128,8 @@ public class Game : DIKUGame , IGameEventProcessor{
                                                                         Message = "MOVE_DOWN"});
                 break;
             case KeyboardKey.Space:
-                playerShots.AddEntity(
-                new PlayerShot(
-                    new Vec2F(player.GetPosition().X+player.Extent().X/2.0f
-                    ,player.GetPosition().Y),playerShotImage));
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
+                                                                        Message = "SHOOT"});
                 break;
         }
     }
@@ -162,14 +162,32 @@ public class Game : DIKUGame , IGameEventProcessor{
             KeyRelease(key);
         }
     }
+
     public void ProcessEvent(GameEvent gameEvent) {
-        if (gameEvent.EventType == GameEventType.WindowEvent) {
+        if (gameEvent.EventType == GameEventType.InputEvent) {
+            switch (gameEvent.Message) {
+                case "SHOOT":
+                    AddMovingShot();
+                    break;
+            }
+        }
+        else if (gameEvent.EventType == GameEventType.WindowEvent) {
             switch (gameEvent.Message) {
                 case "CLOSE_WINDOW":
                     window.CloseWindow();
                 break;
             }
         }
+    }
+
+    private void AddMovingShot() {
+        playerShots.AddEntity(
+            new PlayerShot(GetShotSpawnpoint(),playerShotImage));
+    }
+
+    private Vec2F GetShotSpawnpoint() {
+        return new Vec2F(player.GetPosition().X+player.Extent().X/2.0f
+                ,player.GetPosition().Y);
     }
 
     public void isDead() {

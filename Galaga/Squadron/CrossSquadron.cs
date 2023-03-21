@@ -26,31 +26,31 @@ public class CrossSquadron : ISquadron {
             // ROW ONE
             enemyContainer.AddEntity(new Enemy(
             new DynamicShape(new Vec2F(0.2f, 0.9f), new Vec2F(0.1f, 0.1f)),
-            new ImageStride(80, enemyStride), alternativeEnemyStride));
+            new ImageStride(80, enemyStride), new ImageStride(80 ,alternativeEnemyStride)));
 
             // ROW TWO
             enemyContainer.AddEntity(new Enemy(
             new DynamicShape(new Vec2F(0.1f, 0.8f), new Vec2F(0.1f, 0.1f)),
-            new ImageStride(80, enemyStride), alternativeEnemyStride));
+            new ImageStride(80, enemyStride), new ImageStride(80 ,alternativeEnemyStride)));
 
             // ROW TWO
             enemyContainer.AddEntity(new Enemy(
             new DynamicShape(new Vec2F(0.2f, 0.8f), new Vec2F(0.1f, 0.1f)),
-            new ImageStride(80, enemyStride), alternativeEnemyStride));
+            new ImageStride(80, enemyStride), new ImageStride(80 ,alternativeEnemyStride)));
 
             // ROW TWO
             enemyContainer.AddEntity(new Enemy(
             new DynamicShape(new Vec2F(0.3f, 0.8f), new Vec2F(0.1f, 0.1f)),
-            new ImageStride(80, enemyStride), alternativeEnemyStride));
+            new ImageStride(80, enemyStride), new ImageStride(80 ,alternativeEnemyStride)));
 
             // ROW FOUR
             enemyContainer.AddEntity(new Enemy(
             new DynamicShape(new Vec2F(0.2f, 0.7f), new Vec2F(0.1f, 0.1f)),
-            new ImageStride(80, enemyStride), alternativeEnemyStride));
+            new ImageStride(80, enemyStride), new ImageStride(80 ,alternativeEnemyStride)));
 
             // ROW FIVE
             enemyContainer.AddEntity(new Enemy(
             new DynamicShape(new Vec2F(0.2f, 0.6f), new Vec2F(0.1f, 0.1f)),
-            new ImageStride(80, enemyStride), alternativeEnemyStride));
+            new ImageStride(80, enemyStride), new ImageStride(80 ,alternativeEnemyStride)));
     }
 }
