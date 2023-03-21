@@ -9,8 +9,7 @@ using System;
 namespace Galaga;
 
 
-public class WaveControl
-{
+public class WaveControl {
     private ISquadron activeSquadron;
     public ISquadron ActiveSquadron {
         get {return activeSquadron;}
@@ -75,7 +74,7 @@ public class WaveControl
 
     public void increaseDifficultyForEnemies(EntityContainer<Enemy> enemies) {
         enemies.Iterate( enemy => {
-            enemy.increaseDifficulty(difficulty);
+            enemy.IncreaseMovementSpeedByFactor(difficulty);
         });
     }
 }

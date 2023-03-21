@@ -110,8 +110,7 @@ namespace Galaga {
             
         }
 
-        public void ProcessEvent(GameEvent gameEvent)
-        {
+        public void ProcessEvent(GameEvent gameEvent) {
             if (gameEvent.EventType == GameEventType.InputEvent) {
             switch(gameEvent.Message) {
                 case "MOVE_LEFT":
@@ -140,8 +139,8 @@ namespace Galaga {
                 case "MOVE_DOWN_STOP":
                 this.SetMoveDown(false);
                 break;
+                }
             }
-        }
         }
     }
 }

@@ -21,28 +21,35 @@ public class Enemy : Entity {
         get {return startposition;}
     }
     
-    public Enemy(DynamicShape shape, IBaseImage image, List<Image> imageStride) : base(shape, image) {
+    public Enemy(DynamicShape shape, IBaseImage image, IBaseImage redImageStride) : base(shape, image) {
         Random rnd = new Random();
         hitpoints = rnd.Next(5);
         enrageHPThreshold = (int)Math.Ceiling(hitpoints/2.0);
 
-        redEnemies = new ImageStride(80, imageStride);
+        redEnemies = redImageStride;
         startposition = shape.Position;
     }
 
-    public bool EnemyIsTakingDamage() {
+    public void TakeDamage() {
         hitpoints--;
+    }
+
+    public bool IsDead() {
         if (hitpoints <= 0) {
-            return false;
+            return true;
         }
+        return false;
+    }
+
+    public void GetsShot() {
+        TakeDamage();
         if (hitpoints <= enrageHPThreshold) {
             EnrageEnemy();
         }
-        return true;
     }
 
-    public void increaseDifficulty(float difficulty) {
-        movementSpeed *= difficulty;
+    public void IncreaseMovementSpeedByFactor(float factor) {
+        movementSpeed *= factor;
     }
 
     public void EnrageEnemy() {

@@ -21,29 +21,29 @@ public class ZigZagDown : IMovementStrategy {
 
     public void MoveEnemy(Enemy enemy)
     {
-        enemy.Shape.Position = calculateNextPosition(enemy);
+        enemy.Shape.Position = CalculateNextPosition(enemy);
     }
 
-    private float getSpeed(Enemy enemy) {
+    private float GetSpeed(Enemy enemy) {
         return s + enemy.MovementSpeed;
     }
 
-    private Vec2F calculateNextPosition(Enemy enemy) {
+    private Vec2F CalculateNextPosition(Enemy enemy) {
         Vec2F returnPosition = new Vec2F(0.0f,0.0f);
-        returnPosition.Y = calculateNextYPosition(enemy);
+        returnPosition.Y = CalculateNextYPosition(enemy);
 
-        returnPosition.X = calculateNextXPosition(enemy,returnPosition.Y);
+        returnPosition.X = CalculateNextXPosition(enemy,returnPosition.Y);
 
         return returnPosition;
     }
 
-    private float calculateNextYPosition(Enemy enemy) {
+    private float CalculateNextYPosition(Enemy enemy) {
         Vec2F currentPosition = enemy.Shape.Position;
 
-        return currentPosition.Y - getSpeed(enemy);
+        return currentPosition.Y - GetSpeed(enemy);
     }
 
-    private float calculateNextXPosition(Enemy enemy, float nextYPos) {
+    private float CalculateNextXPosition(Enemy enemy, float nextYPos) {
         float startPosX = enemy.Startposition.X;
         float startPosY = enemy.Startposition.Y;
 
