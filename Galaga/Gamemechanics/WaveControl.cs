@@ -28,42 +28,23 @@ public class WaveControl {
         get {return scoreboard;}
     }
     private float difficulty = 1.0f;
+
+    private ISquadronFactory randomSquadronFactory = new RandomSquadronFactory();
+    private IStrategyFactory randomStrategyFactory = new RandomStrategyFactory();
     
     System.Random rnd = new Random();
 
     public WaveControl(List<Image> neutralImage, List<Image> enrageImage) {
         this.neutralImage = neutralImage;
         this.enrageImage = enrageImage;
-        activeStrategy = getRandomStrategy();
-        activeSquadron = getRandomSquadron();
-    }
-
-    private IMovementStrategy getRandomStrategy() {
-        switch (rnd.Next(3)) {
-            case 1:
-                return new Down();
-            case 2:
-                return new ZigZagDown();
-            default:
-                return new NoMove();
-        }
-    }
-
-    private ISquadron getRandomSquadron() {
-        switch (rnd.Next(3)) {
-            case 1:
-                return new SmileySquadron();
-            case 2:
-                return new SquareSquadron();
-            default:
-                return new CrossSquadron();
-        }
+        activeStrategy = randomStrategyFactory.CreateNewStrategy();
+        activeSquadron = randomSquadronFactory.CreateNewSquadron();
     }
 
     public void generateWave(EntityContainer<Enemy> enemies) {
         if (enemies.CountEntities() == 0) {
-            activeStrategy = getRandomStrategy();
-            activeSquadron = getRandomSquadron();
+            activeStrategy = randomStrategyFactory.CreateNewStrategy();
+            activeSquadron = randomSquadronFactory.CreateNewSquadron();
             activeSquadron.CreateEnemies(neutralImage,enrageImage);
             enemies = activeSquadron.Enemies;
             difficulty *= 1.1f;

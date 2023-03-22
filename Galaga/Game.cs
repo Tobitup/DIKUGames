@@ -10,6 +10,7 @@ using DIKUArcade.Input;
 using System.Collections.Generic;
 using Galaga.Squadron;
 using Galaga.MovementStrategy;
+using Galaga.GalagaStates;
 
 namespace Galaga;
 public class Game : DIKUGame , IGameEventProcessor{
@@ -26,26 +27,31 @@ public class Game : DIKUGame , IGameEventProcessor{
     private const int EXPLOSION_LENGTH_MS = 500;
 
     private bool isGameover = false;
+    private StateMachine stateMachine;
 
 
     private List<Image> enemyStridesRed;
     public Game(WindowArgs windowArgs) : base(windowArgs) {
-        player = new Player(
+        stateMachine = new StateMachine();
+        /*player = new Player(
         new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
         new Image(Path.Combine("Assets", "Images", "Player.png")));
 
         playerShots = new EntityContainer<PlayerShot>();
         playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
-
-        eventBus = new GameEventBus();
+        */
+        eventBus = GalagaBus.GetBus();
         eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, 
-                                                            GameEventType.WindowEvent });
+                                                            GameEventType.WindowEvent,
+                                                            GameEventType.GameStateEvent });
         window.SetKeyEventHandler(KeyHandler);
-        eventBus.Subscribe(GameEventType.InputEvent, player);
+        window.SetKeyEventHandler(stateMachine.ActiveState.HandleKeyEvent);
+        //eventBus.Subscribe(GameEventType.InputEvent, player);
         eventBus.Subscribe(GameEventType.WindowEvent, this);      
         eventBus.Subscribe(GameEventType.InputEvent, this);
+         GalagaBus.GetBus().Subscribe(GameEventType.GameStateEvent, stateMachine);
 
-
+        /*
         List<Image> images = ImageStride.CreateStrides
             (4, Path.Combine("Assets", "Images", "BlueMonster.png"));
 
@@ -61,7 +67,7 @@ public class Game : DIKUGame , IGameEventProcessor{
         enemyExplosions = new AnimationContainer(numEnemies);
 
         explosionStrides = ImageStride.CreateStrides(8,
-            Path.Combine("Assets", "Images", "Explosion.png"));
+            Path.Combine("Assets", "Images", "Explosion.png"));*/
     }
 
     public void AddExplosion(Vec2F position, Vec2F extent) {
@@ -196,21 +202,21 @@ public class Game : DIKUGame , IGameEventProcessor{
         }
     }
     public override void Render() {
-
-        if (!isGameover) {
+        stateMachine.ActiveState.RenderState();
+        /*if (!isGameover) {
             player.Render();
             enemies.RenderEntities();
             playerShots.RenderEntities();
             enemyExplosions.RenderAnimations();
             player.Health.RenderHealth();
         }
-        wave.Scoreboard.RenderText();
+        wave.Scoreboard.RenderText();*/
     }
     public override void Update() {
         window.PollEvents();
         eventBus.ProcessEventsSequentially();
-
-        if (!isGameover) {
+        stateMachine.ActiveState.UpdateState();
+        /*if (!isGameover) {
             player.Move();
             enemies = wave.ActiveSquadron.Enemies;
             wave.generateWave(enemies);
@@ -218,6 +224,6 @@ public class Game : DIKUGame , IGameEventProcessor{
             PlayerCollideWithEnemy(enemies);
             IterateShots();
             isDead();
-        }
+        }*/
     }
 }
