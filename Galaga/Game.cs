@@ -46,6 +46,7 @@ public class Game : DIKUGame , IGameEventProcessor{
                                                             GameEventType.GameStateEvent });
         window.SetKeyEventHandler(KeyHandler);
         window.SetKeyEventHandler(stateMachine.ActiveState.HandleKeyEvent);
+        window.SetKeyEventHandler(GamePaused.GetInstance().HandleKeyEvent);
         //eventBus.Subscribe(GameEventType.InputEvent, player);
         eventBus.Subscribe(GameEventType.WindowEvent, this);      
         eventBus.Subscribe(GameEventType.InputEvent, this);
