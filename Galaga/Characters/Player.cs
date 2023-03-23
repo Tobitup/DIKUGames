@@ -5,12 +5,12 @@ using DIKUArcade.Events;
 
 namespace Galaga {
     public class Player : IGameEventProcessor {
+        private GameEventBus eventBus;
         private float moveLeft = 0.0f;
         private float moveRight = 0.0f;
         private float moveUp = 0.0f;
         private float moveDown = 0.0f;
         const float MOVEMENT_SPEED = 0.01f;
-
         private Health health = new Health(new Vec2F(0.05f,0.4f), new Vec2F(0.3f,0.3f));
         public Health Health {
             get {return health;}
@@ -28,6 +28,9 @@ namespace Galaga {
         public Player(DynamicShape shape, IBaseImage image) {
             entity = new Entity(shape, image);
             this.shape = shape;
+
+            eventBus = GalagaBus.GetBus();
+            eventBus.Subscribe(GameEventType.InputEvent, this);
         }
         public void Render() {
             entity.RenderEntity();

@@ -11,6 +11,7 @@ public class StateMachine : IGameEventProcessor {
     private void SwitchState(GameStateType stateType) {
         switch (stateType) {
             case GameStateType.GamePaused:
+                ActiveState = GamePaused.GetInstance();
                 break;
             case GameStateType.GameRunning:
                 ActiveState = GameRunning.GetInstance();
@@ -22,9 +23,13 @@ public class StateMachine : IGameEventProcessor {
     }
 
     public void ProcessEvent(GameEvent gameEvent) {
+        System.Console.WriteLine(gameEvent.StringArg1);
         if (gameEvent.EventType == GameEventType.GameStateEvent) {
             switch (gameEvent.StringArg1) {
                 case "GAME_RUNNING":
+                    SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
+                break;
+                case "GAME_PAUSED":
                     SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
                 break;
                 default:

@@ -114,8 +114,12 @@ public class Game : DIKUGame , IGameEventProcessor{
     private void KeyPress(KeyboardKey key) {
         switch(key) {
             case KeyboardKey.Escape:
-                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.WindowEvent, 
-                                                                        Message = "CLOSE_WINDOW"});
+                GalagaBus.GetBus().RegisterEvent(
+                                    new GameEvent{
+                                        EventType = GameEventType.GameStateEvent,
+                                        Message = "CHANGE_STATE",
+                                        StringArg1 = "GAME_PAUSED"
+                                    });
                 break;
             case KeyboardKey.Left:
                 eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
@@ -170,14 +174,7 @@ public class Game : DIKUGame , IGameEventProcessor{
     }
 
     public void ProcessEvent(GameEvent gameEvent) {
-        if (gameEvent.EventType == GameEventType.InputEvent) {
-            switch (gameEvent.Message) {
-                case "SHOOT":
-                    AddMovingShot();
-                    break;
-            }
-        }
-        else if (gameEvent.EventType == GameEventType.WindowEvent) {
+        if (gameEvent.EventType == GameEventType.WindowEvent) {
             switch (gameEvent.Message) {
                 case "CLOSE_WINDOW":
                     window.CloseWindow();

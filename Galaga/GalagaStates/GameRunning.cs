@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 
 namespace Galaga.GalagaStates;
-public class GameRunning : IGameState {
+public class GameRunning : IGameState, IGameEventProcessor {
     private GameEventBus eventBus;
     private Player player;
     private EntityContainer<Enemy> enemies;
@@ -46,6 +46,7 @@ public class GameRunning : IGameState {
         playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
 
         eventBus = GalagaBus.GetBus();
+        eventBus.Subscribe(GameEventType.InputEvent, this);
         List<Image> images = ImageStride.CreateStrides
             (4, Path.Combine("Assets", "Images", "BlueMonster.png"));
 
@@ -122,9 +123,8 @@ public class GameRunning : IGameState {
         }
     }
 
-    public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
-    {
-        }
+    public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
+    }
 
     public void RenderState()
     {
@@ -154,6 +154,17 @@ public class GameRunning : IGameState {
             PlayerCollideWithEnemy(enemies);
             IterateShots();
             isDead();
+        }
+    }
+
+    public void ProcessEvent(GameEvent gameEvent)
+    {
+        if (gameEvent.EventType == GameEventType.InputEvent) {
+            switch (gameEvent.Message) {
+                case "SHOOT":
+                    AddMovingShot();
+                    break;
+            }
         }
     }
 }
