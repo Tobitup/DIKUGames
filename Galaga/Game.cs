@@ -28,9 +28,8 @@ public class Game : DIKUGame , IGameEventProcessor{
 
     private bool isGameover = false;
     private StateMachine stateMachine;
-
-
     private List<Image> enemyStridesRed;
+    
     public Game(WindowArgs windowArgs) : base(windowArgs) {
         stateMachine = new StateMachine();
         /*player = new Player(
@@ -51,7 +50,7 @@ public class Game : DIKUGame , IGameEventProcessor{
         //eventBus.Subscribe(GameEventType.InputEvent, player);
         eventBus.Subscribe(GameEventType.WindowEvent, this);      
         eventBus.Subscribe(GameEventType.InputEvent, this);
-         GalagaBus.GetBus().Subscribe(GameEventType.GameStateEvent, stateMachine);
+        eventBus.Subscribe(GameEventType.GameStateEvent, stateMachine);
 
         /*
         List<Image> images = ImageStride.CreateStrides

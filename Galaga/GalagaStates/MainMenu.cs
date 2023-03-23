@@ -28,8 +28,8 @@ public class MainMenu : IGameState {
             menuButtons[0].SetFont("Impact");
             menuButtons[1].SetFont("Impact");
             backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f,0.0f),
-                                            new Vec2F(1.0f,1.0f)),new Image(Path.Combine("Assets",
-                                                                    "Images", "TitleImage.png")));
+                                            new Vec2F(1.0f,1.0f)),new Image(Path.Combine("..",
+                                                "Galaga","Assets","Images", "TitleImage.png")));
             activeMenuButton = 0;
         }
 

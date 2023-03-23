@@ -7,6 +7,11 @@ using System;
 namespace Galaga;
 public class Enemy : Entity {
     private int hitpoints;
+
+    // Made to access Hitpoints in Testing class
+    public int Hitpoints {
+        get{return hitpoints;}
+    }
     private float movementSpeed = 0.001f;
     public float MovementSpeed {
         get {return movementSpeed;}

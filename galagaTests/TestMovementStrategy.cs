@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System;
 
-namespace Tests;
+namespace galagaTests;
 [TestFixture]
 public class TestMovementStrategy {
     [SetUp]
