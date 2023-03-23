@@ -25,6 +25,8 @@ public class MainMenu : IGameState {
         private void InitializeGameState() {
             menuButtons[0].SetColor(new Vec3I(255,255,255));
             menuButtons[1].SetColor(new Vec3I(255,255,255));
+            menuButtons[0].SetFont("Impact");
+            menuButtons[1].SetFont("Impact");
             backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f,0.0f),
                                             new Vec2F(1.0f,1.0f)),new Image(Path.Combine("Assets",
                                                                     "Images", "TitleImage.png")));

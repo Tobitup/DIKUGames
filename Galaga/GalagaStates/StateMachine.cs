@@ -19,22 +19,33 @@ public class StateMachine : IGameEventProcessor {
             case GameStateType.MainMenu:
                 ActiveState = MainMenu.GetInstance();
                 break;
+            case GameStateType.GameLost:
+                ActiveState = GameLost.GetInstance();
+                break;
         }
     }
 
     public void ProcessEvent(GameEvent gameEvent) {
-        System.Console.WriteLine(gameEvent.StringArg1);
         if (gameEvent.EventType == GameEventType.GameStateEvent) {
-            switch (gameEvent.StringArg1) {
+            if (gameEvent.Message == "CHANGE_STATE") {
+                switch (gameEvent.StringArg1) {
                 case "GAME_RUNNING":
                     SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
-                break;
+                    break;
                 case "GAME_PAUSED":
                     SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
-                break;
+                    break;
+                case "GAME_OVER":
+                    SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
+                    break;
                 default:
-                break;
+                    break;
+                }
+            }
+            if (gameEvent.Message == "RESET_STATE") {
+                ActiveState.ResetState();
             }
         }
+
     }
 }       

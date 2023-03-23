@@ -23,6 +23,8 @@ namespace Galaga.GalagaStates {
                     return GameStateType.GamePaused;
                 case "MENU":
                     return GameStateType.MainMenu;
+                case "GAME_OVER":
+                    return GameStateType.GameLost;
                 default:
                     throw new NotImplementedException();
             }
@@ -36,6 +38,8 @@ namespace Galaga.GalagaStates {
                     return "GAME_PAUSED";
                 case GameStateType.MainMenu:
                     return "MENU";
+                case GameStateType.GameLost:
+                    return "GAME_OVER";
                 default:
                     throw new NotImplementedException();
             }

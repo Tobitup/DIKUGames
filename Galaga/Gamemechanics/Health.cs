@@ -1,5 +1,6 @@
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
+using DIKUArcade.Events;
 
 namespace Galaga;
 public class Health {
@@ -7,10 +8,6 @@ public class Health {
     private Text display;
     private bool isDead = false;
 
-    // Used to check if the game is over.
-    public bool IsDead {
-        get {return isDead;}
-    }
     public Health (Vec2F position, Vec2F extent) {
         health = 3;
         display = new Text (health.ToString(), position, extent);
@@ -26,6 +23,18 @@ public class Health {
             health--;
         }
     }
+
+    public void IsDead() {
+        if (isDead) {
+            GalagaBus.GetBus().RegisterEvent(
+                                    new GameEvent{
+                                        EventType = GameEventType.GameStateEvent,
+                                        Message = "CHANGE_STATE",
+                                        StringArg1 = "GAME_OVER"
+                                    });
+        }
+    }
+
     // Used to render the health text to the window.
     public void RenderHealth () {
         display.SetText($"HP: {health}");

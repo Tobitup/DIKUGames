@@ -47,6 +47,7 @@ public class Game : DIKUGame , IGameEventProcessor{
         window.SetKeyEventHandler(KeyHandler);
         window.SetKeyEventHandler(stateMachine.ActiveState.HandleKeyEvent);
         window.SetKeyEventHandler(GamePaused.GetInstance().HandleKeyEvent);
+        window.SetKeyEventHandler(GameLost.GetInstance().HandleKeyEvent);
         //eventBus.Subscribe(GameEventType.InputEvent, player);
         eventBus.Subscribe(GameEventType.WindowEvent, this);      
         eventBus.Subscribe(GameEventType.InputEvent, this);
@@ -84,7 +85,12 @@ public class Game : DIKUGame , IGameEventProcessor{
             }
 
             if (enemy.Shape.Position.Y <= 0.0f) {
-                isGameover = true;
+                GalagaBus.GetBus().RegisterEvent(
+                                    new GameEvent{
+                                        EventType = GameEventType.GameStateEvent,
+                                        Message = "CHANGE_STATE",
+                                        StringArg1 = "GAME_OVER"
+                                    });
             }
         });
     }
@@ -194,11 +200,6 @@ public class Game : DIKUGame , IGameEventProcessor{
                 ,player.GetPosition().Y);
     }
 
-    public void isDead() {
-        if (player.Health.IsDead) {
-            isGameover = true;
-        }
-    }
     public override void Render() {
         stateMachine.ActiveState.RenderState();
         /*if (!isGameover) {

@@ -63,6 +63,8 @@ public class GameRunning : IGameState, IGameEventProcessor {
 
         explosionStrides = ImageStride.CreateStrides(8,
             Path.Combine("Assets", "Images", "Explosion.png"));
+        
+        wave.Scoreboard.ResetScore();
     
     }
 
@@ -79,7 +81,12 @@ public class GameRunning : IGameState, IGameEventProcessor {
             }
 
             if (enemy.Shape.Position.Y <= 0.0f) {
-                isGameover = true;
+                GalagaBus.GetBus().RegisterEvent(
+                                    new GameEvent{
+                                        EventType = GameEventType.GameStateEvent,
+                                        Message = "CHANGE_STATE",
+                                        StringArg1 = "GAME_OVER"
+                                    });
             }
         });
     }
@@ -117,11 +124,6 @@ public class GameRunning : IGameState, IGameEventProcessor {
                 ,player.GetPosition().Y);
     }
 
-    public void isDead() {
-        if (player.Health.IsDead) {
-            isGameover = true;
-        }
-    }
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
     }
@@ -141,7 +143,7 @@ public class GameRunning : IGameState, IGameEventProcessor {
 
     public void ResetState()
     {
-        throw new System.NotImplementedException();
+        InitializeGameState();
     }
 
     public void UpdateState()
@@ -153,8 +155,8 @@ public class GameRunning : IGameState, IGameEventProcessor {
             wave.ActiveStrategy.MoveEnemies(enemies);
             PlayerCollideWithEnemy(enemies);
             IterateShots();
-            isDead();
         }
+        player.Health.IsDead();
     }
 
     public void ProcessEvent(GameEvent gameEvent)

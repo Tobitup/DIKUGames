@@ -3,7 +3,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 
 public class Score : Text{
-    private int count = 0;
+    private static int count = 0;
 
     public Score(string text, Vec2F pos, Vec2F extent) : base(text, pos, extent)
     {
@@ -13,5 +13,12 @@ public class Score : Text{
     public void IncrementScore() {
         count += 1;
         this.SetText($"Level: {count}");
+    }
+
+    public static int GetCurrentScore() {
+        return count;
+    }
+    public void ResetScore() {
+        count = 0;
     }
 }
