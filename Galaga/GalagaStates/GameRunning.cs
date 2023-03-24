@@ -28,6 +28,7 @@ public class GameRunning : IGameState, IGameEventProcessor {
 
 
     private List<Image> enemyStridesRed;
+    private List<Image> images;
     private static GameRunning instance = null;
     public static GameRunning GetInstance() {
         if (GameRunning.instance == null) {
@@ -39,15 +40,15 @@ public class GameRunning : IGameState, IGameEventProcessor {
 
     private void InitializeGameState() {
         player = new Player(
-        new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-        new Image(Path.Combine("Assets", "Images", "Player.png")));
+                            new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
+                            new Image(Path.Combine("Assets", "Images", "Player.png")));
         
         playerShots = new EntityContainer<PlayerShot>();
         playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
 
         eventBus = GalagaBus.GetBus();
         eventBus.Subscribe(GameEventType.InputEvent, this);
-        List<Image> images = ImageStride.CreateStrides
+        images = ImageStride.CreateStrides
             (4, Path.Combine("Assets", "Images", "BlueMonster.png"));
 
         enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets",
@@ -124,8 +125,67 @@ public class GameRunning : IGameState, IGameEventProcessor {
                 ,player.GetPosition().Y);
     }
 
+    private void KeyPress(KeyboardKey key) {
+        switch(key) {
+            case KeyboardKey.Escape:
+                GalagaBus.GetBus().RegisterEvent(
+                                    new GameEvent{
+                                        EventType = GameEventType.GameStateEvent,
+                                        Message = "CHANGE_STATE",
+                                        StringArg1 = "GAME_PAUSED"
+                                    });
+                break;
+            case KeyboardKey.Left:
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
+                                                                        Message = "MOVE_LEFT"});
+                break;
+            case KeyboardKey.Right:
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
+                                                                        Message = "MOVE_RIGHT"});
+                break;
+            case KeyboardKey.Up:
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
+                                                                        Message = "MOVE_UP"});
+                break;
+            case KeyboardKey.Down:
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
+                                                                        Message = "MOVE_DOWN"});
+                break;
+            case KeyboardKey.Space:
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
+                                                                        Message = "SHOOT"});
+                break;
+        }
+    }
+    private void KeyRelease(KeyboardKey key) {
+        switch(key){
+            case KeyboardKey.Left:
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
+                                                                    Message = "MOVE_LEFT_STOP"});
+                break;
+            case KeyboardKey.Right:
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
+                                                                    Message = "MOVE_RIGHT_STOP"});
+                break;
+            case KeyboardKey.Up:
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
+                                                                    Message = "MOVE_UP_STOP"});
+                break;
+            case KeyboardKey.Down:
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
+                                                                    Message = "MOVE_DOWN_STOP"});
+                break;
+            }
+        }
+
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
+        if (action == KeyboardAction.KeyPress) {
+            KeyPress(key);
+        }
+        if (action == KeyboardAction.KeyRelease) {
+            KeyRelease(key);
+        }
     }
 
     public void RenderState()
@@ -141,21 +201,19 @@ public class GameRunning : IGameState, IGameEventProcessor {
         
     }
 
-    public void ResetState()
-    {
+    public void ResetState() {
         InitializeGameState();
     }
 
     public void UpdateState()
     {
-        if (!isGameover) {
-            player.Move();
-            enemies = wave.ActiveSquadron.Enemies;
-            wave.generateWave(enemies);
-            wave.ActiveStrategy.MoveEnemies(enemies);
-            PlayerCollideWithEnemy(enemies);
-            IterateShots();
-        }
+        player.Move();
+        enemies = wave.ActiveSquadron.Enemies;
+        wave.generateWave(enemies);
+        wave.ActiveStrategy.MoveEnemies(enemies);
+        PlayerCollideWithEnemy(enemies);
+        IterateShots();
+    
         player.Health.IsDead();
     }
 

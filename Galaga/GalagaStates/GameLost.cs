@@ -61,15 +61,14 @@ public class GameLost : IGameState {
                                     new GameEvent{
                                         EventType = GameEventType.GameStateEvent,
                                         Message = "RESET_STATE",
-                                    });
-
-                            break;
+                                        });
+                                break;
                             case 1:
                             GalagaBus.GetBus().RegisterEvent(new GameEvent {EventType = GameEventType.WindowEvent, 
                                                                         Message = "CLOSE_WINDOW"});
-                            break;
+                                break;
                             default:
-                            break;
+                                break;
                         }
                     break;
                 }

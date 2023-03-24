@@ -19,19 +19,13 @@ namespace galagaTests {
     [TestFixture]
     public class StateMachineTesting {
             private StateMachine stateMachine;
+
         [SetUp]
         public void InitiateStateMachine() {
             DIKUArcade.GUI.Window.CreateOpenGLContext();
-
             stateMachine = new StateMachine();
-
-            
-            //Here you should:
-            //(1) Initialize a GalagaBus with proper GameEventTypes
-            //(2) Instantiate the StateMachine
-            //(3) Subscribe the GalagaBus to proper GameEventTypes
-            //and GameEventProcessors
-            
+            //eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.GameStateEvent});
+            GalagaBus.GetBus().Subscribe(GameEventType.GameStateEvent, stateMachine);
         }
         [Test]
         public void TestInitialState() {
@@ -39,14 +33,14 @@ namespace galagaTests {
         }
         [Test]
         public void TestEventGamePaused() {
-            GalagaBus.GetBus().RegisterEvent(
+            stateMachine.ProcessEvent(
             new GameEvent{
-            EventType = GameEventType.GameStateEvent,
-            Message = "CHANGE_STATE",
-            StringArg1 = "GAME_PAUSED"
+                EventType = GameEventType.GameStateEvent,
+                Message = "CHANGE_STATE",
+                StringArg1 = "GAME_PAUSED"
             }
         );
-        GalagaBus.GetBus().ProcessEventsSequentially();
+        //GalagaBus.GetBus().ProcessEventsSequentially();
         Assert.That(stateMachine.ActiveState, Is.InstanceOf<GamePaused>());
         }
     }

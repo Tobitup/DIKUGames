@@ -20,7 +20,7 @@ namespace galagaTests;
     public class TestPlayer {
         private Player player;
         private GameEventBus eventBus = GalagaBus.GetBus();
-        private StateMachine stateMachine;
+        //private StateMachine stateMachine;
         private bool BusFound;
 
         [SetUp]
@@ -37,6 +37,7 @@ namespace galagaTests;
                 new Image(Path.Combine("..","Galaga","Assets", "Images", "Player.png")));
 
             eventBus.Subscribe(GameEventType.InputEvent, player);
+            //eventBus.Subscribe(GameEventType.GameStateEvent, stateMachine);
 
         }
         [Test]

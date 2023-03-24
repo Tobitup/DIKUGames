@@ -26,7 +26,7 @@ namespace Galaga.GalagaStates {
                 case "GAME_OVER":
                     return GameStateType.GameLost;
                 default:
-                    throw new NotImplementedException();
+                    throw new ArgumentException("ERROR - Not a valid StringState");
             }
         }
 

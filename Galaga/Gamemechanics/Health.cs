@@ -5,30 +5,26 @@ using DIKUArcade.Events;
 namespace Galaga;
 public class Health {
     private int health;
+    private string healthbar;
+    private int startingHealth = 3;
     public int readHealth {
         get{return health;}
     }
     private Text display;
-    private bool isDead = false;
+  
 
     public Health (Vec2F position, Vec2F extent) {
-        health = 3;
+        health = startingHealth;
         display = new Text (health.ToString(), position, extent);
         display.SetColor(new Vec3I(255,255,255));
     }
 
-    // Method used to check if the player's remaining health is less than or equal to zero
-    // if so, the isDead bool is updated and the game will end.
     public void LoseHealth () {
-        if (health <= 0) {
-            isDead = true;
-        } else {
-            health--;
-        }
+        health--;
     }
 
     public void IsDead() {
-        if (isDead) {
+        if (health <= 0) {
             GalagaBus.GetBus().RegisterEvent(
                                     new GameEvent{
                                         EventType = GameEventType.GameStateEvent,
@@ -40,7 +36,21 @@ public class Health {
 
     // Used to render the health text to the window.
     public void RenderHealth () {
-        display.SetText($"HP: {health}");
+        //display.SetText($"Lives: {health}");
+        UpdateHealthBar();
+        display.SetText(healthbar);
+        display.SetColor(new Vec3I(255,0,0));
         display.RenderText();
+    }
+
+    public void UpdateHealthBar() {
+        healthbar = "";
+        for (int i = 1; i<=health; i++) {
+            healthbar += "❤️";
+        }
+    }
+
+    public void resetHealth() {
+        health = startingHealth;
     }
 }

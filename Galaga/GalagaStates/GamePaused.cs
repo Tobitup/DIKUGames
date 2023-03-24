@@ -26,13 +26,12 @@ public class GamePaused : IGameState {
             menuButtons[0].SetColor(new Vec3I(255,255,255));
             menuButtons[1].SetColor(new Vec3I(255,255,255));
             backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f,0.0f),
-                                            new Vec2F(1.0f,1.0f)),new Image(Path.Combine("Assets",
+                                            new Vec2F(1.0f,1.0f)),new Image(Path.Combine("..","Galaga","Assets",
                                                                     "Images", "TitleImage.png")));
             activeMenuButton = 0;
         }
 
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
-            System.Console.WriteLine("key");
             if (action == KeyboardAction.KeyPress) {
                 switch (key) {
                     case KeyboardKey.Up:
@@ -53,7 +52,8 @@ public class GamePaused : IGameState {
 
                             break;
                             case 1:
-                            GalagaBus.GetBus().RegisterEvent(new GameEvent {EventType = GameEventType.WindowEvent, 
+                            GalagaBus.GetBus().RegisterEvent(new GameEvent 
+                                                             {EventType = GameEventType.WindowEvent, 
                                                                         Message = "CLOSE_WINDOW"});
                             break;
                             default:

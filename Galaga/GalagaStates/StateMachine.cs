@@ -26,6 +26,7 @@ public class StateMachine : IGameEventProcessor {
     }
 
     public void ProcessEvent(GameEvent gameEvent) {
+        System.Console.WriteLine(gameEvent.Message);
         if (gameEvent.EventType == GameEventType.GameStateEvent) {
             if (gameEvent.Message == "CHANGE_STATE") {
                 switch (gameEvent.StringArg1) {
