@@ -18,7 +18,7 @@ using Galaga.GalagaStates;
 namespace galagaTests;
 [TestFixture]
 public class TestSquadron {
-    private ISquadron squadron;
+    private ISquadron? squadron;
     private List<Image> enemyStride;
     private List<Image> alternativeEnemyStride;
     [SetUp]
@@ -35,7 +35,7 @@ public class TestSquadron {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
         squadron = new SquareSquadron();
 
-        Assert.AreEqual(squadron.MaxEnemies, 4);
+        Assert.That(squadron.MaxEnemies, Is.EqualTo(4));
     }
 
     [Test]
@@ -43,7 +43,7 @@ public class TestSquadron {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
         squadron = new CrossSquadron();
 
-        Assert.AreEqual(squadron.MaxEnemies, 6);
+        Assert.That(squadron.MaxEnemies, Is.EqualTo(6));
 
     }
 
@@ -52,7 +52,7 @@ public class TestSquadron {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
         squadron = new SmileySquadron();
 
-        Assert.AreEqual(squadron.MaxEnemies, 7);
+        Assert.That(squadron.MaxEnemies, Is.EqualTo(7));
 
     }
 }

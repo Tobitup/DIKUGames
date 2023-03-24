@@ -20,8 +20,8 @@ namespace galagaTests;
 public class TestMovementStrategy {
     private List<Image> enemyStride;
     private List<Image> alternativeEnemyStride;
-    private ISquadron squadron;
-    private IMovementStrategy strategy;
+    private ISquadron? squadron;
+    private IMovementStrategy? strategy;
     [SetUp]
     public void Init() {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
@@ -39,7 +39,7 @@ public class TestMovementStrategy {
 
         strategy.MoveEnemies(squadron.Enemies);
         foreach (Enemy singleEnemy in squadron.Enemies) {
-            Assert.AreEqual(singleEnemy.Startposition.Y, singleEnemy.Shape.Position.Y);
+            Assert.That(singleEnemy.Shape.Position.Y, Is.EqualTo(singleEnemy.Startposition.Y));
         }
     }
 
@@ -50,7 +50,7 @@ public class TestMovementStrategy {
 
         strategy.MoveEnemies(squadron.Enemies);
         foreach (Enemy singleEnemy in squadron.Enemies) {
-            Assert.AreNotEqual(singleEnemy.Startposition.Y, singleEnemy.Shape.Position.Y);
+            Assert.That(singleEnemy.Shape.Position.Y, Is.EqualTo(singleEnemy.Startposition.Y));
         }
     }
 
@@ -61,7 +61,7 @@ public class TestMovementStrategy {
 
         strategy.MoveEnemies(squadron.Enemies);
         foreach (Enemy singleEnemy in squadron.Enemies) {
-            Assert.AreNotEqual(singleEnemy.Startposition.Y, singleEnemy.Shape.Position.Y);
+            Assert.That(singleEnemy.Shape.Position.Y, Is.EqualTo(singleEnemy.Startposition.Y));
         }
     }
 }

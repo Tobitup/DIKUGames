@@ -24,15 +24,15 @@ public class TestStateTransformer {
 
     [Test]
     public void TestTransformStatetoString() {
-        Assert.AreEqual(GameStateType.MainMenu, StateTransformer.TransformStringToState("MENU"));
-        Assert.AreEqual(GameStateType.GamePaused, StateTransformer.TransformStringToState("GAME_PAUSED"));
-        Assert.AreEqual(GameStateType.GameRunning, StateTransformer.TransformStringToState("GAME_RUNNING"));
+        Assert.That(StateTransformer.TransformStringToState("MENU"), Is.EqualTo(GameStateType.MainMenu));
+        Assert.That(StateTransformer.TransformStringToState("GAME_PAUSED"), Is.EqualTo(GameStateType.GamePaused));
+        Assert.That(StateTransformer.TransformStringToState("GAME_RUNNING"), Is.EqualTo(GameStateType.GameRunning));
     }
 
     [Test]
     public void TransformStringtoState() {
-        Assert.AreEqual(StateTransformer.TransformStateToString(GameStateType.MainMenu), "MENU");
-        Assert.AreEqual(StateTransformer.TransformStateToString(GameStateType.GamePaused), "GAME_PAUSED");
-        Assert.AreEqual(StateTransformer.TransformStateToString(GameStateType.GameRunning), "GAME_RUNNING");
+        Assert.That(StateTransformer.TransformStateToString(GameStateType.MainMenu), Is.EqualTo("MENU"));
+        Assert.That(StateTransformer.TransformStateToString(GameStateType.GamePaused), Is.EqualTo("GAME_PAUSED"));
+        Assert.That(StateTransformer.TransformStateToString(GameStateType.GameRunning), Is.EqualTo("GAME_RUNNING"));
     }
 }

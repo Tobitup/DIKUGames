@@ -45,6 +45,6 @@ public class TestEnemy {
         enemy.TakeDamage();
         enemy.TakeDamage();
         bool shouldBeDead = enemy.IsDead();
-        Assert.AreEqual(shouldBeDead,true);
+        Assert.That(shouldBeDead, Is.EqualTo(true));
     }
 }

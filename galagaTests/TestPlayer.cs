@@ -56,8 +56,8 @@ namespace galagaTests;
                     EventType = GameEventType.InputEvent,
                     Message = "MOVE_LEFT_STOP"
                 });
-                
-            Assert.AreNotEqual(firstPos.X, player.GetPosition().X);
+            
+            Assert.That(firstPos.X, Is.Not.EqualTo(player.GetPosition().X));
         }
 
         [Test]
@@ -77,6 +77,6 @@ namespace galagaTests;
                     Message = "MOVE_RIGHT_STOP"
                 });
                 
-            Assert.AreNotEqual(firstPos.X, player.GetPosition().X);
+            Assert.That(firstPos.X, Is.Not.EqualTo(player.GetPosition().X));
         }
 }
