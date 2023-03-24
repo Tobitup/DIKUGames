@@ -5,6 +5,9 @@ using DIKUArcade.Events;
 namespace Galaga;
 public class Health {
     private int health;
+    public int readHealth {
+        get{return health;}
+    }
     private Text display;
     private bool isDead = false;
 
