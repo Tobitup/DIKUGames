@@ -1,8 +1,6 @@
 using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using System;
-using System.Collections.Generic;
 
 namespace Galaga.MovementStrategy;
 

@@ -7,8 +7,6 @@ using System.Collections.Generic;
 using System;
 
 namespace Galaga;
-
-
 public class WaveControl {
     private ISquadron activeSquadron;
     public ISquadron ActiveSquadron {

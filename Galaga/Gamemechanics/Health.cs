@@ -12,7 +12,6 @@ public class Health {
     }
     private Text display;
   
-
     public Health (Vec2F position, Vec2F extent) {
         health = startingHealth;
         display = new Text (health.ToString(), position, extent);
@@ -36,7 +35,6 @@ public class Health {
 
     // Used to render the health text to the window.
     public void RenderHealth () {
-        //display.SetText($"Lives: {health}");
         UpdateHealthBar();
         display.SetText(healthbar);
         display.SetColor(new Vec3I(255,0,0));
@@ -49,7 +47,6 @@ public class Health {
             healthbar += "❤️";
         }
     }
-
     public void resetHealth() {
         health = startingHealth;
     }

@@ -24,7 +24,6 @@ public class StateMachine : IGameEventProcessor {
                 break;
         }
     }
-
     public void ProcessEvent(GameEvent gameEvent) {
         System.Console.WriteLine(gameEvent.Message);
         if (gameEvent.EventType == GameEventType.GameStateEvent) {
@@ -47,6 +46,5 @@ public class StateMachine : IGameEventProcessor {
                 ActiveState.ResetState();
             }
         }
-
     }
 }       

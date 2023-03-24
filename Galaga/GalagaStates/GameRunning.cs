@@ -8,25 +8,17 @@ using DIKUArcade.Math;
 using System.IO;
 using System.Collections.Generic;
 
-
 namespace Galaga.GalagaStates;
 public class GameRunning : IGameState, IGameEventProcessor {
     private GameEventBus eventBus;
     private Player player;
     private EntityContainer<Enemy> enemies;
-
     private EntityContainer<PlayerShot> playerShots;
     private IBaseImage playerShotImage;
     private WaveControl wave;
-
     private AnimationContainer enemyExplosions;
     private List<Image> explosionStrides;
     private const int EXPLOSION_LENGTH_MS = 500;
-
-    private bool isGameover = false;
-    private StateMachine stateMachine;
-
-
     private List<Image> enemyStridesRed;
     private List<Image> images;
     private static GameRunning instance = null;
@@ -178,7 +170,6 @@ public class GameRunning : IGameState, IGameEventProcessor {
             }
         }
 
-
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
         if (action == KeyboardAction.KeyPress) {
             KeyPress(key);
@@ -190,13 +181,11 @@ public class GameRunning : IGameState, IGameEventProcessor {
 
     public void RenderState()
     {
-        if (!isGameover) {
             player.Render();
             enemies.RenderEntities();
             playerShots.RenderEntities();
             enemyExplosions.RenderAnimations();
             player.Health.RenderHealth();
-        }
         wave.Scoreboard.RenderText();
         
     }

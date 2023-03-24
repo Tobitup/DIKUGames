@@ -1,7 +1,6 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using System.Collections.Generic;
 using System;
 
 namespace Galaga;
@@ -30,7 +29,6 @@ public class Enemy : Entity {
         Random rnd = new Random();
         hitpoints = rnd.Next(5);
         enrageHPThreshold = (int)Math.Ceiling(hitpoints/2.0);
-
         redEnemies = redImageStride;
         startposition = shape.Position;
     }

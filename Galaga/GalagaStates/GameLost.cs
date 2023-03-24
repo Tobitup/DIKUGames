@@ -9,9 +9,10 @@ using System.IO;
 namespace Galaga.GalagaStates;
 public class GameLost : IGameState {
     private static GameLost instance = null;
-    private static Text gameOver = new Text("GAME OVER", new Vec2F(0.3f,0.4f), new Vec2F(0.5f,0.5f));
-    private Text[] menuButtons = {new Text("NEW GAME", new Vec2F(0.25f,0.15f), new Vec2F(0.5f,0.5f)),
-                                    new Text("QUIT", new Vec2F(0.25f,0.0f), new Vec2F(0.5f,0.5f))};
+    private static Text gameOver = new Text("GAME OVER", new Vec2F(0.3f,0.4f), 
+                                                                new Vec2F(0.5f,0.5f));
+    private Text[] menuButtons = {new Text("NEW GAME", new Vec2F(0.25f,0.15f), 
+            new Vec2F(0.5f,0.5f)), new Text("QUIT", new Vec2F(0.25f,0.0f), new Vec2F(0.5f,0.5f))};
     private int activeMenuButton;
     private static Text levelReached;
     private Entity backGroundImage;
@@ -24,7 +25,8 @@ public class GameLost : IGameState {
     }
 
     private void InitializeGameState() {
-        levelReached = new Text($"Score: {Score.GetCurrentScore()}", new Vec2F(0.4f,0.3f), new Vec2F(0.5f, 0.5f));
+        levelReached = new Text($"Score: {Score.GetCurrentScore()}", new Vec2F(0.4f,0.3f), 
+                                                                            new Vec2F(0.5f, 0.5f));
         gameOver.SetColor(new Vec3I(255,255,255));
         levelReached.SetColor(new Vec3I(255,255,255));
 
@@ -64,7 +66,8 @@ public class GameLost : IGameState {
                                         });
                                 break;
                             case 1:
-                            GalagaBus.GetBus().RegisterEvent(new GameEvent {EventType = GameEventType.WindowEvent, 
+                            GalagaBus.GetBus().RegisterEvent(new GameEvent {
+                                                            EventType = GameEventType.WindowEvent, 
                                                                         Message = "CLOSE_WINDOW"});
                                 break;
                             default:

@@ -13,7 +13,6 @@ public class MainMenu : IGameState {
     private Text[] menuButtons = {new Text("NEW GAME", new Vec2F(0.25f,0.15f), new Vec2F(0.5f,0.5f)),
                                     new Text("QUIT", new Vec2F(0.25f,0.0f), new Vec2F(0.5f,0.5f))};
     private int activeMenuButton;
-    private int maxMenuButtons;
     public static MainMenu GetInstance() {
         if (MainMenu.instance == null) {
             MainMenu.instance = new MainMenu();
@@ -64,7 +63,6 @@ public class MainMenu : IGameState {
                 }
             }
         }
-
 
         public void RenderState() {
             backGroundImage.RenderEntity();

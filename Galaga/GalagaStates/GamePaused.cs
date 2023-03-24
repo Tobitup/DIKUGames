@@ -13,7 +13,6 @@ public class GamePaused : IGameState {
     private Text[] menuButtons = {new Text("CONTINUE", new Vec2F(0.25f,0.15f), new Vec2F(0.5f,0.5f)),
                                     new Text("QUIT", new Vec2F(0.25f,0.0f), new Vec2F(0.5f,0.5f))};
     private int activeMenuButton;
-    private int maxMenuButtons;
     public static GamePaused GetInstance() {
         if (GamePaused.instance == null) {
             GamePaused.instance = new GamePaused();

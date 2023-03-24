@@ -11,9 +11,7 @@ public class GameWon : IGameState {
         }
             return GameWon.instance;
     }
-
     private void InitializeGameState() {
-
     }
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)

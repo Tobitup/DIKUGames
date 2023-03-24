@@ -2,19 +2,14 @@ using System;
 
 namespace Galaga.GalagaStates {
     public enum GameStateType {
-
         GameRunning,
-
         GamePaused,
-
         MainMenu,
         GameWon,
         GameLost
     }
 
     public class StateTransformer {
-
-
         public static GameStateType TransformStringToState(string state) {
             switch (state){
                 case "GAME_RUNNING":
@@ -44,7 +39,6 @@ namespace Galaga.GalagaStates {
                     throw new NotImplementedException();
             }
         }
-
     }
 }
 
