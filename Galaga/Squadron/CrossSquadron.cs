@@ -8,6 +8,11 @@ namespace Galaga.Squadron;
 public class CrossSquadron : ISquadron {
 
     private int maxEnemies = 6;
+
+    // Used for testing
+    public int MaxEnemies {
+            get {return maxEnemies;}
+        }
     private EntityContainer<Enemy> enemyContainer;
     public EntityContainer<Enemy> Enemies {
         get {return enemyContainer;}

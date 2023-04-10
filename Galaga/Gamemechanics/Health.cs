@@ -8,6 +8,10 @@ public class Health {
     private string healthbar;
     private int startingHealth = 3;
 
+    // Used for testing
+    public int readHealth {
+        get {return health;}
+    }
     private Text display;
   
     public Health (Vec2F position, Vec2F extent) {
