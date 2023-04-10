@@ -18,10 +18,10 @@ public class GameLost : IGameState {
     private Entity backGroundImage;
     public static GameLost GetInstance() {
         if (GameLost.instance == null) {
-            GameLost.instance = new GameLost();
-            GameLost.instance.InitializeGameState();
-        }
-            return GameLost.instance;
+                GameLost.instance = new GameLost();
+                GameLost.instance.InitializeGameState();
+            }
+        return GameLost.instance;
     }
 
     private void InitializeGameState() {
@@ -43,39 +43,39 @@ public class GameLost : IGameState {
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
         if (action == KeyboardAction.KeyPress) {
-                switch (key) {
-                    case KeyboardKey.Up:
-                        activeMenuButton = 0;
+            switch (key) {
+                case KeyboardKey.Up:
+                    activeMenuButton = 0;
                     break;
-                    case KeyboardKey.Down:
-                        activeMenuButton = 1;
+                case KeyboardKey.Down:
+                    activeMenuButton = 1;
                     break;
-                    case KeyboardKey.Enter:
-                        switch (activeMenuButton) {
-                            case 0:
-                                GalagaBus.GetBus().RegisterEvent(
-                                    new GameEvent{
-                                        EventType = GameEventType.GameStateEvent,
-                                        Message = "CHANGE_STATE",
-                                        StringArg1 = "GAME_RUNNING"
+                case KeyboardKey.Enter:
+                    switch (activeMenuButton) {
+                        case 0:
+                            GalagaBus.GetBus().RegisterEvent(
+                                new GameEvent{
+                                    EventType = GameEventType.GameStateEvent,
+                                    Message = "CHANGE_STATE",
+                                    StringArg1 = "GAME_RUNNING"
+                                });
+                            GalagaBus.GetBus().RegisterEvent(
+                                new GameEvent{
+                                    EventType = GameEventType.GameStateEvent,
+                                    Message = "RESET_STATE",
                                     });
-                                GalagaBus.GetBus().RegisterEvent(
-                                    new GameEvent{
-                                        EventType = GameEventType.GameStateEvent,
-                                        Message = "RESET_STATE",
-                                        });
-                                break;
-                            case 1:
+                            break;
+                        case 1:
                             GalagaBus.GetBus().RegisterEvent(new GameEvent {
                                                             EventType = GameEventType.WindowEvent, 
                                                                         Message = "CLOSE_WINDOW"});
-                                break;
-                            default:
-                                break;
-                        }
+                            break;
+                        default:
+                            break;
+                    }
                     break;
-                }
             }
+        }
     }
 
     public void RenderState() {
@@ -86,9 +86,7 @@ public class GameLost : IGameState {
         menuButtons[1].RenderText();
     }
 
-    public void ResetState() {
-        
-    }
+    public void ResetState() {}
 
     public void UpdateState() {
         levelReached.SetText($"Level {Score.GetCurrentScore()}");

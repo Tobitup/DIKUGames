@@ -10,15 +10,13 @@ public class ZigZagDown : IMovementStrategy {
     const float a = 0.05f;
     const float pi = (float)Math.PI;
 
-    public void MoveEnemies(EntityContainer<Enemy> enemies)
-    {
+    public void MoveEnemies(EntityContainer<Enemy> enemies) {
         foreach (Enemy enemy in enemies) {
             MoveEnemy(enemy);
         }
     }
 
-    public void MoveEnemy(Enemy enemy)
-    {
+    public void MoveEnemy(Enemy enemy) {
         enemy.Shape.Position = CalculateNextPosition(enemy);
     }
 
@@ -26,21 +24,28 @@ public class ZigZagDown : IMovementStrategy {
         return s + enemy.MovementSpeed;
     }
 
+    /// <summary> Calculates the enemy's next position </summary>
+    /// <param = enemy> Individual enemy in an enemyContainer of type Enemy </param>
+    /// <returns> A Vec2F possition </returns> 
     private Vec2F CalculateNextPosition(Enemy enemy) {
         Vec2F returnPosition = new Vec2F(0.0f,0.0f);
         returnPosition.Y = CalculateNextYPosition(enemy);
-
         returnPosition.X = CalculateNextXPosition(enemy,returnPosition.Y);
-
         return returnPosition;
     }
-
+    /// <summary> Calculate the enemy's next Y position </summary>
+    /// <param = enemy> Individual enemy in an enemyContainer of type Enemy </param>
+    /// <returns> A float for enemys new Y position </returns> 
     private float CalculateNextYPosition(Enemy enemy) {
         Vec2F currentPosition = enemy.Shape.Position;
 
         return currentPosition.Y - GetSpeed(enemy);
     }
 
+    /// <summary> Calculate the enemy's next X position </summary>
+    /// <param = enemy> Individual enemy in an enemyContainer of type Enemy </param>
+    /// <param = nextYPos> The next Y position calculated above of type float </param>
+    /// <returns> A float for enemys new X position </returns> 
     private float CalculateNextXPosition(Enemy enemy, float nextYPos) {
         float startPosX = enemy.Startposition.X;
         float startPosY = enemy.Startposition.Y;

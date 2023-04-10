@@ -30,6 +30,8 @@ public class GameRunning : IGameState, IGameEventProcessor {
         return GameRunning.instance;
     }
 
+    /// <summary> Initializes all elements requiered for the game to run </summary>
+    /// <returns> Void </returns> 
     private void InitializeGameState() {
         player = new Player(
                             new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
@@ -50,7 +52,6 @@ public class GameRunning : IGameState, IGameEventProcessor {
 
         wave = new WaveControl(images,enemyStridesRed);
         enemies = wave.ActiveSquadron.Enemies;
-
         
         enemyExplosions = new AnimationContainer(numEnemies);
 
@@ -61,12 +62,19 @@ public class GameRunning : IGameState, IGameEventProcessor {
     
     }
 
-        public void AddExplosion(Vec2F position, Vec2F extent) {
+    /// <summary> Adds Explosion image and stride for later use </summary>
+    /// <param = position> Position of the explosion </param>
+    /// <param = extent> The extend of the enemy </param>
+    /// <returns> Void </returns> 
+    public void AddExplosion(Vec2F position, Vec2F extent) {
         enemyExplosions.AddAnimation(
             new StationaryShape(position,extent), EXPLOSION_LENGTH_MS, 
             new ImageStride(EXPLOSION_LENGTH_MS/8, explosionStrides));
     }
 
+    /// <summary> Checks for a colition between Player and the enemy container </summary>
+    /// <param = enemies> The enemies of type EntityContainer full of enimies </param>
+    /// <returns> Void </returns> 
     private void PlayerCollideWithEnemy(EntityContainer<Enemy> enemies) {
         enemies.Iterate(enemy => {
             if (CollisionDetection.Aabb(player.Shape,enemy.Shape).Collision) {
@@ -198,7 +206,7 @@ public class GameRunning : IGameState, IGameEventProcessor {
     {
         player.Move();
         enemies = wave.ActiveSquadron.Enemies;
-        wave.generateWave(enemies);
+        wave.GenerateWave(enemies);
         wave.ActiveStrategy.MoveEnemies(enemies);
         PlayerCollideWithEnemy(enemies);
         IterateShots();

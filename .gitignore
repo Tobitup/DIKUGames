@@ -4,3 +4,4 @@
 .ionide/
 .DS_Store
 **/nuget.config
+.fake

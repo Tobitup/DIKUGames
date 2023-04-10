@@ -57,6 +57,6 @@ public class Enemy : Entity {
 
     public void EnrageEnemy() {
         base.Image = redEnemies;
-        movementSpeed = 0.01f;
+        movementSpeed = 0.005f;
     }
 }
