@@ -30,8 +30,6 @@ public class WaveControl {
     private ISquadronFactory randomSquadronFactory = new RandomSquadronFactory();
     private IStrategyFactory randomStrategyFactory = new RandomStrategyFactory();
     
-    System.Random rnd = new Random();
-
     public WaveControl(List<Image> neutralImage, List<Image> enrageImage) {
         this.neutralImage = neutralImage;
         this.enrageImage = enrageImage;
@@ -39,19 +37,25 @@ public class WaveControl {
         activeSquadron = randomSquadronFactory.CreateNewSquadron();
     }
 
-    public void generateWave(EntityContainer<Enemy> enemies) {
+    /// <summary> Generates the next wave after all enemies are dead, and increments
+    ///           difficulty and score </summary>
+    /// <param = enemies> An EntityContainer holding all enemies </param>
+    /// <returns> Void </returns> 
+    public void GenerateWave(EntityContainer<Enemy> enemies) {
         if (enemies.CountEntities() == 0) {
             activeStrategy = randomStrategyFactory.CreateNewStrategy();
             activeSquadron = randomSquadronFactory.CreateNewSquadron();
             activeSquadron.CreateEnemies(neutralImage,enrageImage);
             enemies = activeSquadron.Enemies;
             difficulty *= 1.1f;
-            increaseDifficultyForEnemies(enemies);
+            IncreaseDifficultyForEnemies(enemies);
             scoreboard.IncrementScore();
         }
     }
-
-    public void increaseDifficultyForEnemies(EntityContainer<Enemy> enemies) {
+    /// <summary> Increases the difficulty of the wave and is called in "GenerateWave" </summary>
+    /// <param = enemies> An EntityContainer holding all enemies </param>
+    /// <returns> Void </returns> 
+    public void IncreaseDifficultyForEnemies(EntityContainer<Enemy> enemies) {
         enemies.Iterate( enemy => {
             enemy.IncreaseMovementSpeedByFactor(difficulty);
         });

@@ -7,9 +7,7 @@ public class Health {
     private int health;
     private string healthbar;
     private int startingHealth = 3;
-    public int readHealth {
-        get{return health;}
-    }
+
     private Text display;
   
     public Health (Vec2F position, Vec2F extent) {
@@ -22,6 +20,8 @@ public class Health {
         health--;
     }
 
+    /// <summary> Checks if player health is 0 or less, then changes states </summary>
+    /// <returns> Void </returns> 
     public void IsDead() {
         if (health <= 0) {
             GalagaBus.GetBus().RegisterEvent(
@@ -40,14 +40,11 @@ public class Health {
         display.SetColor(new Vec3I(255,0,0));
         display.RenderText();
     }
-
+    // Updates the visable healthbar on screen.
     public void UpdateHealthBar() {
         healthbar = "";
         for (int i = 1; i<=health; i++) {
             healthbar += "❤️";
         }
-    }
-    public void resetHealth() {
-        health = startingHealth;
     }
 }

@@ -1,0 +1,88 @@
+##########################################################################################################################
+############## GALAGA ####################################################################################################
+##########################################################################################################################
+
+Overall:
+# DONE #  * State machine is not correctly implemented as stated in state diagram. From GamePaused you should be able to go to MainMenu
+# DONE #  * Game looks nice, but why do I have three hearts when I die after loosing 1 life?
+
+EventBus
+# ALREADY DONE - Spørg Jakob #  * puts Eventbus in seperate class 
+# ALREADY DONE - Spørg Jakob #  * only intialize it once (in game)
+# ALREADY DONE - Spørg Jakob #  * useGetBus to get the bus
+
+GameStateType
+# DONE #  * have an enum with the states 
+# DONE #  * implemts the StateTransformer
+
+StateMachine
+# ALREADY DONE - Spørg Jakob #  * implements IGameEventProcessor with process events 
+# ALREADY DONE - Spørg Jakob #  * implementation of SwitchState
+# DOES IT IN GAME - Spørg Jakob #  * subscribes to the GalagaBus
+
+MainMenu
+# DONE #  * Is the intial active states 
+# DONE #  * has as least 2 buttions (new game and quit)
+# DONE #  * have background image
+# DONE #  * Newgame, should switch state to GameRunning
+# DONE # !!!!!!!!!!!!!!! DOES NOT RESET?
+
+
+GameRunning
+# DONE #  * should work like the old game class - Good
+# DONE #  * escape, should not quit the window, but pause the game - Good
+
+GamePaused 
+# DONE - * two buttons, one to continue, one  to return to MainMenu - Missing
+# DONE #  * pausing should not reset the game
+
+Code structure and design solutions
+# DET SYNES JEG #  * Good structure using folders
+# DONE #  * unused classes and code, you have such e.g. in galagaTests 
+# DONE #  * Remove unused fields from Game, etc. e.g. private const int EXPLOSION_LENGTH_MS = 500;
+# DONE #  * GameStateType.cs please do not put multiple enums, classes, structs in one .cs file.
+# IKKE EN OPGAVE #  * You have made good progress, still for coming assignments, try to reflect about how you can remove more responsibilities from GameRunning class and the methods within the GameRunning class.
+# IKKE EN OPGAVE #  * If you have half unfinished work such as GameRunning, please mention this in the report.
+# DONE #  * Name methods such that they begin with uppercase letter, see style guide, e.g. rename increaseDifficultyForEnemies
+# DONE #  * Fix incorrect indentation, e.g. in RenderState
+  * Code is almost not commented. Of course the best code is completely self-explanatory code. But at least for the most non-trivial parts, you should document your methods, using XML-tags and/or add comments where appropiate.
+
+To sum up
+  * You have made a nice code project, and it is good that you have made some design considerations. This will be even more important in block 4. Still some things will have to be fixed for 4 points. Keep up the good work.
+
+For resubmission of the code, Please:
+# DONE #  * Make state works as described in state diagram
+# DONE #  * Remove unused classes and code, you have such e.g. in galagaTests. Also in general cleanup and remove unused fields as described, etc.
+# DONE #  * Make one .cs file for each enum, struct, class, etc.
+# DONE #  * Rename methods increaseDifficultyForEnemies, etc. according to style guide.
+# DONE #  * Fix incorrect indentation
+
+  * Document most non-trivial parts of code using XML
+
+##########################################################################################################################
+############## TESTS #####################################################################################################
+##########################################################################################################################
+
+# DONE # * tests the StateTransformer 
+# DONE # * tests the StateMachine
+# DONE # * some test of the player, enemy, etc.
+
+# Feedback for the report
+
+Report
+# DONE #  * Is structured like a technical report (Introduction, Background, Analysis, Design, Implementation, Evaluation, Conclusion). It does, good.
+# DONE #  * In background it would make sense to mention what the tech stack used is and that the background for the project is that you have been tasked with these assignments in the course.
+# DONE #  * On top of the enemy formation there should be "Boss Galagas" who use tractor beams to capture the player? - What do you mean here? Elaboration needed.
+# DONE #  * Gives overview of the previous Galaga exercies - Yes but you could state requirements more formal, e.g. by making a requirements list in the analysis section. 
+  * Design: This is a very brief summary of what you have thougt. Have a look in the report guide and note that this section is about 'how we are going to solve it' - Focus on the overall design and relation between classes. I would recomend using a UML diagram. It is good that you mention state pattern, but I am missing a bit of consistency in the text going from analysis (here we require states) and to design (how did we design to meet this requirement).
+  * Implementation - Fine to talk about singleton, but mentioning such design patterns typically belong to design section.
+  * Good to mention wavecontrol, but it would have been nice to be introduced to this in a high-level manner in design section as well.
+  * The way you talk about factories does not make it obvious how you have used a factory in your code base. It would be a good idea to first mention some high level design of this solution, e.g. using UML in the design section, and then commenting on some implementation details of this in the implementation part.
+  * Evalutation - Needs elaboration.
+  * Conclusion.
+  * To sum up: I know you were short on time, but you have gotten a fine start. Writing technical reports is a new skill and tricky thing to get right. It is important to get good at it as you will do it throughout block 4. So please look at my comments and carefully read the report writing guide, and refactor your report in order to get 4 points. Your idea with the Wavecontrol is interesting, and elaborating on that in both design and implementationn would be nice :)
+    
+For resubmission of the report, Please:
+  * Formalize requirements as describe
+  * Look at my comments and refactor your report
+  * I know you are busy with exams, so if you need help with the resubmission I can offer a short online or on-site TA-session in the coming week. Please email me at jasv@di.ku.dk to make an appointment. Keep up the good work!
