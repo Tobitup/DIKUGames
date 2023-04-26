@@ -26,7 +26,7 @@ kkkkkkkkkkkk
 ------------
 Map/
 
-Meta:
+Mea:
 Name: LEVEL 2
 Time: 180
 PowerUp: i
