@@ -14,6 +14,7 @@ namespace Breakout.BreakoutStates;
 
 public class GameRunning : IGameState, IGameEventProcessor {
     private GameEventBus eventBus;
+    private Entity backGroundImage;
     private Breakout.Player.Player player;
     private List<Image> images;
     private Level currentLevel;
@@ -36,6 +37,10 @@ public class GameRunning : IGameState, IGameEventProcessor {
         currentLevel = levelloader.Level;
         eventBus = BreakoutBus.GetBus();
         eventBus.Subscribe(GameEventType.PlayerEvent, this);
+
+        backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f,0.0f),
+                                        new Vec2F(1.0f,1.0f)),new Image(Path.Combine("..",
+                                        "Breakout","Assets","Images", "SpaceBackground.png")));
     
     }
     private void SwitchLevel(SelectLevel newlevel){
@@ -86,6 +91,7 @@ public class GameRunning : IGameState, IGameEventProcessor {
     }
 
     public void RenderState() {
+        backGroundImage.RenderEntity();
         player.Render();
         currentLevel.BlockContainer.RenderEntities();
     }
