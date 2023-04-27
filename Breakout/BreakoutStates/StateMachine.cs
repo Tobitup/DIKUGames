@@ -6,10 +6,11 @@ public class StateMachine : IGameEventProcessor {
     public StateMachine() {
         BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
         BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
-        ActiveState = BreakoutStates.GameRunning.GetInstance();
+        BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
+        ActiveState = BreakoutStates.MainMenu.GetInstance();
     }
 
-    /* private void SwitchState(GameStateType stateType) {
+    private void SwitchState(GameStateType stateType) {
         switch (stateType) {
             case GameStateType.GamePaused:
                 ActiveState = GamePaused.GetInstance();
@@ -20,16 +21,28 @@ public class StateMachine : IGameEventProcessor {
             case GameStateType.MainMenu:
                 ActiveState = MainMenu.GetInstance();
                 break;
-            case GameStateType.GameLost:
+            /* case GameStateType.GameLost:
                 ActiveState = GameLost.GetInstance();
-                break;
+                break; */
         }
-    } */
+    }
 
     public void ProcessEvent(GameEvent gameEvent) {
         if (gameEvent.EventType == GameEventType.GameStateEvent) {
             if (gameEvent.Message == "CHANGE_STATE") {
                 switch (gameEvent.StringArg1) {
+                case "GAME_RUNNING":
+                    SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
+                    break;
+                case "GAME_PAUSED":
+                    SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
+                    break;
+                /* case "GAME_OVER":
+                    SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
+                    break; */
+                case "MENU":
+                    SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
+                    break;
                 default:
                     break;
                 }

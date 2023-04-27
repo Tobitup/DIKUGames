@@ -13,7 +13,6 @@ public class Game : DIKUGame , IGameEventProcessor{
 
     public Game(WindowArgs windowArgs) : base(windowArgs) {
         stateMachine = new StateMachine();
-
         eventBus = GalagaBus.GetBus();
         eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, 
                                                                 GameEventType.WindowEvent,

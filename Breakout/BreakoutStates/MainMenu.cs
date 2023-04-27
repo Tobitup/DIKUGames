@@ -6,7 +6,7 @@ using DIKUArcade.Events;
 using DIKUArcade.Math;
 using System.IO;
 
-namespace Galaga.GalagaStates;
+namespace Breakout.BreakoutStates;
 public class MainMenu : IGameState {
     private static MainMenu instance = null;
     private Entity backGroundImage;
@@ -45,20 +45,20 @@ public class MainMenu : IGameState {
                 case KeyboardKey.Enter:
                     switch (activeMenuButton) {
                         case 0:
-                            GalagaBus.GetBus().RegisterEvent(
+                            BreakoutBus.GetBus().RegisterEvent(
                                 new GameEvent{
                                     EventType = GameEventType.GameStateEvent,
                                     Message = "CHANGE_STATE",
                                     StringArg1 = "GAME_RUNNING"
                                 });
-                            GalagaBus.GetBus().RegisterEvent(
+                            BreakoutBus.GetBus().RegisterEvent(
                                 new GameEvent{
                                     EventType = GameEventType.GameStateEvent,
                                     Message = "RESET_STATE"
                                 });
                             break;
                         case 1:
-                            GalagaBus.GetBus().RegisterEvent(new GameEvent 
+                            BreakoutBus.GetBus().RegisterEvent(new GameEvent 
                                                             {EventType = GameEventType.WindowEvent, 
                                                                         Message = "CLOSE_WINDOW"});
                             break;

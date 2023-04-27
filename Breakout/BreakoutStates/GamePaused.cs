@@ -6,20 +6,20 @@ using DIKUArcade.Events;
 using DIKUArcade.Math;
 using System.IO;
 
-namespace Galaga.GalagaStates;
-public class MainMenu : IGameState {
-    private static MainMenu instance = null;
+namespace Breakout.BreakoutStates;
+public class GamePaused : IGameState {
+    private static GamePaused instance = null;
     private Entity backGroundImage;
-    private Text[] menuButtons = {new Text("NEW GAME", new Vec2F(0.25f,0.15f), new Vec2F(0.5f,0.5f))
-                                    ,new Text("QUIT", new Vec2F(0.25f,0.0f), new Vec2F(0.5f,0.5f))};
+    private Text[] menuButtons = {new Text("CONTINUE",new Vec2F(0.25f,0.15f), new Vec2F(0.5f,0.5f)),
+                                new Text("MAIN MENU",new Vec2F(0.25f,0.0f), new Vec2F(0.5f,0.5f))};
     private int activeMenuButton;
-    public static MainMenu GetInstance() {
-        if (MainMenu.instance == null) {
-            MainMenu.instance = new MainMenu();
-            MainMenu.instance.InitializeGameState();
+    public static GamePaused GetInstance() {
+        if (GamePaused.instance == null) {
+            GamePaused.instance = new GamePaused();
+            GamePaused.instance.InitializeGameState();
             }
-        return MainMenu.instance;
-        }
+        return GamePaused.instance;
+    }
 
     private void InitializeGameState() {
         menuButtons[0].SetColor(new Vec3I(255,255,255));
@@ -27,11 +27,11 @@ public class MainMenu : IGameState {
         menuButtons[0].SetFont("Impact");
         menuButtons[1].SetFont("Impact");
         backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f,0.0f),
-                                        new Vec2F(1.0f,1.0f)),new Image(Path.Combine("..",
-                                        "Breakout","Assets","Images", "BreakoutTitleScreen.png")));
+                                new Vec2F(1.0f,1.0f)),new Image(Path.Combine(
+                                                            "..","Breakout","Assets",
+                                                            "Images", "BreakoutTitleScreen.png")));
         activeMenuButton = 0;
-        }
-
+    }
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
         if (action == KeyboardAction.KeyPress) {
@@ -45,30 +45,30 @@ public class MainMenu : IGameState {
                 case KeyboardKey.Enter:
                     switch (activeMenuButton) {
                         case 0:
-                            GalagaBus.GetBus().RegisterEvent(
+                            BreakoutBus.GetBus().RegisterEvent(
                                 new GameEvent{
                                     EventType = GameEventType.GameStateEvent,
                                     Message = "CHANGE_STATE",
                                     StringArg1 = "GAME_RUNNING"
                                 });
-                            GalagaBus.GetBus().RegisterEvent(
-                                new GameEvent{
-                                    EventType = GameEventType.GameStateEvent,
-                                    Message = "RESET_STATE"
-                                });
+
                             break;
                         case 1:
-                            GalagaBus.GetBus().RegisterEvent(new GameEvent 
-                                                            {EventType = GameEventType.WindowEvent, 
-                                                                        Message = "CLOSE_WINDOW"});
+                        BreakoutBus.GetBus().RegisterEvent(
+                                new GameEvent {
+                                    EventType = GameEventType.GameStateEvent, 
+                                    Message = "CHANGE_STATE",
+                                    StringArg1 = "MENU"
+                                });
                             break;
                         default:
                             break;
                     }
-                break;
+                    break;
             }
         }
     }
+
 
     public void RenderState() {
         backGroundImage.RenderEntity();
@@ -77,7 +77,7 @@ public class MainMenu : IGameState {
     }
 
     public void ResetState() {
-        MainMenu.instance.InitializeGameState();
+        GamePaused.instance.InitializeGameState();
     }
 
     public void UpdateState() {

@@ -30,8 +30,6 @@ public class GameRunning : IGameState, IGameEventProcessor {
         return GameRunning.instance;
     }
 
-    /// <summary> Initializes all elements requiered for the game to run </summary>
-    /// <returns> Void </returns> 
     private void InitializeGameState() {
         player = new Player(
                             new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),

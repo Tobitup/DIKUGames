@@ -26,8 +26,6 @@ public class LevelParser {
                 }
             }
         }
-        
-
         return levelMap;
     }
 
@@ -40,7 +38,6 @@ public class LevelParser {
             string[] lineOfMetaData = rawLinesFromFile[i].Split(": ");
             metaDataDictionary.Add(lineOfMetaData[0],lineOfMetaData[1]);
         }
-
         return metaDataDictionary;
     }
 
@@ -53,7 +50,6 @@ public class LevelParser {
             string[] lineOfLegendData = rawLinesFromFile[i].Split(") ");
             legendDataDictionary.Add(lineOfLegendData[0],lineOfLegendData[1]);
         }
-
         return legendDataDictionary;
     }
 

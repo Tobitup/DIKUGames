@@ -8,6 +8,7 @@ using DIKUArcade.Math;
 using System.IO;
 using System.Collections.Generic;
 using Breakout.Player;
+using Breakout.Levels;
 
 namespace Breakout.BreakoutStates;
 
@@ -15,6 +16,8 @@ public class GameRunning : IGameState, IGameEventProcessor {
     private GameEventBus eventBus;
     private Breakout.Player.Player player;
     private List<Image> images;
+    private Level currentLevel;
+    private LevelLoader levelloader;
     private static GameRunning instance = null;
     public static GameRunning GetInstance() {
         if (GameRunning.instance == null) {
@@ -24,21 +27,26 @@ public class GameRunning : IGameState, IGameEventProcessor {
         return GameRunning.instance;
     }
 
-    /// <summary> Initializes all elements required for the game to run </summary>
-    /// <returns> Void </returns> 
     private void InitializeGameState() {
         player = new Player.Player(
-                            new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
+                            new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.22f, 0.03f)),
                             new Image(Path.Combine("Assets", "Images", "player.png")));
 
+        levelloader =  new LevelLoader (SelectLevel.level1);
+        currentLevel = levelloader.Level;
         eventBus = BreakoutBus.GetBus();
+        eventBus.Subscribe(GameEventType.PlayerEvent, this);
     
+    }
+    private void SwitchLevel(SelectLevel newlevel){
+        levelloader = new LevelLoader (newlevel);
+        currentLevel = levelloader.Level;
     }
 
     private void KeyPress(KeyboardKey key) {
         switch(key) {
             case KeyboardKey.Escape:
-                BreakoutBus.GetBus().RegisterEvent(
+                eventBus.RegisterEvent(
                                     new GameEvent{
                                         EventType = GameEventType.GameStateEvent,
                                         Message = "CHANGE_STATE",
@@ -46,40 +54,24 @@ public class GameRunning : IGameState, IGameEventProcessor {
                                     });
                 break;
             case KeyboardKey.Left:
-                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.PlayerEvent, 
                                                                         Message = "MOVE_LEFT"});
                 break;
             case KeyboardKey.Right:
-                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
-                                                                        Message = "MOVE_RIGHT"});
-                break;
-            case KeyboardKey.Up:
-                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
-                                                                        Message = "MOVE_UP"});
-                break;
-            case KeyboardKey.Down:
-                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
-                                                                        Message = "MOVE_DOWN"});
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.PlayerEvent, 
+                                                                        Message = "MOVE_RIGHT"});                
                 break;
         }
     }
     private void KeyRelease(KeyboardKey key) {
         switch(key){
             case KeyboardKey.Left:
-                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.PlayerEvent, 
                                                                     Message = "MOVE_LEFT_STOP"});
                 break;
             case KeyboardKey.Right:
-                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
+                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.PlayerEvent, 
                                                                     Message = "MOVE_RIGHT_STOP"});
-                break;
-            case KeyboardKey.Up:
-                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
-                                                                    Message = "MOVE_UP_STOP"});
-                break;
-            case KeyboardKey.Down:
-                eventBus.RegisterEvent(new GameEvent {EventType = GameEventType.InputEvent, 
-                                                                    Message = "MOVE_DOWN_STOP"});
                 break;
             }
         }
@@ -93,26 +85,26 @@ public class GameRunning : IGameState, IGameEventProcessor {
         }
     }
 
-    public void RenderState()
-    {
+    public void RenderState() {
         player.Render();
-        
+        currentLevel.BlockContainer.RenderEntities();
     }
 
     public void ResetState() {
         InitializeGameState();
     }
 
-    public void UpdateState()
-    {
-     throw new NotImplementedException();
+    public void UpdateState() {
+        player.Move();
     }
 
-    public void ProcessEvent(GameEvent gameEvent)
-    {
-        if (gameEvent.EventType == GameEventType.InputEvent) {
-            //switch (gameEvent.Message) {
-                    throw new NotImplementedException();
+    public void ProcessEvent(GameEvent gameEvent) {
+    if (gameEvent.EventType == GameEventType.PlayerEvent) {
+        switch (gameEvent.Message) {
+            case "Test":
+                System.Console.WriteLine("Oh no");
+                break;
+            }
         }
     }
 }
