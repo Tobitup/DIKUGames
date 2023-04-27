@@ -6,12 +6,9 @@ public class LevelParser {
         rawLinesFromFile = textLines;
     }
 
-    // Returns the beginning and end location of given tag
-    private (int, int) findTag(string tag) {
-        int tagBeginsAt = Array.IndexOf(rawLinesFromFile, $"{tag}:") + 1;
-        int tagEndsAt = Array.IndexOf(rawLinesFromFile, $"{tag}/");
+    public Level GenerateLevel() {
+        return new Level(findMetaData(), findLegendData(), findLevelMap());
 
-        return (tagBeginsAt,tagEndsAt);
     }
 
     private string[,] findLevelMap() {
@@ -53,8 +50,12 @@ public class LevelParser {
         return legendDataDictionary;
     }
 
-    public Level GenerateLevel() {
-        return new Level(findMetaData(), findLegendData(), findLevelMap());
+        // Returns the beginning and end location of given tag
+    private (int, int) findTag(string tag) {
+        int tagBeginsAt = Array.IndexOf(rawLinesFromFile, $"{tag}:") + 1;
+        int tagEndsAt = Array.IndexOf(rawLinesFromFile, $"{tag}/");
 
+        return (tagBeginsAt,tagEndsAt);
     }
+
 }
