@@ -16,7 +16,6 @@ public class GameRunning : IGameState, IGameEventProcessor {
     private GameEventBus eventBus;
     private Entity backGroundImage;
     private Breakout.Player.Player player;
-    private List<Image> images;
     private Level currentLevel;
     private LevelLoader levelLoader;
 
@@ -44,8 +43,8 @@ public class GameRunning : IGameState, IGameEventProcessor {
                                         new Vec2F(1.0f,1.0f)),new Image(Path.Combine(
                                                                 LevelLoader.MAIN_PATH, "Assets",
                                                                 "Images", "SpaceBackground.png")));
-    
     }
+    
     private void SwitchLevel(SelectLevel newlevel){
         levelLoader = new LevelLoader (newlevel);
         currentLevel = levelLoader.Level;

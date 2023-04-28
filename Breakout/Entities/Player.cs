@@ -68,7 +68,7 @@ public class Player : IGameEventProcessor {
     /// <param name="val"> The new X-axis direction value. </param>
     /// <returns> Void </returns> 
     private void UpdateDirection(float val) {
-        shape.Direction.X = val;  
+        shape.Direction.X = val;
     }
 
     /// <summary> Moves the player's shape within the boundaries of the game screen. </summary>
