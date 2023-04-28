@@ -18,7 +18,8 @@ public class GameRunning : IGameState, IGameEventProcessor {
     private Breakout.Player.Player player;
     private List<Image> images;
     private Level currentLevel;
-    private LevelLoader levelloader;
+    private LevelLoader levelLoader;
+
     private static GameRunning instance = null;
     public static GameRunning GetInstance() {
         if (GameRunning.instance == null) {
@@ -31,21 +32,23 @@ public class GameRunning : IGameState, IGameEventProcessor {
     private void InitializeGameState() {
         player = new Player.Player(
                             new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.22f, 0.03f)),
-                            new Image(Path.Combine("Assets", "Images", "player.png")));
+                            new Image(Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Images", 
+                                                                                    "player.png")));
 
-        levelloader =  new LevelLoader (SelectLevel.level1);
-        currentLevel = levelloader.Level;
+        levelLoader =  new LevelLoader (SelectLevel.level1);
+        currentLevel = levelLoader.Level;
         eventBus = BreakoutBus.GetBus();
         eventBus.Subscribe(GameEventType.PlayerEvent, this);
 
         backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f,0.0f),
-                                        new Vec2F(1.0f,1.0f)),new Image(Path.Combine("..",
-                                        "Breakout","Assets","Images", "SpaceBackground.png")));
+                                        new Vec2F(1.0f,1.0f)),new Image(Path.Combine(
+                                                                LevelLoader.MAIN_PATH, "Assets",
+                                                                "Images", "SpaceBackground.png")));
     
     }
     private void SwitchLevel(SelectLevel newlevel){
-        levelloader = new LevelLoader (newlevel);
-        currentLevel = levelloader.Level;
+        levelLoader = new LevelLoader (newlevel);
+        currentLevel = levelLoader.Level;
     }
 
     private void KeyPress(KeyboardKey key) {

@@ -38,9 +38,9 @@ namespace breakoutTests.TestPlayer;
                 new Image(Path.Combine("..","Breakout","Assets", "Images", "Player.png")));
 
             eventBus.Subscribe(GameEventType.PlayerEvent, player);
-            //eventBus.Subscribe(GameEventType.GameStateEvent, stateMachine);
-
         }
+
+        
         [Test]
         public void TestPlayerMoveLeft() {
             Vec2F initialPos = player.Shape.Position;

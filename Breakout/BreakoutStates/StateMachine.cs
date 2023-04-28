@@ -5,7 +5,6 @@ public class StateMachine : IGameEventProcessor {
     public IGameState ActiveState { get; private set; }
     public StateMachine() {
         BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
-        BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
         BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
         ActiveState = BreakoutStates.MainMenu.GetInstance();
     }

@@ -5,6 +5,7 @@ using DIKUArcade.Input;
 using DIKUArcade.Events;
 using DIKUArcade.Math;
 using System.IO;
+using Breakout.Levels;
 
 namespace Breakout.BreakoutStates;
 public class MainMenu : IGameState {
@@ -13,6 +14,7 @@ public class MainMenu : IGameState {
     private Text[] menuButtons = {new Text("NEW GAME", new Vec2F(0.25f,0.15f), new Vec2F(0.5f,0.5f))
                                     ,new Text("QUIT", new Vec2F(0.25f,0.0f), new Vec2F(0.5f,0.5f))};
     private int activeMenuButton;
+    public int ActiveMenuButton {get {return activeMenuButton;}}
     public static MainMenu GetInstance() {
         if (MainMenu.instance == null) {
             MainMenu.instance = new MainMenu();
@@ -27,8 +29,9 @@ public class MainMenu : IGameState {
         menuButtons[0].SetFont("Impact");
         menuButtons[1].SetFont("Impact");
         backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f,0.0f),
-                                        new Vec2F(1.0f,1.0f)),new Image(Path.Combine("..",
-                                        "Breakout","Assets","Images", "BreakoutTitleScreen.png")));
+                                        new Vec2F(1.0f,1.0f)),new Image(Path.Combine(
+                                                    LevelLoader.MAIN_PATH,"Assets","Images", 
+                                                                    "BreakoutTitleScreen.png")));
         activeMenuButton = 0;
         }
 

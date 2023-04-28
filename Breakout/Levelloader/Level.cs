@@ -2,6 +2,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using Breakout.Blocks;
+using Breakout.BreakoutStates;
 
 namespace Breakout.Levels;
 public class Level
@@ -17,10 +18,13 @@ public class Level
         this.metaData = metaData;
         this.legendData = legendData;
         this.levelMap = levelMap;
+        
 
         GenerateEntityContainer();
     }
-
+    /// <summary>
+    /// Generates an entity container from the level map.
+    /// </summary>
     private void GenerateEntityContainer() {
         for (int i = 0; i < levelMap.GetLength(0); i++) {
             for (int j = 0; j < levelMap.GetLength(1); j++) {
@@ -28,7 +32,8 @@ public class Level
                 string character = levelMap[i, j].ToString();
 
                 if (levelMap[i, j] != "-") {
-                    string imagePath = Path.Combine("Assets", "Images", legendData[character]);
+                    string imagePath = Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Images",  
+                                                                            legendData[character]);
                     blockContainer.AddEntity(
                         new Block(new Vec2I(i, j), new Image(imagePath)));
                 }

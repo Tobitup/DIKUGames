@@ -6,11 +6,19 @@ public class LevelParser {
         rawLinesFromFile = textLines;
     }
 
+    /// <summary>
+    /// Generates a Level object from the findMetaData(), findLegendData() and findLevelMap() data.
+    /// </summary>
+    /// <returns>A new Level object</returns>
     public Level GenerateLevel() {
         return new Level(findMetaData(), findLegendData(), findLevelMap());
 
     }
 
+    /// <summary>
+    /// Parses the level map data from the raw text lines.
+    /// </summary>
+    /// <returns>A 2D array of strings representing the level map.</returns>
     private string[,] findLevelMap() {
         string[,] levelMap = new string[25,12];
 
@@ -26,6 +34,10 @@ public class LevelParser {
         return levelMap;
     }
 
+    /// <summary>
+    /// Parses the metadata from the raw text lines.
+    /// </summary>
+    /// <returns>A dictionary of key-value pairs representing the metadata.</returns>
     private Dictionary<string, string> findMetaData() {
         (int,int) metaTagLocation = findTag("Meta");
 
@@ -38,6 +50,10 @@ public class LevelParser {
         return metaDataDictionary;
     }
 
+    /// <summary>
+    /// Parses the legend data from the raw text lines.
+    /// </summary>
+    /// <returns>A dictionary of key-value pairs representing the legend data.</returns>
     private Dictionary<string, string> findLegendData() {
         (int,int) legendTagLocation = findTag("Legend");
 
@@ -50,7 +66,14 @@ public class LevelParser {
         return legendDataDictionary;
     }
 
-        // Returns the beginning and end location of given tag
+
+    /// <summary>
+    /// Finds the beginning and end location of a given tag in an array of raw lines from a file.   
+    /// </summary>
+    /// <param name="tag">The tag to search for.</param>
+    /// <returns>
+    /// A tuple of two integers representing the beginning and end location of the tag. 
+    /// </returns>
     private (int, int) findTag(string tag) {
         int tagBeginsAt = Array.IndexOf(rawLinesFromFile, $"{tag}:") + 1;
         int tagEndsAt = Array.IndexOf(rawLinesFromFile, $"{tag}/");
