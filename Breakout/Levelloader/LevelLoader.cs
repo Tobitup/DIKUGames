@@ -1,10 +1,9 @@
 using DIKUArcade.Utilities;
-
 namespace Breakout.Levels;
 public class LevelLoader {
     private LevelParser levelParser;
 
-    // Static Path to insure breakoutTests always pulls Assets from the correct directory.
+    // Static readonly Path to insure breakoutTests always pulls Assets from the correct directory.
     public static readonly string MAIN_PATH = 
                     Path.Combine(Directory.GetParent(FileIO.GetProjectPath())!.FullName,"Breakout");
 

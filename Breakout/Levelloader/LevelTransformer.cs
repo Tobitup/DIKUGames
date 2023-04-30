@@ -1,11 +1,10 @@
 namespace Breakout.Levels;
 public static class LevelTransformer {
-    /// <summary>
-    /// Transforms a SelectLevel enumeration value to its corresponding file name string.
+    /// <summary> Transforms a SelectLevel enum value to its corresponding file name string.
     /// </summary>
-    /// <param name="level">The SelectLevel enumeration value to transform.</param>
-    /// <returns>The file name string representation of the specified SelectLevel enumeration value.</returns>
-    /// <exception cref="ArgumentException">Thrown when the level parameter is not a valid SelectLevel enumerator</exception>
+    /// <param name="level"> The SelectLevel enum value to transform. </param>
+    /// <returns> The file name string representation of the specified SelectLevel enum value. 
+    /// </returns>
         public static string TransformLevelToString(SelectLevel level) {
             switch (level){
                 case SelectLevel.central_mass:

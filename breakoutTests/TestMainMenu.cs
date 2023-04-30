@@ -32,14 +32,17 @@ public class MainMenuTesting {
 
     [Test]
     public void TestInitialState() {
+    /// ASSERT
         Assert.That(stateMachine.ActiveState, Is.InstanceOf<MainMenu>());
     }
 
     [Test]
     public void TestMenuButtons() {
+    /// ARRANGE
         int initialButtonPossition = menu.ActiveMenuButton;
+    /// ACT
         menu.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Down);
-
+    /// ASSERT
         Assert.That(initialButtonPossition, Is.Not.EqualTo(menu.ActiveMenuButton));
     }
 }

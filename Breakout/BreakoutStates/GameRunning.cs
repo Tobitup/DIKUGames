@@ -18,8 +18,10 @@ public class GameRunning : IGameState, IGameEventProcessor {
     private Breakout.Player.Player player;
     private Level currentLevel;
     private LevelLoader levelLoader;
-
     private static GameRunning instance = null;
+
+    /// <summary> Gets the singleton instance of the GameRunning state. </summary>
+    /// <returns> The GameRunning instance. </returns>
     public static GameRunning GetInstance() {
         if (GameRunning.instance == null) {
             GameRunning.instance = new GameRunning();
@@ -28,28 +30,35 @@ public class GameRunning : IGameState, IGameEventProcessor {
         return GameRunning.instance;
     }
 
+    /// <summary> Initializes the game state by creating a new player object, loading a level, 
+    ///           subscribing to PlayerEvents, and creating the background image entity. </summary>
+    /// <returns> Void. </returns>
     private void InitializeGameState() {
         player = new Player.Player(
                             new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.22f, 0.03f)),
                             new Image(Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Images", 
                                                                                     "player.png")));
 
-        levelLoader =  new LevelLoader (SelectLevel.level1);
-        currentLevel = levelLoader.Level;
-        eventBus = BreakoutBus.GetBus();
-        eventBus.Subscribe(GameEventType.PlayerEvent, this);
-
         backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f,0.0f),
                                         new Vec2F(1.0f,1.0f)),new Image(Path.Combine(
                                                                 LevelLoader.MAIN_PATH, "Assets",
                                                                 "Images", "SpaceBackground.png")));
+        levelLoader =  new LevelLoader (SelectLevel.level1);
+        currentLevel = levelLoader.Level;
+        eventBus = BreakoutBus.GetBus();
+        eventBus.Subscribe(GameEventType.PlayerEvent, this);
     }
     
+    /// <summary> Switches to a new level by setting the current level to the loaded level. 
+    /// </summary>
     private void SwitchLevel(SelectLevel newlevel){
         levelLoader = new LevelLoader (newlevel);
         currentLevel = levelLoader.Level;
     }
 
+    /// <summary> Responds to a key press by registering a game event with the 
+    ///           appropriate message. </summary>
+    /// <param name="key"> A KeyboardKey enum that represents the key that was pressed. </param>
     private void KeyPress(KeyboardKey key) {
         switch(key) {
             case KeyboardKey.Escape:
@@ -70,6 +79,10 @@ public class GameRunning : IGameState, IGameEventProcessor {
                 break;
         }
     }
+
+    /// <summary> Responds to a key release by registering a game event to stop the given player 
+    ///           movement. </summary>
+/// <param name="key"> A KeyboardKey enum that represents the key that was released. </param>
     private void KeyRelease(KeyboardKey key) {
         switch(key){
             case KeyboardKey.Left:
@@ -83,6 +96,9 @@ public class GameRunning : IGameState, IGameEventProcessor {
             }
         }
 
+    /// <summary> Handles a keyboard event by invoking either KeyPress() or KeyRelease() method 
+    ///           based on the action type. </summary>
+    /// <returns> Void. </returns>
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
         if (action == KeyboardAction.KeyPress) {
             KeyPress(key);
@@ -92,20 +108,31 @@ public class GameRunning : IGameState, IGameEventProcessor {
         }
     }
 
+    /// <summary> Renders the current game state, with background and menu buttons. </summary>
+    /// <returns> Void. </returns>
     public void RenderState() {
         backGroundImage.RenderEntity();
         player.Render();
         currentLevel.BlockContainer.RenderEntities();
     }
 
+    /// <summary> Resets the state of the game paused screen to its initial state. </summary>
+    /// <returns> Void. </returns>
     public void ResetState() {
         InitializeGameState();
     }
 
+    /// <summary> Updates the game state by invoking the Move() method and update the players 
+    ///           position. </summary>
+    /// <returns> Void. </returns>
     public void UpdateState() {
         player.Move();
     }
 
+    /// <summary> Processes a GameEvent by checking its type and message, and performs the 
+    ///           subsequent action. </summary>
+    /// <param name="gameEvent"> A GameEvent object that represents the event to be processed. 
+    /// </param>
     public void ProcessEvent(GameEvent gameEvent) {
     if (gameEvent.EventType == GameEventType.PlayerEvent) {
         switch (gameEvent.Message) {

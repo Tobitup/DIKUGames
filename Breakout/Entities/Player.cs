@@ -17,7 +17,6 @@ public class Player : IGameEventProcessor {
     public DynamicShape Shape {
         get {return shape;}
     }
-
     private float moveLeft = 0.0f;
     private float moveRight = 0.0f;
     const float MOVEMENT_SPEED = 0.02f;
@@ -35,6 +34,7 @@ public class Player : IGameEventProcessor {
     }
 
     /// <summary> Renders the player's game object. </summary>
+     /// <returns> Void. </returns>
     public void Render() {
         entity.RenderEntity();
     }
@@ -42,7 +42,7 @@ public class Player : IGameEventProcessor {
 
     /// <summary> Sets the player's movement to the left. </summary>
     /// <param name="val"> Boolean value for starting or stopping player movement. </param>
-    /// <returns> Void </returns>
+    /// <returns> Void. </returns>
     private void SetMoveLeft(bool val) {
         if (val) {
             moveLeft -= MOVEMENT_SPEED;
@@ -54,7 +54,7 @@ public class Player : IGameEventProcessor {
 
     /// <summary> Sets the player's movement to the right. </summary>
     /// <param name="val"> Boolean value for starting or stopping player movement. </param>
-    /// <returns> Void </returns>
+    /// <returns> Void. </returns>
     private void SetMoveRight(bool val) {
         if (val) {
             moveRight += MOVEMENT_SPEED;
@@ -66,13 +66,13 @@ public class Player : IGameEventProcessor {
 
     /// <summary> Updates the direction of the player's shape. </summary>
     /// <param name="val"> The new X-axis direction value. </param>
-    /// <returns> Void </returns> 
+    /// <returns> Void. </returns> 
     private void UpdateDirection(float val) {
         shape.Direction.X = val;
     }
 
     /// <summary> Moves the player's shape within the boundaries of the game screen. </summary>
-    /// <returns> Void </returns> 
+    /// <returns> Void. </returns> 
     public void Move() {
         if (shape.Position.X > 0.0f && shape.Position.X + shape.Extent.X< 1.0f) {
             shape.Move();
@@ -86,7 +86,7 @@ public class Player : IGameEventProcessor {
 
     /// <summary> Processes a game event and updates the player's movement state. </summary>
     /// <param name="gameEvent"> The game event to process. </param>
-    /// <returns> Void </returns> 
+    /// <returns> Void. </returns> 
     public void ProcessEvent(GameEvent gameEvent) {
         if (gameEvent.EventType == GameEventType.PlayerEvent) {
             switch(gameEvent.Message) {

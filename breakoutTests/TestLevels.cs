@@ -19,23 +19,27 @@ namespace breakoutTests.TestLevels;
 public class LevelTesting {
 
     [SetUp]
-    public void SetUp() {
+    public void SetUp() { }
 
-    }
-    //Test that the right input in ReadFile will result in a string array
+
+    // Test that the right input in ReadFile will result in a string array
     [Test]
     public void TestReadFile() {
-    string[] testValue = FileReader.ReadFile(
+    /// ACT
+        string[] testValue = FileReader.ReadFile(
                                     Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
-                                    "Level1.txt"));
-    Assert.AreEqual(testValue.GetType(), typeof(string[]));
-
+                                                                            "Level1.txt"));
+    /// ASSERT
+        Assert.That(testValue.GetType(), Is.EqualTo(typeof(string[])));
     }
-    //Test that the wrong file input in ReadFile will result in empty string array
+
+    // Test that the wrong file input in ReadFile will result in empty string array
     [Test]
     public void ReadFile_ThrowsFileNotFoundException() {
+    /// ACT
         string invalidFilePath = Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
-                                                                                    "Level8.txt");
-        Assert.AreEqual(FileReader.ReadFile(invalidFilePath), new string[0]);
+                                                                            "Level8.txt");
+    /// ASSERT
+        Assert.That(FileReader.ReadFile(invalidFilePath), Is.EqualTo(new string[0]));
     }   
 }

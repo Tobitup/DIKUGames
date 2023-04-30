@@ -28,26 +28,31 @@ public class StateMachineTesting {
 
     [Test]
     public void TestInitialState() {
+    /// ASSERT
         Assert.That(stateMachine.ActiveState, Is.InstanceOf<MainMenu>());
     }
 
     [Test]
     public void TestEventGamePaused() {
+    /// ACT
         stateMachine.ProcessEvent(
         new GameEvent{
             EventType = GameEventType.GameStateEvent,
             Message = "CHANGE_STATE",
             StringArg1 = "GAME_PAUSED" });
+    /// ASSERT
         Assert.That(stateMachine.ActiveState, Is.InstanceOf<GamePaused>());
     }
 
     [Test]
     public void TestEventGameRunning() {
+    /// ACT
         stateMachine.ProcessEvent(
         new GameEvent{
             EventType = GameEventType.GameStateEvent,
             Message = "CHANGE_STATE",
             StringArg1 = "GAME_RUNNING" });
+    /// ASSERT
         Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameRunning>());
     }
 }
