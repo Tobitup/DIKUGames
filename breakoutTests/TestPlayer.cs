@@ -13,6 +13,7 @@ using DIKUArcade.Input;
 using System.Collections.Generic;
 using Breakout.BreakoutStates;
 using Breakout.Player;
+using Breakout.Levels;
 
 namespace breakoutTests.TestPlayer;
 
@@ -20,7 +21,6 @@ namespace breakoutTests.TestPlayer;
     public class TestPlayer {
         private Player player;
         private GameEventBus eventBus = Breakout.BreakoutBus.GetBus();
-        //private StateMachine stateMachine;
         private bool isBusInitilized;
 
         [SetUp]
@@ -35,91 +35,84 @@ namespace breakoutTests.TestPlayer;
 
             player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
-                new Image(Path.Combine("..","Breakout","Assets", "Images", "Player.png")));
-
+                new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images", "Player.png")));
             eventBus.Subscribe(GameEventType.PlayerEvent, player);
         }
 
         
         [Test]
         public void TestPlayerMoveLeft() {
+        /// ARRANGE
             Vec2F initialPos = player.Shape.Position;
             eventBus.RegisterEvent(new GameEvent {
                 EventType = GameEventType.PlayerEvent,
-                Message = "MOVE_LEFT"
-                });
-
+                Message = "MOVE_LEFT" });
+        /// ACT
             for(int i = 0; i <100; i++) {
                 Breakout.BreakoutBus.GetBus().ProcessEvents();
                 player.Move();
             }
-
             eventBus.RegisterEvent(new GameEvent {
                     EventType = GameEventType.PlayerEvent,
-                    Message = "MOVE_LEFT_STOP"
-                });
-            
+                    Message = "MOVE_LEFT_STOP" });
+        /// ASSERT
             Assert.That(initialPos.X, Is.Not.EqualTo(player.Shape.Position.X));
         }
 
         [Test]
         public void TestPlayerMoveRight() {
+        /// ARRANGE
             Vec2F initialPos = player.Shape.Position;
             eventBus.RegisterEvent(new GameEvent {
                 EventType = GameEventType.PlayerEvent,
-                Message = "MOVE_RIGHT"
-                });
-
+                Message = "MOVE_RIGHT" });
+        /// ACT
             for(int i = 0; i <100; i++) {
                 Breakout.BreakoutBus.GetBus().ProcessEvents();
                 player.Move();
             }
-
             eventBus.RegisterEvent(new GameEvent {
                     EventType = GameEventType.PlayerEvent,
-                    Message = "MOVE_RIGHT_STOP"
-                });
-            
+                    Message = "MOVE_RIGHT_STOP" });
+        /// ASSERT
             Assert.That(initialPos.X, Is.Not.EqualTo(player.Shape.Position.X));
         }
 
         [Test]
         public void TestPlayerOutOfBoundLeft() {
+        /// ARRANGE
             Vec2F initialPos = player.Shape.Position;
             eventBus.RegisterEvent(new GameEvent {
                 EventType = GameEventType.PlayerEvent,
-                Message = "MOVE_LEFT"
-                });
+                Message = "MOVE_LEFT" });
+        /// ACT
             for(int i = 0; i <10000; i++) {
                 Breakout.BreakoutBus.GetBus().ProcessEvents();
                 player.Move();
             }
-
             eventBus.RegisterEvent(new GameEvent {
                     EventType = GameEventType.PlayerEvent,
-                    Message = "MOVE_LEFT_STOP"
-                });
-            
+                    Message = "MOVE_LEFT_STOP" });
+        /// ASSERT
             Assert.IsTrue(initialPos.X >= 0.0f);
         }
 
         [Test]
         public void TestPlayerOutOfBoundRight() {
+        /// ARRANGE
             Vec2F initialPos = player.Shape.Position;
             eventBus.RegisterEvent(new GameEvent {
                 EventType = GameEventType.PlayerEvent,
-                Message = "MOVE_RIGHT"
-                });
+                Message = "MOVE_RIGHT" });
+        /// ACT
             for(int i = 0; i <10000; i++) {
                 Breakout.BreakoutBus.GetBus().ProcessEvents();
-                player.Move();
+                player.Move(); 
             }
-
             eventBus.RegisterEvent(new GameEvent {
                     EventType = GameEventType.PlayerEvent,
-                    Message = "MOVE_RIGHT_STOP"
-                });
-            
+                    Message = "MOVE_RIGHT_STOP" });
+        /// ASSERT
             Assert.IsTrue(initialPos.X <= 1.0f);
         }
 }

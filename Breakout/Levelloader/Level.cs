@@ -13,18 +13,23 @@ public class Level
     public EntityContainer<Block> BlockContainer { get { return blockContainer; } }
     private string[,] levelMap;
 
+    /// <summary> Initializes a new instance of the Level class with the specified metadata, 
+    ///           legend data, and level map. </summary>
+    /// <param name="metaData"> A Dictionary object that represents the metadata linked with 
+    ///                         the level. </param>
+    /// <param name="legendData"> A Dictionary object that represents the legend data linked with 
+    ///                           the level. </param>
+    /// <param name="levelMap"> A string array that represents the level map. </param>
     public Level(Dictionary<string, string> metaData, Dictionary<string, string> legendData,
                                                                             string[,] levelMap) {
         this.metaData = metaData;
         this.legendData = legendData;
         this.levelMap = levelMap;
-        
-
         GenerateEntityContainer();
     }
-    /// <summary>
-    /// Generates an entity container from the level map.
-    /// </summary>
+
+    /// <summary> Generates an entity container from the level map. </summary>
+    /// <returns> Void. </returns>
     private void GenerateEntityContainer() {
         for (int i = 0; i < levelMap.GetLength(0); i++) {
             for (int j = 0; j < levelMap.GetLength(1); j++) {
