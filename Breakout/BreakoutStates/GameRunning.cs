@@ -9,6 +9,7 @@ using System.IO;
 using System.Collections.Generic;
 using Breakout.Player;
 using Breakout.Levels;
+using Breakout.Blocks;
 
 namespace Breakout.BreakoutStates;
 
@@ -47,7 +48,7 @@ public class GameRunning : IGameState, IGameEventProcessor
                                         new Vec2F(1.0f, 1.0f)), new Image(Path.Combine(
                                                                 LevelLoader.MAIN_PATH, "Assets",
                                                                 "Images", "SpaceBackground.png")));
-        levelLoader = new LevelLoader(SelectLevel.testlevel);
+        levelLoader = new LevelLoader(SelectLevel.level4);
         currentLevel = levelLoader.Level;
         eventBus = BreakoutBus.GetBus();
         eventBus.Subscribe(GameEventType.PlayerEvent, this);
@@ -132,6 +133,15 @@ public class GameRunning : IGameState, IGameEventProcessor
             KeyRelease(key);
         }
     }
+    public void MoveMovingBlocks()
+    {
+        foreach (Block block in currentLevel.BlockContainer)
+        {
+            {
+                block.MoveMoving();
+            }
+        }
+    }
 
     /// <summary> Renders the current game state, with background and menu buttons. </summary>
     /// <returns> Void. </returns>
@@ -155,6 +165,7 @@ public class GameRunning : IGameState, IGameEventProcessor
     public void UpdateState()
     {
         player.Move();
+        MoveMovingBlocks();
     }
 
     /// <summary> Processes a GameEvent by checking its type and message, and performs the 

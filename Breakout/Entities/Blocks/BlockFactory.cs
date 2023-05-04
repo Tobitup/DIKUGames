@@ -11,6 +11,9 @@ public static class BlockFactory
             case "Unbreakable":
                 //System.Console.WriteLine("unbreakable block created");
                 return new Unbreakable(positionInArray, image);
+            case "Moving":
+                //System.Console.WriteLine("moving block created");
+                return new Moving(positionInArray, image);
             case "Normal":
                 //System.Console.WriteLine("normal block created");
                 return new NormalBlock(positionInArray, image);

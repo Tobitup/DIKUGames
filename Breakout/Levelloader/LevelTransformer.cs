@@ -22,8 +22,8 @@ public static class LevelTransformer
                 return "level3.txt";
             case SelectLevel.wall:
                 return "wall.txt";
-            case SelectLevel.testlevel:
-                return "testlevel.txt";
+            case SelectLevel.level4:
+                return "level4.txt";
             default:
                 throw new ArgumentException("ERROR - Not a valid stringlevel");
         }

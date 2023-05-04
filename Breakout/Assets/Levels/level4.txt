@@ -30,7 +30,7 @@ Meta:
 Name: LEVEL 3
 Time: 180
 Unbreakable: Y
-Moving: 0
+Moving: #
 Meta/
 
 Legend:
