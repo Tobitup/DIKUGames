@@ -196,7 +196,7 @@ public class GameRunning : IGameState, IGameEventProcessor
         foreach (Block block in blocks) {
             if (block.IsDead()) {
                 levelScore.IncrementScore(block.Value);
-                block.Remove();
+                block.RemoveIfDead();
             }
         }
     }
