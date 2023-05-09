@@ -142,9 +142,10 @@ public class GameRunning : IGameState, IGameEventProcessor
     /// <returns> Void. </returns>
     public void UpdateBlocks()
     {
-        foreach (Block block in currentLevel.BlockContainer)
+        foreach (Entity block in currentLevel.BlockContainer)
         {
             {
+                block.Update();
                 block.Update();
             }
         }

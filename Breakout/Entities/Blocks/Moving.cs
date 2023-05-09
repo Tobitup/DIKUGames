@@ -4,11 +4,12 @@ using DIKUArcade.Entities;
 
 namespace Breakout.Blocks;
 
-public class Moving : Block
+public class Moving : Entity, IBlock
 {
 
     private int hitpoints;
 
+    public uint Value { get { return (uint)value; } }
     private int value;
 
     bool movingRight = false;
@@ -23,7 +24,9 @@ public class Moving : Block
     /// <param name="positionInArray"> The position of the block in the array. </param>
     /// <param name="image"> The image to be used for the block. </param>
     /// <return> Returns a Block with a given size, position and image. </return>
-    public Moving(Vec2I positionInArray, IBaseImage image) : base((positionInArray), image)
+    public Moving(Vec2I positionInArray, IBaseImage image) : base(new DynamicShape(
+                new Vec2F(positionInArray.X * 0.083f - 0.04f, positionInArray.Y * 0.041f + 0.40f),
+                                                            new Vec2F(0.08f, 0.035f)), image)
     {
         //placeholder hp
         hitpoints = 1;
@@ -58,5 +61,38 @@ public class Moving : Block
             float newPosition = currentPosition - movementSpeed;
             this.Shape.Position.X = newPosition;
         }
+    }
+
+    /// <summary> Reduces the hitpoints of a block by 1. </summary>
+    /// <return> Void. </return>
+    public void TakeDamage()
+    {
+        hitpoints--;
+    }
+    public virtual void Update()
+    {
+        MoveMoving();
+    }
+
+    /// <summary> Checks if a block has 0 or less Hitpoints, in which case it is dead. </summary>
+    /// <return> Boolean value to indicate if the block is dead or not. </return>
+    public bool IsDead()
+    {
+        if (hitpoints <= 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary> Checks if a block IsDead and if true deletes the entity. </summary>
+    /// <return> Void. </return>
+    public void RemoveIfDead()
+    {
+        if (IsDead())
+        {
+            DeleteEntity();
+        }
+
     }
 }
