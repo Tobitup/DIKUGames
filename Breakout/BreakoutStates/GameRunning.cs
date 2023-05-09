@@ -102,7 +102,7 @@ public class GameRunning : IGameState, IGameEventProcessor
 
     /// <summary> Responds to a key release by registering a game event to stop the given player 
     ///           movement. </summary>
-        /// <param name="key"> A KeyboardKey enum that represents the key that was released. </param>
+    /// <param name="key"> A KeyboardKey enum that represents the key that was released. </param>
     private void KeyRelease(KeyboardKey key)
     {
         switch (key)
@@ -138,12 +138,14 @@ public class GameRunning : IGameState, IGameEventProcessor
             KeyRelease(key);
         }
     }
-    public void MoveMovingBlocks()
+    /// <summary> Updates the blocks. </summary>
+    /// <returns> Void. </returns>
+    public void UpdateBlocks()
     {
         foreach (Block block in currentLevel.BlockContainer)
         {
             {
-                block.MoveMoving();
+                block.Update();
             }
         }
     }
@@ -171,7 +173,7 @@ public class GameRunning : IGameState, IGameEventProcessor
     public void UpdateState()
     {
         player.Move();
-        MoveMovingBlocks();
+        UpdateBlocks();
         FindAndRemoveDeadBlocks(currentLevel.BlockContainer);
     }
 
@@ -192,9 +194,12 @@ public class GameRunning : IGameState, IGameEventProcessor
         }
     }
 
-    private void FindAndRemoveDeadBlocks(EntityContainer<Block> blocks) {
-        foreach (Block block in blocks) {
-            if (block.IsDead()) {
+    private void FindAndRemoveDeadBlocks(EntityContainer<Block> blocks)
+    {
+        foreach (Block block in blocks)
+        {
+            if (block.IsDead())
+            {
                 levelScore.IncrementScore(block.Value);
                 block.RemoveIfDead();
             }
