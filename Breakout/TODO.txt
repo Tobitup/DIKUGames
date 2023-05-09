@@ -1,0 +1,80 @@
+############ Rapport TING ##################################
+- You could add a bit of your understanding of the problem to the part about blocks
+- You should elaborate to really convince the reader that a mediator pattern is used here.
+- To avoid triggering your TA's (and possibly the external examiners OCD) I recomend that you keep the arrows straight in the UML diagram!
+- Having a black background confuses the reader. Is aggregation or composition used for the diamonds here? There is a functionality in UMLet to export the diagram. 
+- Perhaps you can include some SOLID to justify why this is a good design for level loading.
+- Clearly there are more interesting things you should elaborate on in design and implementation???????????????
+- Also state how you have fulfilled/Will fulfill R.4 - It would be easy to implement new blocks.
+
+- Evaluation
+    - Learning goals
+
+- Table of Responsibility
+- Table of Associations
+- Table of Attributes
+
+# PlayerReward
+- Explain in analysis
+- Explain test in evalution
+- Explain in design
+
+# Block
+- Explain in analysis
+- Explain test in evalution
+
+# Player
+- Explain in analysis
+- Explain test in evalution
+
+# LevelLoading
+- Explain test in evalution
+
+# Ball
+- Explain in analysis
+- Explain design
+- Explain implementation
+- Explain test in evalution
+
+# Statemachine ting 
+- Explain implementation of Statemachine
+- Explain design (short)
+- Explain test in evalution
+
+############ KODE TING ######################################
+- You have to handle invalid .txt files, if i remove a bit of level1.txt it will throw a nasty exception. 
+- Fix 4.2.2, folder called EntityTests
+- Remove compiler warnings and print statements you have used in your own debugging
+- Remove empty and commented out files and comments
+
+- implement ball
+
+- Change level by keypress (Statemachine)
+
+- Clean up code !!! :)
+
+############ TEST TING #####################################
+- 4 player tests fails due to FileNotFoundException, please fix this. See my tip on referencing 
+
+- Just testing on the type resulting from reading data does not really convince the reader that your LevelLoading works correctly. 
+Try loading in a small sample input.txt and see if it is stored data structures exactly as expected. 
+
+- As we have discussed in class before be careful when asserting not something. 
+Asserting that the player is not in the middle does not prove that the player has moved left. It could have moved right or up or whatever.
+
+- Create test for levelloading
+
+- Create StateTestFolder and test state implementation
+- Create EntityTest folder
+    - Test ball and collitionsdetection
+    - Test block
+
+- Create PointTest folder
+    - Test PlayerReward
+
+For resubmission of the code, please: ################################################
+  * Fix things mentioned under 'Tests', Especially refactor and create missing tests.
+  * Fix R.3 - Empty or invalid files do not crash the program
+
+
+#################### DONE PILE #####################################################################

@@ -6,7 +6,7 @@ namespace Breakout.Blocks;
 
 public abstract class Block : Entity
 {
-
+    public uint Value { get { return (uint)value; } }
     private int hitpoints;
 
     private int value;
@@ -32,6 +32,9 @@ public abstract class Block : Entity
     {
         hitpoints--;
     }
+    /// <summary> Update the status of special blocks </summary>
+    /// <return> Void. </return>
+    public virtual void Update()
 
     public virtual void Update()
     {
@@ -40,7 +43,7 @@ public abstract class Block : Entity
 
     /// <summary> Checks if a block has 0 or less Hitpoints, in which case it is dead. </summary>
     /// <return> Boolean value to indicate if the block is dead or not. </return>
-    public bool IsDead()
+    public virtual bool IsDead()
     {
         if (hitpoints <= 0)
         {
@@ -51,7 +54,7 @@ public abstract class Block : Entity
 
     /// <summary> Checks if a block IsDead and if true deletes the entity. </summary>
     /// <return> Void. </return>
-    public void RemoveIfDead()
+    public virtual void RemoveIfDead()
     {
         if (IsDead())
         {
