@@ -28,7 +28,22 @@ public class Level
         this.levelMap = levelMap;
         GenerateEntityContainer();
     }
-
+    /// <summary> Loops through metadata to find out which type of block a character is
+    /// connected to  </summary>
+    /// <param name="character"> The character as a string </param>
+    /// <returns> The type of the block as a string  </returns>
+    private string GetBlockType(string character)
+    {
+        string blocktype = "Normal";
+        foreach (string value in metaData.Values)
+        {
+            if (character == value)
+            {
+                blocktype = metaData.FirstOrDefault(x => x.Value == value).Key;
+            }
+        }
+        return blocktype;
+    }
     /// <summary> Generates an entity container from the level map. </summary>
     /// <returns> Void. </returns>
     private void GenerateEntityContainer()
@@ -43,26 +58,9 @@ public class Level
                 {
                     string imagePath = Path.Combine
                     (LevelLoader.MAIN_PATH, "Assets", "Images", legendData[character]);
-                    bool specialBlockFound = false;
-                    foreach (string value in metaData.Values)
-                    {
-                        if (character == value)
-                        {   // Special blocktype was found for the character
-                            // Make block of that type
-                            string blocktype = metaData.FirstOrDefault(x => x.Value == value).Key;
-                            blockContainer.AddEntity(BlockFactory.CreateNewBlock
+                    string blocktype = GetBlockType(character);
+                    blockContainer.AddEntity(BlockFactory.CreateNewBlock
                             (blocktype, new Vec2I(i, j), new Image(imagePath)));
-                            specialBlockFound = true;
-                            break;
-                        }
-                    }
-                    if (!specialBlockFound)
-                    {
-                        // Make normal block if no special blocktype was found in dictionary
-                        // for the character
-                        blockContainer.AddEntity(BlockFactory.CreateNewBlock
-                        ("Normal", new Vec2I(i, j), new Image(imagePath)));
-                    }
                 }
             }
         }
