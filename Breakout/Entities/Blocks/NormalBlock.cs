@@ -4,8 +4,7 @@ using DIKUArcade.Entities;
 
 namespace Breakout.Blocks;
 
-public class NormalBlock : Entity, IBlock
-{
+public class NormalBlock : Entity, IBlock {
 
     private int hitpoints;
 

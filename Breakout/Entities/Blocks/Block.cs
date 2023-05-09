@@ -3,9 +3,8 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
 
 namespace Breakout.Blocks;
-
-public abstract class Block : Entity
-{
+/*
+public abstract class Block : Entity {
     public uint Value { get { return (uint)value; } }
     private int hitpoints;
 
@@ -34,7 +33,6 @@ public abstract class Block : Entity
     }
     /// <summary> Update the status of special blocks </summary>
     /// <return> Void. </return>
-    public virtual void Update()
 
     public virtual void Update()
     {
@@ -62,4 +60,4 @@ public abstract class Block : Entity
         }
 
     }
-}
+}*/

@@ -142,10 +142,9 @@ public class GameRunning : IGameState, IGameEventProcessor
     /// <returns> Void. </returns>
     public void UpdateBlocks()
     {
-        foreach (Entity block in currentLevel.BlockContainer)
+        foreach (IBlock block in currentLevel.BlockContainer)
         {
             {
-                block.Update();
                 block.Update();
             }
         }
@@ -195,9 +194,9 @@ public class GameRunning : IGameState, IGameEventProcessor
         }
     }
 
-    private void FindAndRemoveDeadBlocks(EntityContainer<Block> blocks)
+    private void FindAndRemoveDeadBlocks(EntityContainer<Entity> blocks)
     {
-        foreach (Block block in blocks)
+        foreach (IBlock block in blocks)
         {
             if (block.IsDead())
             {
