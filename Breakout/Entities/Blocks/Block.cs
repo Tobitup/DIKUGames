@@ -4,7 +4,8 @@ using DIKUArcade.Entities;
 
 namespace Breakout.Blocks;
 
-public class Block : Entity { 
+public abstract class Block : Entity
+{
 
     public uint Value {get {return (uint)value;}}
     private int hitpoints;
@@ -15,26 +16,36 @@ public class Block : Entity {
     ///           and image. </summary>
     /// <param name="positionInArray"> The position of the block in the array. </param>
     /// <param name="image"> The image to be used for the block. </param>
-    /// <return> Returns a Block with a given size, possition and image. </return>
-    public Block(Vec2I positionInArray, IBaseImage image) : base(new StationaryShape(
-                new Vec2F(positionInArray.X * 0.083f - 0.04f, positionInArray.Y * 0.041f + 0.40f), 
-                                                            new Vec2F(0.08f, 0.035f)), image) {
+    /// <return> Returns a Block with a given size, position and image. </return>
+    public Block(Vec2I positionInArray, IBaseImage image) : base(new DynamicShape(
+                new Vec2F(positionInArray.X * 0.083f - 0.04f, positionInArray.Y * 0.041f + 0.40f),
+                                                            new Vec2F(0.08f, 0.035f)), image)
+    {
         // Temporary HitPoints for Blocks.
         hitpoints = 123;
         // Temporary Value for Blocks.
         value = 123;
     }
-    
+
     /// <summary> Reduces the hitpoints of a block by 1. </summary>
     /// <return> Void. </return>
-    public void TakeDamage() {
+    public virtual void TakeDamage()
+    {
         hitpoints--;
+    }
+    /// <summary> Move if it is a moving block </summary>
+    /// <return> Void. </return>
+    public virtual void MoveMoving()
+    {
+        //do nothing
     }
 
     /// <summary> Checks if a block has 0 or less Hitpoints, in which case it is dead. </summary>
     /// <return> Boolean value to indicate if the block is dead or not. </return>
-    public bool IsDead() {
-        if (hitpoints <= 0) {
+    public bool IsDead()
+    {
+        if (hitpoints <= 0)
+        {
             return true;
         }
         return false;
@@ -42,9 +53,12 @@ public class Block : Entity {
 
     /// <summary> Checks if a block IsDead and if true deletes the entity. </summary>
     /// <return> Void. </return>
-    public void Remove(){
-        if (IsDead()) {
-        DeleteEntity();
+    public void RemoveIfDead()
+    {
+        if (IsDead())
+        {
+            DeleteEntity();
         }
+
     }
 }
