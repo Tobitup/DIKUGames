@@ -34,10 +34,7 @@ public class Moving : Entity, IBlock
         value = 1;
     }
 
-    public override void Update()
-    {
-        MoveMoving();
-    }
+  
     public void MoveMoving()
     {
         if (this.Shape.Position.X >= 1.0f - Shape.Extent.X)

@@ -4,8 +4,7 @@ using DIKUArcade.Entities;
 
 namespace Breakout.Blocks;
 
-public class Unbreakable : Entity, IBlock
-{
+public class Unbreakable : Entity, IBlock {
 
     private int hitpoints;
 

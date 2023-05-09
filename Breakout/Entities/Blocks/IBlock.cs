@@ -1,7 +1,8 @@
+using DIKUArcade.Entities;
+
 namespace Breakout.Blocks
 {
-    public interface IBlock
-    {
+    public interface IBlock {
         uint Value { get; }
         void TakeDamage();
         void Update();
