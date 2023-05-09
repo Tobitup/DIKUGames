@@ -15,19 +15,23 @@
 - Table of Attributes
 
 # PlayerReward
+- Explain in analysis
 - Explain test in evalution
 - Explain in design
 
 # Block
+- Explain in analysis
 - Explain test in evalution
 
 # Player
+- Explain in analysis
 - Explain test in evalution
 
 # LevelLoading
 - Explain test in evalution
 
 # Ball
+- Explain in analysis
 - Explain design
 - Explain implementation
 - Explain test in evalution
