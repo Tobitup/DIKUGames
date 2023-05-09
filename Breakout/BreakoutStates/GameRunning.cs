@@ -9,6 +9,7 @@ using System.IO;
 using System.Collections.Generic;
 using Breakout.Player;
 using Breakout.Levels;
+using Breakout.PlayerScore;
 using Breakout.Blocks;
 
 namespace Breakout.BreakoutStates;
@@ -21,6 +22,8 @@ public class GameRunning : IGameState, IGameEventProcessor
     private Level currentLevel;
     private LevelLoader levelLoader;
     private static GameRunning instance = null;
+
+    private Score levelScore;
 
     /// <summary> Gets the singleton instance of the GameRunning state. </summary>
     /// <returns> The GameRunning instance. </returns>
@@ -52,6 +55,8 @@ public class GameRunning : IGameState, IGameEventProcessor
         currentLevel = levelLoader.Level;
         eventBus = BreakoutBus.GetBus();
         eventBus.Subscribe(GameEventType.PlayerEvent, this);
+
+        levelScore = new Score();
     }
 
     /// <summary> Switches to a new level by setting the current level to the loaded level. 
@@ -97,7 +102,7 @@ public class GameRunning : IGameState, IGameEventProcessor
 
     /// <summary> Responds to a key release by registering a game event to stop the given player 
     ///           movement. </summary>
-    /// <param name="key"> A KeyboardKey enum that represents the key that was released. </param>
+        /// <param name="key"> A KeyboardKey enum that represents the key that was released. </param>
     private void KeyRelease(KeyboardKey key)
     {
         switch (key)
@@ -150,6 +155,7 @@ public class GameRunning : IGameState, IGameEventProcessor
         backGroundImage.RenderEntity();
         player.Render();
         currentLevel.BlockContainer.RenderEntities();
+        levelScore.RenderText();
     }
 
     /// <summary> Resets the state of the game paused screen to its initial state. </summary>
@@ -166,6 +172,7 @@ public class GameRunning : IGameState, IGameEventProcessor
     {
         player.Move();
         MoveMovingBlocks();
+        FindAndRemoveDeadBlocks(currentLevel.BlockContainer);
     }
 
     /// <summary> Processes a GameEvent by checking its type and message, and performs the 
@@ -184,4 +191,14 @@ public class GameRunning : IGameState, IGameEventProcessor
             }
         }
     }
+
+    private void FindAndRemoveDeadBlocks(EntityContainer<Block> blocks) {
+        foreach (Block block in blocks) {
+            if (block.IsDead()) {
+                levelScore.IncrementScore(block.Value);
+                block.Remove();
+            }
+        }
+    }
+
 }

@@ -7,6 +7,7 @@ namespace Breakout.Blocks;
 public abstract class Block : Entity
 {
 
+    public uint Value {get {return (uint)value;}}
     private int hitpoints;
 
     private int value;
