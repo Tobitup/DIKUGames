@@ -9,8 +9,8 @@ public class Level
 {
     private Dictionary<string, string> metaData;
     private Dictionary<string, string> legendData;
-    private EntityContainer<Block> blockContainer = new EntityContainer<Block>();
-    public EntityContainer<Block> BlockContainer { get { return blockContainer; } }
+    private EntityContainer<Entity> blockContainer = new EntityContainer<Entity>();
+    public EntityContainer<Entity> BlockContainer { get { return blockContainer; } }
     private string[,] levelMap;
 
     /// <summary> Initializes a new instance of the Level class with the specified metadata, 

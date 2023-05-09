@@ -28,13 +28,12 @@ public abstract class Block : Entity
 
     /// <summary> Reduces the hitpoints of a block by 1. </summary>
     /// <return> Void. </return>
-    public virtual void TakeDamage()
+    public void TakeDamage()
     {
         hitpoints--;
     }
-    /// <summary> Move if it is a moving block </summary>
-    /// <return> Void. </return>
-    public virtual void MoveMoving()
+
+    public virtual void Update()
     {
         //do nothing
     }

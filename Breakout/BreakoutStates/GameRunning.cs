@@ -133,12 +133,12 @@ public class GameRunning : IGameState, IGameEventProcessor
             KeyRelease(key);
         }
     }
-    public void MoveMovingBlocks()
+    public void UpdateSpecialBlocks()
     {
-        foreach (Block block in currentLevel.BlockContainer)
+        foreach (Entity block in currentLevel.BlockContainer)
         {
             {
-                block.MoveMoving();
+                block.Update();
             }
         }
     }
@@ -165,7 +165,7 @@ public class GameRunning : IGameState, IGameEventProcessor
     public void UpdateState()
     {
         player.Move();
-        MoveMovingBlocks();
+        UpdateSpecialBlocks();
     }
 
     /// <summary> Processes a GameEvent by checking its type and message, and performs the 
