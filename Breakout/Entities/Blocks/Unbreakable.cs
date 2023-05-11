@@ -19,8 +19,7 @@ public class Unbreakable : Entity, IBlock {
     /// <return> Returns a Block with a given size, position and image. </return>
     public Unbreakable(Vec2I positionInArray, IBaseImage image) : base(new DynamicShape(
                 new Vec2F(positionInArray.X * 0.083f - 0.04f, positionInArray.Y * 0.041f + 0.40f),
-                                                            new Vec2F(0.08f, 0.035f)), image)
-    {
+                                                            new Vec2F(0.08f, 0.035f)), image) {
         //placeholder hp
         hitpoints = 1;
         //placeholder value
@@ -29,22 +28,18 @@ public class Unbreakable : Entity, IBlock {
 
     /// <summary> Makes sure unbreakable blocks do not break </summary>
     /// <return> Void. </return>
-    public void TakeDamage()
-    {
+    public void TakeDamage() {
         //do nothing
     }
 
-    public virtual void Update()
-    {
+    public virtual void Update() {
         //do nothing
     }
 
     /// <summary> Checks if a block has 0 or less Hitpoints, in which case it is dead. </summary>
     /// <return> Boolean value to indicate if the block is dead or not. </return>
-    public bool IsDead()
-    {
-        if (hitpoints <= 0)
-        {
+    public bool IsDead() {
+        if (hitpoints <= 0) {
             return true;
         }
         return false;
@@ -52,12 +47,9 @@ public class Unbreakable : Entity, IBlock {
 
     /// <summary> Checks if a block IsDead and if true deletes the entity. </summary>
     /// <return> Void. </return>
-    public void RemoveIfDead()
-    {
-        if (IsDead())
-        {
+    public void RemoveIfDead() {
+        if (IsDead()) {
             DeleteEntity();
         }
-
     }
 }
