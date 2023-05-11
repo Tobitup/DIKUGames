@@ -1,3 +1,5 @@
+using DIKUArcade.Events;
+
 namespace Breakout.Levels;
 public static class LevelTransformer
 {
@@ -6,10 +8,8 @@ public static class LevelTransformer
     /// <param name="level"> The SelectLevel enum value to transform. </param>
     /// <returns> The file name string representation of the specified SelectLevel enum value. 
     /// </returns>
-    public static string TransformLevelToString(SelectLevel level)
-    {
-        switch (level)
-        {
+    public static string TransformLevelToString(SelectLevel level) {
+        switch (level) {
             case SelectLevel.central_mass:
                 return "central-mass.txt";
             case SelectLevel.columns:
@@ -26,6 +26,34 @@ public static class LevelTransformer
                 return "level4.txt";
             default:
                 throw new ArgumentException("ERROR - Not a valid stringlevel");
+        }
+    }
+
+    public static SelectLevel TransformIntToLevel(int numericLevel) {
+        switch (numericLevel) {
+            case 1:
+                return SelectLevel.level1;
+            case 2:
+                return SelectLevel.level2;
+            case 3:
+                return SelectLevel.level3;
+            case 4:
+                return SelectLevel.level4;
+            // BONUS REMOVE IN FINAL VERSION FOR TA TO TEST LEVELS
+            case 5:
+                return SelectLevel.central_mass;
+            case 6:
+                return SelectLevel.columns;
+            case 7: 
+                return SelectLevel.wall;
+            default:
+                BreakoutBus.GetBus().RegisterEvent(
+                                    new GameEvent {
+                                        EventType = GameEventType.GameStateEvent, 
+                                        Message = "CHANGE_STATE",
+                                        StringArg1 = "MENU"
+                                    });
+                return SelectLevel.level1;
         }
     }
 }

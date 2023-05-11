@@ -32,7 +32,7 @@ public class LevelLoader {
     /// <returns> A loaded Level object if the raw file data is valid, an empty Level object 
     ///           otherwise.</returns>
     private Level AttemptLevelLoad(string[] rawFileData) {
-        // Load level if data else load empty level
+        // Load level if data is valid else load empty level
         if ((rawFileData.Length != 0) && (FileReader.IsDataValid(rawFileData))) {
             levelParser = new LevelParser(rawFileData);
             return levelParser.GenerateLevel(); 

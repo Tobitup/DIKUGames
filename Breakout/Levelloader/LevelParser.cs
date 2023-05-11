@@ -9,19 +9,26 @@ public class LevelParser {
     ///           findLevelMap() data. </summary>
     /// <returns> A new Level object. </returns>
     public Level GenerateLevel() {
-        return new Level(findMetaData(), findLegendData(), findLevelMap());
+        return new Level(parseMetaData(), parseLegendData(), parseLevelMap());
     }
 
     /// <summary> Parses the level map data from the raw text lines. </summary>
     /// <returns> A 2D array of strings representing the level map. </returns>
-    private string[,] findLevelMap() {
-        string[,] levelMap = new string[25,12];
-        int mapBegins = findTag("Map").Item1;
+    private string[,] parseLevelMap() {
+        (int, int) mapLocation = findTag("Map");
 
-        if (mapBegins != 0) {
-            for (int i = 0; i < 25; i++) {
-                for (int j = 0; j < 12; j++) {
-                    levelMap[i,j] = rawLinesFromFile[mapBegins+i][j].ToString();
+        // Default empty map
+        string[,] levelMap = initEmptyMap(12, 25);
+
+        if (mapLocation.Item1 != 0) {
+
+            int mapHeight = mapLocation.Item2-mapLocation.Item1;
+            int mapWidht = rawLinesFromFile[mapLocation.Item1].Count();
+
+            for (int i = 0; i < mapHeight; i++) {
+                for (int j = 0; j < mapWidht; j++) {
+                    //levelMap[i,j] = tryReadingData(mapBegins, (i,j));
+                    levelMap[i,j] = rawLinesFromFile[mapLocation.Item1+i][j].ToString();
                 }
             }
         }
@@ -30,7 +37,7 @@ public class LevelParser {
 
     /// <summary> Parses the metadata from the raw text lines. </summary>
     /// <returns> A dictionary of key-value pairs representing the metadata. </returns>
-    private Dictionary<string, string> findMetaData() {
+    private Dictionary<string, string> parseMetaData() {
         (int,int) metaTagLocation = findTag("Meta");
         Dictionary<string, string> metaDataDictionary = new Dictionary<string, string> {};
 
@@ -43,7 +50,7 @@ public class LevelParser {
 
     /// <summary> Parses the legend data from the raw text lines. </summary>
     /// <returns> A dictionary of key-value pairs representing the legend data. </returns>
-    private Dictionary<string, string> findLegendData() {
+    private Dictionary<string, string> parseLegendData() {
         (int,int) legendTagLocation = findTag("Legend");
         Dictionary<string, string> legendDataDictionary = new Dictionary<string, string> {};
 
@@ -64,6 +71,18 @@ public class LevelParser {
         int tagBeginsAt = Array.IndexOf(rawLinesFromFile, $"{tag}:") + 1;
         int tagEndsAt = Array.IndexOf(rawLinesFromFile, $"{tag}/");
         return (tagBeginsAt,tagEndsAt);
+    }
+
+    private string[,] initEmptyMap(int width, int height) {
+        string[,] map = new string [height,width];
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                map[i,j] = "-";
+            }
+        }
+
+        return map;
     }
 
 }
