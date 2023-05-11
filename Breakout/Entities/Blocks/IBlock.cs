@@ -8,5 +8,6 @@ namespace Breakout.Blocks
         void Update();
         bool IsDead();
         void RemoveIfDead();
+        Shape Shape {get;}
     }
 }

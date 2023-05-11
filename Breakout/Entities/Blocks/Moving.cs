@@ -19,6 +19,9 @@ public class Moving : Entity, IBlock
     {
         get { return movementSpeed; }
     }
+
+    public Shape GetShape {get {return base.Shape;}}
+
     /// <summary> Initializes a new instance of the Block class with the specified position 
     ///           and image. </summary>
     /// <param name="positionInArray"> The position of the block in the array. </param>
@@ -26,8 +29,7 @@ public class Moving : Entity, IBlock
     /// <return> Returns a Block with a given size, position and image. </return>
     public Moving(Vec2I positionInArray, IBaseImage image) : base(new DynamicShape(
                 new Vec2F(positionInArray.X * 0.083f - 0.04f, positionInArray.Y * 0.041f + 0.40f),
-                                                            new Vec2F(0.08f, 0.035f)), image)
-    {
+                                                            new Vec2F(0.08f, 0.035f)), image) {
         //placeholder hp
         hitpoints = 1;
         //placeholder value
@@ -35,25 +37,18 @@ public class Moving : Entity, IBlock
     }
 
   
-    public void MoveMoving()
-    {
-        if (this.Shape.Position.X >= 1.0f - Shape.Extent.X)
-        {
+    public void MoveMoving() {
+        if (this.Shape.Position.X >= 1.0f - Shape.Extent.X) {
             movingRight = false;
-        }
-        else if (this.Shape.Position.X <= 0.0f)
-        {
+        } else if (this.Shape.Position.X <= 0.0f) {
             movingRight = true;
         }
-        if (movingRight)
-        {
+        if (movingRight) {
             float currentPosition = this.Shape.Position.X;
             float newPosition = currentPosition + movementSpeed;
             this.Shape.Position.X = newPosition;
 
-        }
-        else //moving left
-        {
+        } else /*moving left*/ {
             float currentPosition = this.Shape.Position.X;
             float newPosition = currentPosition - movementSpeed;
             this.Shape.Position.X = newPosition;
@@ -62,21 +57,17 @@ public class Moving : Entity, IBlock
 
     /// <summary> Reduces the hitpoints of a block by 1. </summary>
     /// <return> Void. </return>
-    public void TakeDamage()
-    {
+    public void TakeDamage() {
         hitpoints--;
     }
-    public virtual void Update()
-    {
+    public virtual void Update() {
         MoveMoving();
     }
 
     /// <summary> Checks if a block has 0 or less Hitpoints, in which case it is dead. </summary>
     /// <return> Boolean value to indicate if the block is dead or not. </return>
-    public bool IsDead()
-    {
-        if (hitpoints <= 0)
-        {
+    public bool IsDead() {
+        if (hitpoints <= 0) {
             return true;
         }
         return false;
@@ -84,12 +75,9 @@ public class Moving : Entity, IBlock
 
     /// <summary> Checks if a block IsDead and if true deletes the entity. </summary>
     /// <return> Void. </return>
-    public void RemoveIfDead()
-    {
-        if (IsDead())
-        {
+    public void RemoveIfDead() {
+        if (IsDead()) {
             DeleteEntity();
         }
-
     }
 }

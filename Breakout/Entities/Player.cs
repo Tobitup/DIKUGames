@@ -21,6 +21,8 @@ public class Player : IGameEventProcessor {
     private float moveRight = 0.0f;
     const float MOVEMENT_SPEED = 0.02f;
 
+    public Entity GetEntity() => entity;
+
     /// <summary> Creates a new Player object with the specified shape and image. </summary>
     /// <param name="shape"> The shape of the player's game object. </param>
     /// <param name="image"> The image used to render the player's game object. </param>
@@ -46,7 +48,7 @@ public class Player : IGameEventProcessor {
     private void SetMoveLeft(bool val) {
         if (val) {
             moveLeft -= MOVEMENT_SPEED;
-        } else {
+        } else { 
             moveLeft = 0f;
         }
         UpdateDirection(moveLeft);

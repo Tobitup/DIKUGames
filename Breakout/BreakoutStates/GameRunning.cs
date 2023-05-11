@@ -11,6 +11,7 @@ using Breakout.Player;
 using Breakout.Levels;
 using Breakout.PlayerScore;
 using Breakout.Blocks;
+using Breakout.BallClass;
 
 namespace Breakout.BreakoutStates;
 
@@ -19,6 +20,9 @@ public class GameRunning : IGameState, IGameEventProcessor
     private GameEventBus eventBus;
     private Entity backGroundImage;
     private Breakout.Player.Player player;
+    //private Entity ball;
+    private EntityContainer<Ball> ballContainer;
+    private IBaseImage ballImage;
     private Level currentLevel;
     private int numericLevel = 1;
     private LevelLoader levelLoader;
@@ -44,9 +48,23 @@ public class GameRunning : IGameState, IGameEventProcessor
     private void InitializeGameState()
     {
         player = new Player.Player(
-                            new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.22f, 0.03f)),
+                            new DynamicShape(new Vec2F(0.4f, 0.1f), new Vec2F(0.22f, 0.025f)),
                             new Image(Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Images",
                                                                                     "player.png")));
+
+        ballContainer = new EntityContainer<Ball>();
+        ballImage = new Image(Path.Combine(LevelLoader.MAIN_PATH, "Assets",
+                                                                "Images", "ball.png"));
+        //ballContainer.AddEntity(new Ball(new Vec2F((0.45f),(0.22f)),ballImage));
+        /* ball = new Ball.Ball(new Vec2F((0.45f),(0.22f)),new Image(Path.Combine(
+                                                                LevelLoader.MAIN_PATH, "Assets",
+                                                                "Images", "ball.png"))); */
+
+        Ball newBall = new Ball(
+            new DynamicShape(new Vec2F(0.45f,0.22f), new Vec2F(0.03f, 0.03f), new Vec2F(0.005f, 0.009f) ),
+            ballImage
+            );
+        ballContainer.AddEntity(newBall);
 
         backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f),
                                         new Vec2F(1.0f, 1.0f)), new Image(Path.Combine(
@@ -151,14 +169,69 @@ public class GameRunning : IGameState, IGameEventProcessor
     }
     /// <summary> Updates the blocks. </summary>
     /// <returns> Void. </returns>
-    public void UpdateBlocks()
-    {
-        foreach (IBlock block in currentLevel.BlockContainer)
-        {
+    public void UpdateBlocks() {
+        foreach (IBlock block in currentLevel.BlockContainer) {
             {
                 block.Update();
             }
         }
+    }
+
+    private void IterateBlocks() {
+        ballContainer.Iterate(ball => {
+            var activeBall = ball.Shape.AsDynamicShape();
+            var ballPlayerDetect = 
+                            CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.Shape);
+
+            if (ballPlayerDetect.Collision) {
+                // Checks for Horizontal Collision.
+                if (ballPlayerDetect.CollisionDir == CollisionDirection.CollisionDirRight ||  
+                    ballPlayerDetect.CollisionDir == CollisionDirection.CollisionDirLeft) {
+                    var newDirection = activeBall.Direction = new Vec2F(
+                        activeBall.Direction.X*(-1),
+                        activeBall.Direction.Y);
+                    ball.ChangeDirection(newDirection);
+                }
+                // Checks For Vertical Collision.
+                if (ballPlayerDetect.CollisionDir == CollisionDirection.CollisionDirUp || 
+                    ballPlayerDetect.CollisionDir == CollisionDirection.CollisionDirDown) {
+                    var newDirection = activeBall.Direction = new Vec2F(
+                        activeBall.Direction.X,
+                        activeBall.Direction.Y*(-1));
+                    ball.ChangeDirection(newDirection);
+                }
+            } else {
+                foreach (IBlock block in currentLevel.BlockContainer) {
+                //currentLevel.BlockContainer.Iterate(block => {
+                    var ballBlockDetect = 
+                                CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), block.Shape);
+
+                    if (ballBlockDetect.Collision) {
+                        if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirRight || 
+                            ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirLeft) {
+                        var newDirection = activeBall.Direction = new Vec2F(
+                            activeBall.Direction.X*(-1),
+                            activeBall.Direction.Y);
+                        ball.ChangeDirection(newDirection);
+                        block.TakeDamage();
+                        block.RemoveIfDead();
+                        block.Update();
+                    }
+                    if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirUp || 
+                        ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirDown) {
+                        var newDirection = activeBall.Direction = new Vec2F(
+                            activeBall.Direction.X,
+                            activeBall.Direction.Y*(-1));
+                        ball.ChangeDirection(newDirection);
+                        block.TakeDamage();
+                        
+                        block.Update();
+                    }
+                }
+            //});
+            }
+            ball.Move();   
+        }});
     }
 
     /// <summary> Renders the current game state, with background and menu buttons. </summary>
@@ -169,6 +242,7 @@ public class GameRunning : IGameState, IGameEventProcessor
         player.Render();
         currentLevel.BlockContainer.RenderEntities();
         levelScore.RenderText();
+        ballContainer.RenderEntities();
     }
 
     /// <summary> Resets the state of the game paused screen to its initial state. </summary>
@@ -184,6 +258,7 @@ public class GameRunning : IGameState, IGameEventProcessor
     public void UpdateState()
     {
         player.Move();
+        IterateBlocks();
         UpdateBlocks();
         FindAndRemoveDeadBlocks(currentLevel.BlockContainer);
     }
@@ -207,7 +282,7 @@ public class GameRunning : IGameState, IGameEventProcessor
 
     private void FindAndRemoveDeadBlocks(EntityContainer<Entity> blocks)
     {
-        foreach (IBlock block in blocks)
+        foreach (IBlock block in currentLevel.BlockContainer)
         {
             if (block.IsDead())
             {
