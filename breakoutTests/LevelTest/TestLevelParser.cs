@@ -20,46 +20,70 @@ public class TestLevelParser {
 
     [SetUp]
     public void SetUp() {
-        
+
     }
 
-
-    // Test that the right input in ReadFile will result in a string array
     [Test]
-    public void TestReadFile() {
+    public void TestCorrectLegendData() {
     /// ACT
-        string[] testValue = FileReader.ReadFile(
+    string[] readData = FileReader.ReadFile(
                                     Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
                                                                             "Level1.txt"));
+
+    LevelParser levelParser = new LevelParser(readData);
+
+    Dictionary<string, string> expectedLegendData;
+    expectedLegendData.Add("%", "blue-block.png");
+    expectedLegendData.Add("0", "grey-block.png");
+    expectedLegendData.Add("1", "orange-block.png");
+    expectedLegendData.Add("a", "purple-block.png");
+
+    Dictionary<string, string> legendData = levelParser.parseLegendData();
+
     /// ASSERT
-        Assert.That(testValue.GetType(), Is.EqualTo(typeof(string[])));
+    Assert.That(legendData, Is.EqualTo(expectedLegendData));
     }
 
-    // Test that the wrong file input in ReadFile will result in empty string array
     [Test]
-    public void ReadFile_ThrowsFileNotFoundException() {
+    public void TestCorrectMetaData() {
     /// ACT
-        string invalidFilePath = Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
-                                                                            "Level8.txt");
+    string[] readData = FileReader.ReadFile(
+                                    Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
+                                                                            "Level1.txt"));
+
+    LevelParser levelParser = new LevelParser(readData);
+
+    Dictionary<string, string> expectedMetaData;
+    expectedLegendData.Add("Name", "LEVEL 1");
+    expectedLegendData.Add("Time", "300");
+    expectedLegendData.Add("Hardened", "#");
+    expectedLegendData.Add("PowerUp", "2");
+
+    Dictionary<string, string> metaData = levelParser.parseMetaData();
+
     /// ASSERT
-        Assert.That(FileReader.ReadFile(invalidFilePath), Is.EqualTo(new string[0]));
+    Assert.That(legendData, Is.EqualTo(expectedMetaData));
     }
 
-
-
-    /// TEST invalid files
-
-    /// EXAMPLE TESTING FOR READING A SPECIFIC LEVEL
     [Test]
-    public void ReadFile_ThrowsFileNotFoundException() {
+    public void TestCorrectMetaData() {
     /// ACT
-    string invalidFilePath = Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
-                                                                            "Level8.txt");
+    string[] readData = FileReader.ReadFile(
+                                    Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
+                                                                            "Level1.txt"));
+
+    LevelParser levelParser = new LevelParser(readData);
+
+    Dictionary<string, string> expectedMetaData;
+    expectedLegendData.Add("Name", "LEVEL 1");
+    expectedLegendData.Add("Time", "300");
+    expectedLegendData.Add("Hardened", "#");
+    expectedLegendData.Add("PowerUp", "2");
+
+    Dictionary<string, string> metaData = levelParser.parseMetaData();
 
     /// ASSERT
-    Assert.That(FileReader.ReadFile(invalidFilePath), Is.EqualTo(new string[0]));
+    Assert.That(legendData, Is.EqualTo(expectedMetaData));
     }
-
-
-
 }
+
