@@ -20,6 +20,7 @@ public class GameRunning : IGameState, IGameEventProcessor
     private Entity backGroundImage;
     private Breakout.Player.Player player;
     private Level currentLevel;
+    private int numericLevel = 1;
     private LevelLoader levelLoader;
     private static GameRunning instance = null;
 
@@ -51,12 +52,14 @@ public class GameRunning : IGameState, IGameEventProcessor
                                         new Vec2F(1.0f, 1.0f)), new Image(Path.Combine(
                                                                 LevelLoader.MAIN_PATH, "Assets",
                                                                 "Images", "SpaceBackground.png")));
-        levelLoader = new LevelLoader(SelectLevel.level4);
+        levelLoader = new LevelLoader(SelectLevel.level1);
         currentLevel = levelLoader.Level;
         eventBus = BreakoutBus.GetBus();
         eventBus.Subscribe(GameEventType.PlayerEvent, this);
 
         levelScore = new Score();
+
+        numericLevel = 1;
     }
 
     /// <summary> Switches to a new level by setting the current level to the loaded level. 
@@ -97,7 +100,15 @@ public class GameRunning : IGameState, IGameEventProcessor
                     Message = "MOVE_RIGHT"
                 });
                 break;
+            case KeyboardKey.Up:
+                incrementLevel();
+                break;
         }
+    }
+
+    private void incrementLevel() {
+        numericLevel += 1;
+        SwitchLevel(LevelTransformer.TransformIntToLevel(numericLevel));
     }
 
     /// <summary> Responds to a key release by registering a game event to stop the given player 
