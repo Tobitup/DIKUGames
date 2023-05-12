@@ -31,6 +31,8 @@ public class NormalBlock : Entity, IBlock {
         System.Console.WriteLine(hitpoints);
         hitpoints--;
         System.Console.WriteLine(hitpoints);
+
+        RemoveIfDead();
     }
 
     public virtual void Update() {

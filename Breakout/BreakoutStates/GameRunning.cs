@@ -284,12 +284,16 @@ public class GameRunning : IGameState, IGameEventProcessor
     {
         foreach (IBlock block in currentLevel.BlockContainer)
         {
-            if (block.IsDead())
-            {
+            if (block.IsDead()) {
                 levelScore.IncrementScore(block.Value);
-                block.RemoveIfDead();
             }
         }
+
+        currentLevel.BlockContainer.Iterate(block => {
+            if (block.IsDeleted()) {
+                block.DeleteEntity();
+            }
+        } );
     }
 
 }
