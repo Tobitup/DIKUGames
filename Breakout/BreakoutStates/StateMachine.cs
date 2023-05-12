@@ -20,9 +20,6 @@ public class StateMachine : IGameEventProcessor {
             case GameStateType.MainMenu:
                 ActiveState = MainMenu.GetInstance();
                 break;
-            /* case GameStateType.GameLost:
-                ActiveState = GameLost.GetInstance();
-                break; */
         }
     }
 
@@ -36,9 +33,6 @@ public class StateMachine : IGameEventProcessor {
                 case "GAME_PAUSED":
                     SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
                     break;
-                /* case "GAME_OVER":
-                    SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
-                    break; */
                 case "MENU":
                     SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
                     break;

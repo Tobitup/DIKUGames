@@ -26,7 +26,7 @@ namespace breakoutTests.TestPlayer;
         [SetUp]
         public void Init() {
             DIKUArcade.GUI.Window.CreateOpenGLContext();
-            // Condition check to assure a BreakoutBus is always initilized.
+            // Condition check, to assure a BreakoutBus is always initilized.
             if (!isBusInitilized) {
                 eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.PlayerEvent, 
                                     GameEventType.WindowEvent, GameEventType.GameStateEvent });
@@ -57,6 +57,7 @@ namespace breakoutTests.TestPlayer;
                     Message = "MOVE_LEFT_STOP" });
         /// ASSERT
             Assert.That(initialPos.X, Is.Not.EqualTo(player.Shape.Position.X));
+            Assert.Less((player.Shape.Position.X), (initialPos.X));
         }
 
         [Test]
@@ -76,6 +77,7 @@ namespace breakoutTests.TestPlayer;
                     Message = "MOVE_RIGHT_STOP" });
         /// ASSERT
             Assert.That(initialPos.X, Is.Not.EqualTo(player.Shape.Position.X));
+            Assert.Greater((player.Shape.Position.X), (initialPos.X));
         }
 
         [Test]
