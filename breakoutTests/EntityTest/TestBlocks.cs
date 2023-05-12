@@ -20,86 +20,149 @@ namespace breakoutTests.TestBlocks;
 
 [TestFixture]
     public class TestBlocks {
+
         
         private GameEventBus eventBus = Breakout.BreakoutBus.GetBus();
+        private EntityContainer<Entity> normalBlockContainer = new EntityContainer<Entity>();
+        private EntityContainer<Entity> unbreakableBlockContainer = new EntityContainer<Entity>();
+        private EntityContainer<Entity> movingBlockContainer = new EntityContainer<Entity>();
 
-       // [SetUp]
-        
+        [OneTimeSetUp]
+        public void Init() {
+            DIKUArcade.GUI.Window.CreateOpenGLContext();
+            string imagePath = Path.Combine
+                    (LevelLoader.MAIN_PATH, "Assets", "Images", "blue-block.png");
+            string normalBlockType = "Normal";
+            string unbreakableBlockType = "Unbreakable";
+            string movingBlockType = "Moving";
+    
+            normalBlockContainer.AddEntity(BlockFactory.CreateNewBlock
+                    (normalBlockType, new Vec2I(0, 0), new Image(imagePath)));
+
+            unbreakableBlockContainer.AddEntity(BlockFactory.CreateNewBlock
+                    (unbreakableBlockType, new Vec2I(0, 1), new Image(imagePath)));
+            
+            movingBlockContainer.AddEntity(BlockFactory.CreateNewBlock
+                    (movingBlockType, new Vec2I(1, 0), new Image(imagePath)));
+        }
+
 
         [Test]
         public void TestNormalBlockInizialized() {
         /// ARRANGE
-           
+            int blockCount;
         /// ACT
-           
+            blockCount = normalBlockContainer.CountEntities();
         /// ASSERT
-            
+            Assert.That(blockCount, Is.EqualTo(1));
         }
 
-         [Test]
+        [Test]
         public void TestNormalBlockTakeDmg() {
         /// ARRANGE
-           
+            int currentBlockHealth;
         /// ACT
            
         /// ASSERT
-            
-        }
-         [Test]
-        public void TestNormalBlockDie() {
-        /// ARRANGE
-           
-        /// ACT
-           
-        /// ASSERT
-            
+            foreach (IBlock block in normalBlockContainer) {
+                currentBlockHealth = block.HitPoints;
+                block.TakeDamage();
+                Assert.Less(block.HitPoints, currentBlockHealth);
+           }
         }
 
-         [Test]
-        public void TestMovingBlockInizialized() {
+        [Test]
+        public void TestNormalBlockDie() {
         /// ARRANGE
-           
+
         /// ACT
            
         /// ASSERT
-            
+            foreach (IBlock block in normalBlockContainer) {
+                block.TakeDamage();
+                block.TakeDamage();
+                block.TakeDamage();
+                Assert.That(block.IsDead(),Is.EqualTo(true));
+           }
         }
-         [Test]
+
+        [Test]
+        public void TestMovingBlockInizialized() {
+       /// ARRANGE
+            int blockCount;
+        /// ACT
+            blockCount = movingBlockContainer.CountEntities();
+        /// ASSERT
+            Assert.That(blockCount, Is.EqualTo(1));  
+        }
+        
+        [Test]
         public void TestMovingBlockTakeDmg() {
         /// ARRANGE
-           
+            int currentBlockHealth;
         /// ACT
            
         /// ASSERT
-            
+            foreach (IBlock block in movingBlockContainer) {
+                currentBlockHealth = block.HitPoints;
+                block.TakeDamage();
+                Assert.Less(block.HitPoints, currentBlockHealth);
+           }
         }
-         [Test]
+
+        [Test]
         public void TestMovingBlockDie() {
         /// ARRANGE
            
         /// ACT
            
         /// ASSERT
-            
+           foreach (IBlock block in movingBlockContainer) {
+                block.TakeDamage();
+                block.TakeDamage();
+                block.TakeDamage();
+                Assert.That(block.IsDead(),Is.EqualTo(true));
+           } 
         }
 
          [Test]
         public void TestUnbreakableBlockInizialized() {
         /// ARRANGE
-           
+            int blockCount;
         /// ACT
-           
+            blockCount = unbreakableBlockContainer.CountEntities();
         /// ASSERT
+            Assert.That(blockCount, Is.EqualTo(1));
             
         }
 
-         [Test]
-        public void TestUnbreakableBlock() {
+        [Test]
+        public void TestUnbreakableBlockTakeDmg() {
+        /// ARRANGE
+            int currentBlockHealth;
+        /// ACT
+           
+        /// ASSERT
+            foreach (IBlock block in unbreakableBlockContainer) {
+                currentBlockHealth = block.HitPoints;
+                block.TakeDamage();
+                Assert.That(block.HitPoints, Is.EqualTo(currentBlockHealth));
+           }
+            
+        }
+
+        [Test]
+        public void TestUnbreakableBlockDie() {
         /// ARRANGE
            
         /// ACT
            
         /// ASSERT
-            
+           foreach (IBlock block in unbreakableBlockContainer) {
+                block.TakeDamage();
+                block.TakeDamage();
+                block.TakeDamage();
+                Assert.That(block.IsDead(),Is.EqualTo(false));
+           } 
         }
     }

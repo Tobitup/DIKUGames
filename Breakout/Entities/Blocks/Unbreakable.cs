@@ -7,6 +7,7 @@ namespace Breakout.Blocks;
 public class Unbreakable : Entity, IBlock {
 
     private int hitpoints;
+    public int HitPoints {get {return hitpoints;}}
 
     private int value;
 

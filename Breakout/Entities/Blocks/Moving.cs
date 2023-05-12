@@ -8,6 +8,7 @@ public class Moving : Entity, IBlock
 {
 
     private int hitpoints;
+    public int HitPoints {get {return hitpoints;}}
 
     public uint Value { get { return (uint)value; } }
     private int value;

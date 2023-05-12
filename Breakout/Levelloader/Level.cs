@@ -61,7 +61,7 @@ public class Level
                     string blocktype = GetBlockType(character);
 
                     blockContainer.AddEntity(BlockFactory.CreateNewBlock
-                            (blocktype, new Vec2I(j, levelMap.GetLength(0)-i), new Image(imagePath)));
+                        (blocktype, new Vec2I(j, levelMap.GetLength(0)-i), new Image(imagePath)));
                 }
             }
         }

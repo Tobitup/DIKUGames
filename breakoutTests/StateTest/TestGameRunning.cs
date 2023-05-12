@@ -37,10 +37,4 @@ public class GameRunningTesting {
     public void TestInitialState() {
         Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameRunning>());
     }
-
-    // TODO
-    //  - Test for player existing + Check for correct spawn possition
-    //  - Test for Space Background being rendered
-    //  - Test for GameRunning.cs ProccessEvent (It does nothing currently)
-    //  - Test BlockContainer exists
 }

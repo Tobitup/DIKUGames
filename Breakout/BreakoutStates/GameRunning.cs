@@ -20,7 +20,6 @@ public class GameRunning : IGameState, IGameEventProcessor
     private GameEventBus eventBus;
     private Entity backGroundImage;
     private Breakout.Player.Player player;
-    //private Entity ball;
     private EntityContainer<Ball> ballContainer;
     private IBaseImage ballImage;
     private Level currentLevel;
@@ -55,15 +54,9 @@ public class GameRunning : IGameState, IGameEventProcessor
         ballContainer = new EntityContainer<Ball>();
         ballImage = new Image(Path.Combine(LevelLoader.MAIN_PATH, "Assets",
                                                                 "Images", "ball.png"));
-        //ballContainer.AddEntity(new Ball(new Vec2F((0.45f),(0.22f)),ballImage));
-        /* ball = new Ball.Ball(new Vec2F((0.45f),(0.22f)),new Image(Path.Combine(
-                                                                LevelLoader.MAIN_PATH, "Assets",
-                                                                "Images", "ball.png"))); */
-
         Ball newBall = new Ball(
-            new DynamicShape(new Vec2F(0.45f,0.22f), new Vec2F(0.03f, 0.03f), new Vec2F(0.005f, 0.009f) ),
-            ballImage
-            );
+            new DynamicShape(new Vec2F(0.45f,0.22f), 
+                            new Vec2F(0.03f, 0.03f), new Vec2F(0.005f, 0.009f) ), ballImage);
         ballContainer.AddEntity(newBall);
 
         backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f),
@@ -202,7 +195,6 @@ public class GameRunning : IGameState, IGameEventProcessor
                 }
             } else {
                 foreach (IBlock block in currentLevel.BlockContainer) {
-                //currentLevel.BlockContainer.Iterate(block => {
                     var ballBlockDetect = 
                                 CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), block.Shape);
 
@@ -228,7 +220,6 @@ public class GameRunning : IGameState, IGameEventProcessor
                         block.Update();
                     }
                 }
-            //});
             }
             ball.Move();   
         }});
@@ -274,7 +265,8 @@ public class GameRunning : IGameState, IGameEventProcessor
             switch (gameEvent.Message)
             {
                 case "Test":
-                    System.Console.WriteLine("Oh no");
+                    // Do nothing
+                    // Placeholder
                     break;
             }
         }

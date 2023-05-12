@@ -48,21 +48,4 @@ public class LevelTesting {
     /// ASSERT
         Assert.That(FileReader.ReadFile(invalidFilePath), Is.EqualTo(new string[0]));
     }
-
-
-    /// TEST invalid files
-
-    /// EXAMPLE TESTING FOR READING A SPECIFIC LEVEL
-    /* [Test]
-    public void ReadFile_ThrowsFileNotFoundException() {
-    /// ACT
-    string invalidFilePath = Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
-                                                                            "Level8.txt");
-
-    /// ASSERT
-    Assert.That(FileReader.ReadFile(invalidFilePath), Is.EqualTo(new string[0]));
-    } */
-
-
-
 }
