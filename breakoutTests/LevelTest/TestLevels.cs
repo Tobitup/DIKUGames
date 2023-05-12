@@ -25,10 +25,13 @@ public class LevelTesting {
     // Test that the right input in ReadFile will result in a string array
     [Test]
     public void TestReadFile() {
+    /// ARRANGE
+
     /// ACT
         string[] testValue = FileReader.ReadFile(
                                     Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
                                                                             "Level1.txt"));
+                                                                            
     /// ASSERT
         Assert.That(testValue.GetType(), Is.EqualTo(typeof(string[])));
     }
@@ -36,19 +39,21 @@ public class LevelTesting {
     // Test that the wrong file input in ReadFile will result in empty string array
     [Test]
     public void ReadFile_ThrowsFileNotFoundException() {
+    /// ARRANGE
+
     /// ACT
         string invalidFilePath = Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
                                                                             "Level8.txt");
+
     /// ASSERT
         Assert.That(FileReader.ReadFile(invalidFilePath), Is.EqualTo(new string[0]));
     }
 
 
-
     /// TEST invalid files
 
     /// EXAMPLE TESTING FOR READING A SPECIFIC LEVEL
-    [Test]
+    /* [Test]
     public void ReadFile_ThrowsFileNotFoundException() {
     /// ACT
     string invalidFilePath = Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
@@ -56,7 +61,7 @@ public class LevelTesting {
 
     /// ASSERT
     Assert.That(FileReader.ReadFile(invalidFilePath), Is.EqualTo(new string[0]));
-    }
+    } */
 
 
 

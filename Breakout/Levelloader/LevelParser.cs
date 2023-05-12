@@ -14,7 +14,7 @@ public class LevelParser {
 
     /// <summary> Parses the level map data from the raw text lines. </summary>
     /// <returns> A 2D array of strings representing the level map. </returns>
-    private string[,] parseLevelMap() {
+    public string[,] parseLevelMap() {
         (int, int) mapLocation = findTag("Map");
 
         // Default empty map
@@ -37,7 +37,7 @@ public class LevelParser {
 
     /// <summary> Parses the metadata from the raw text lines. </summary>
     /// <returns> A dictionary of key-value pairs representing the metadata. </returns>
-    private Dictionary<string, string> parseMetaData() {
+    public Dictionary<string, string> parseMetaData() {
         (int,int) metaTagLocation = findTag("Meta");
         Dictionary<string, string> metaDataDictionary = new Dictionary<string, string> {};
 
@@ -50,7 +50,7 @@ public class LevelParser {
 
     /// <summary> Parses the legend data from the raw text lines. </summary>
     /// <returns> A dictionary of key-value pairs representing the legend data. </returns>
-    private Dictionary<string, string> parseLegendData() {
+    public Dictionary<string, string> parseLegendData() {
         (int,int) legendTagLocation = findTag("Legend");
         Dictionary<string, string> legendDataDictionary = new Dictionary<string, string> {};
 
@@ -67,13 +67,13 @@ public class LevelParser {
     /// <param name="tag"> The tag to search for. </param>
     /// <returns> A tuple of two integers representing the beginning and end location of the tag. 
     /// </returns>
-    private (int, int) findTag(string tag) {
+    public (int, int) findTag(string tag) {
         int tagBeginsAt = Array.IndexOf(rawLinesFromFile, $"{tag}:") + 1;
         int tagEndsAt = Array.IndexOf(rawLinesFromFile, $"{tag}/");
         return (tagBeginsAt,tagEndsAt);
     }
 
-    private string[,] initEmptyMap(int width, int height) {
+    public string[,] initEmptyMap(int width, int height) {
         string[,] map = new string [height,width];
 
         for (int i = 0; i < height; i++) {
@@ -81,8 +81,6 @@ public class LevelParser {
                 map[i,j] = "-";
             }
         }
-
         return map;
     }
-
 }

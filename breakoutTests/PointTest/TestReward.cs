@@ -1,61 +1,66 @@
+using System;
+using System.IO;
+using Breakout;
+using NUnit.Framework;
+using DIKUArcade.Entities;
+using DIKUArcade.Graphics;
+using DIKUArcade.Math;
+using DIKUArcade;
+using DIKUArcade.GUI;
+using DIKUArcade.Events;
+using DIKUArcade.Physics;
+using DIKUArcade.Input;
+using System.Collections.Generic;
+using Breakout.BreakoutStates;
+using Breakout.PlayerScore;
 
-using Breakout.Score;
 
-namespace breakoutTests.TestStateMachine;
+namespace breakoutTests.TestRewards;
 
 [TestFixture]
 public class TestReward {
 
     [SetUp]
-    public void TestReward() {
+    public void Test_Reward() {
 
     }
 
     [Test]
     public void TestStartingScore() {
     /// ARANGE
-    Score score = new Score();
+        Score score = new Score();
 
     /// ACT
+    
     /// ASSERT
-    Assert.That(score.GetCurrentScore, (uint) 1);
+        Assert.That(score.GetCurrentScore, Is.EqualTo((uint) 0));
     }
 
-    [TestCase(1, 1)]
-    [TestCase(4, 4)]
-    [TestCase(100, 100)]
+
+    [TestCase((uint)1, (uint)1)]
+    [TestCase((uint)4, (uint)4)]
+    [TestCase((uint)100, (uint)100)]
     public void TestIncrementingScore(uint value, uint expectedScore) {
     /// ARANGE
-    Score score = new Score();
+        Score score = new Score();
 
     /// ACT
-    score.IncrementScore(value);
+        score.IncrementScore(value);
+
     /// ASSERT
-    Assert.That(score.GetCurrentScore, expectedScore);
-    }
-
-    [Test]
-    public void TestNegativeScore() {
-    /// ARANGE
-    Score score = new Score();
-
-    /// ACT
-    score.IncrementScore(-1);
-    /// ASSERT // IDK FEJLER CHECK AT DEN FEJLER MED IKKE UINT
-    Assert.That(score.GetCurrentScore, (uint) 0);
+        Assert.That(score.GetCurrentScore, Is.EqualTo(expectedScore));
     }
 
     [Test]
     public void TestScoreReset() {
     /// ARANGE
-    Score score = new Score();
+        Score score = new Score();
 
     /// ACT
-    score.IncrementScore((uint) 5);
-    score.ResetScore();
-    /// ASSERT // IDK FEJLER CHECK AT DEN FEJLER MED IKKE UINT
-    Assert.That(score.GetCurrentScore, (uint) 5);
-    }
+        score.IncrementScore((uint) 5);
+        score.ResetScore();
 
-    
+    /// ASSERT
+        Assert.That(score.GetCurrentScore, Is.EqualTo((uint) 0));
+    }
 }
