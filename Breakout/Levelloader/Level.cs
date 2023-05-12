@@ -59,8 +59,9 @@ public class Level
                     string imagePath = Path.Combine
                     (LevelLoader.MAIN_PATH, "Assets", "Images", legendData[character]);
                     string blocktype = GetBlockType(character);
+
                     blockContainer.AddEntity(BlockFactory.CreateNewBlock
-                            (blocktype, new Vec2I(i, j), new Image(imagePath)));
+                            (blocktype, new Vec2I(j, levelMap.GetLength(0)-i), new Image(imagePath)));
                 }
             }
         }

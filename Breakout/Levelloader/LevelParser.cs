@@ -23,12 +23,16 @@ public class LevelParser {
         if (mapLocation.Item1 != 0) {
 
             int mapHeight = mapLocation.Item2-mapLocation.Item1;
-            int mapWidht = rawLinesFromFile[mapLocation.Item1].Count();
+            int mapWidth = rawLinesFromFile[mapLocation.Item1].Count();
 
             for (int i = 0; i < mapHeight; i++) {
-                for (int j = 0; j < mapWidht; j++) {
-                    //levelMap[i,j] = tryReadingData(mapBegins, (i,j));
-                    levelMap[i,j] = rawLinesFromFile[mapLocation.Item1+i][j].ToString();
+                for (int j = 0; j < mapWidth; j++) {
+                    if (j >= rawLinesFromFile[mapLocation.Item1+i].Count()) {
+                        levelMap[i,j] = "-";
+                    } else {
+                        levelMap[i,j] = rawLinesFromFile[mapLocation.Item1+i][j].ToString();
+                    }
+
                 }
             }
         }
