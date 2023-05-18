@@ -32,6 +32,8 @@ public class GameRunning : IGameState, IGameEventProcessor
 
     private Score levelScore;
 
+    public uint GetCurrentScore = 0;
+
     /// <summary> Gets the singleton instance of the GameRunning state. </summary>
     /// <returns> The GameRunning instance. </returns>
     public static GameRunning GetInstance() {
@@ -232,7 +234,7 @@ public class GameRunning : IGameState, IGameEventProcessor
         UpdateEffects();
         currentLevel.Timer.UpdateTime();
         FindAndRemoveDeadBlocks(currentLevel.BlockContainer);
-
+        GetCurrentScore = levelScore.GetCurrentScore;
     }
 
     /// <summary> Processes a GameEvent by checking its type and message, and performs the 

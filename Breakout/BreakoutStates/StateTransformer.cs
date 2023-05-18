@@ -15,9 +15,10 @@ public class StateTransformer {
                 return GameStateType.GamePaused;
             case "MENU":
                 return GameStateType.MainMenu;
-            /* case "GAME_OVER":
+            case "GAME_OVER":
                 return GameStateType.GameLost;
-            */
+            case "GAME_WON":
+                return GameStateType.GameWon;
             default:
                 throw new ArgumentException("ERROR - Not a valid StringState");
         }
@@ -36,9 +37,10 @@ public class StateTransformer {
                 return "GAME_PAUSED";
             case GameStateType.MainMenu:
                 return "MENU";
-            /* case GameStateType.GameLost:
+            case GameStateType.GameLost:
                 return "GAME_OVER";
-            */
+            case GameStateType.GameWon:
+                return "GAME_WON";
             default:
                 throw new NotImplementedException();
         }
