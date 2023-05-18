@@ -15,6 +15,8 @@ public static class BlockFactory
                 return new Moving(positionInArray, image);
             case "Normal":
                 return new NormalBlock(positionInArray, image);
+            case "PowerUp":
+                return new PowerUpBlock(positionInArray, image);
             default:
                 return new NormalBlock(positionInArray, image);
         }
