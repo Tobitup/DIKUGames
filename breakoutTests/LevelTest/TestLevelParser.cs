@@ -28,7 +28,7 @@ public class TestLevelParser {
     /// ARRANGE
     string[] readData = FileReader.ReadFile(
                                     Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
-                                                                            "Level1.txt"));
+                                                                            "level1.txt"));
     LevelParser levelParser = new LevelParser(readData);
     Dictionary<string, string> expectedLegendData = new Dictionary<string, string>();
 
@@ -49,7 +49,7 @@ public class TestLevelParser {
     /// ARRANGE
     string[] readData = FileReader.ReadFile(
                         Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
-                                                                 "Level1.txt"));
+                                                                 "level1.txt"));
     LevelParser levelParser = new LevelParser(readData);
     Dictionary<string, string> expectedMetaData = new Dictionary<string, string>();
 
@@ -75,7 +75,7 @@ public class TestLevelParser {
         /// ARRANGE
         string[] readData = FileReader.ReadFile(
                             Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
-                                                                    "Level1.txt"));
+                                                                    "level1.txt"));
         LevelParser levelParser = new LevelParser(readData);
 
         string[,] mapData = levelParser.parseLevelMap();
@@ -89,7 +89,7 @@ public class TestLevelParser {
         /// ARRANGE
         string[] readData = FileReader.ReadFile(
                             Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
-                                                                    "Leve1.txt"));
+                                                                    "leve1.txt"));
         LevelParser levelParser = new LevelParser(readData);
 
         string[,] mapData = levelParser.parseLevelMap();
