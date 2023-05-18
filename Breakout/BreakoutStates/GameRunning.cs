@@ -31,10 +31,8 @@ public class GameRunning : IGameState, IGameEventProcessor
 
     /// <summary> Gets the singleton instance of the GameRunning state. </summary>
     /// <returns> The GameRunning instance. </returns>
-    public static GameRunning GetInstance()
-    {
-        if (GameRunning.instance == null)
-        {
+    public static GameRunning GetInstance() {
+        if (GameRunning.instance == null) {
             GameRunning.instance = new GameRunning();
             GameRunning.instance.InitializeGameState();
         }
@@ -44,8 +42,7 @@ public class GameRunning : IGameState, IGameEventProcessor
     /// <summary> Initializes the game state by creating a new player object, loading a level, 
     ///           subscribing to PlayerEvents, and creating the background image entity. </summary>
     /// <returns> Void. </returns>
-    private void InitializeGameState()
-    {
+    private void InitializeGameState() {
         player = new Player.Player(
                             new DynamicShape(new Vec2F(0.4f, 0.1f), new Vec2F(0.22f, 0.025f)),
                             new Image(Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Images",
@@ -75,8 +72,7 @@ public class GameRunning : IGameState, IGameEventProcessor
 
     /// <summary> Switches to a new level by setting the current level to the loaded level. 
     /// </summary>
-    private void SwitchLevel(SelectLevel newlevel)
-    {
+    private void SwitchLevel(SelectLevel newlevel) {
         levelLoader = new LevelLoader(newlevel);
         currentLevel = levelLoader.Level;
     }
@@ -84,10 +80,8 @@ public class GameRunning : IGameState, IGameEventProcessor
     /// <summary> Responds to a key press by registering a game event with the 
     ///           appropriate message. </summary>
     /// <param name="key"> A KeyboardKey enum that represents the key that was pressed. </param>
-    private void KeyPress(KeyboardKey key)
-    {
-        switch (key)
-        {
+    private void KeyPress(KeyboardKey key) {
+        switch (key) {
             case KeyboardKey.Escape:
                 eventBus.RegisterEvent(
                                     new GameEvent
@@ -125,10 +119,8 @@ public class GameRunning : IGameState, IGameEventProcessor
     /// <summary> Responds to a key release by registering a game event to stop the given player 
     ///           movement. </summary>
     /// <param name="key"> A KeyboardKey enum that represents the key that was released. </param>
-    private void KeyRelease(KeyboardKey key)
-    {
-        switch (key)
-        {
+    private void KeyRelease(KeyboardKey key) {
+        switch (key){
             case KeyboardKey.Left:
                 eventBus.RegisterEvent(new GameEvent
                 {
@@ -149,14 +141,11 @@ public class GameRunning : IGameState, IGameEventProcessor
     /// <summary> Handles a keyboard event by invoking either KeyPress() or KeyRelease() method 
     ///           based on the action type. </summary>
     /// <returns> Void. </returns>
-    public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
-    {
-        if (action == KeyboardAction.KeyPress)
-        {
+    public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
+        if (action == KeyboardAction.KeyPress) {
             KeyPress(key);
         }
-        if (action == KeyboardAction.KeyRelease)
-        {
+        if (action == KeyboardAction.KeyRelease) {
             KeyRelease(key);
         }
     }
@@ -164,65 +153,41 @@ public class GameRunning : IGameState, IGameEventProcessor
     /// <returns> Void. </returns>
     public void UpdateBlocks() {
         foreach (IBlock block in currentLevel.BlockContainer) {
-            {
                 block.Update();
-            }
         }
     }
 
-    private void IterateBlocks() {
+    private void IterateCollision() {
         ballContainer.Iterate(ball => {
             var activeBall = ball.Shape.AsDynamicShape();
-            var ballPlayerDetect = 
-                            CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.Shape);
-
+            var activePlayer = player.Shape;
+            var ballPlayerDetect = CollisionDetection.Aabb(activeBall, activePlayer);
             if (ballPlayerDetect.Collision) {
-                // Checks for Horizontal Collision.
-                if (ballPlayerDetect.CollisionDir == CollisionDirection.CollisionDirRight ||  
-                    ballPlayerDetect.CollisionDir == CollisionDirection.CollisionDirLeft) {
-                    var newDirection = activeBall.Direction = new Vec2F(
-                        activeBall.Direction.X*(-1),
-                        activeBall.Direction.Y);
-                    ball.ChangeDirection(newDirection);
-                }
-                // Checks For Vertical Collision.
-                if (ballPlayerDetect.CollisionDir == CollisionDirection.CollisionDirUp || 
-                    ballPlayerDetect.CollisionDir == CollisionDirection.CollisionDirDown) {
-                    var newDirection = activeBall.Direction = new Vec2F(
-                        activeBall.Direction.X,
-                        activeBall.Direction.Y*(-1));
-                    ball.ChangeDirection(newDirection);
-                }
+                    ball.DirUp(activePlayer.Position.X , activePlayer.Extent.X);
             } else {
                 foreach (IBlock block in currentLevel.BlockContainer) {
-                    var ballBlockDetect = 
-                                CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), block.Shape);
+                    // Deletes ball if it leaves the window.
+                    var ballBlockDetect = CollisionDetection.Aabb(activeBall, block.Shape);
+                    if (activeBall.Position.Y <= 0.01f || 
+                        activeBall.Position.Y + activeBall.Extent.Y <= 0.01f) {
+                            ball.DeleteEntity();
 
-                    if (ballBlockDetect.Collision) {
+                    } else if (ballBlockDetect.Collision) {
                         if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirRight || 
                             ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirLeft) {
-                        var newDirection = activeBall.Direction = new Vec2F(
-                            activeBall.Direction.X*(-1),
-                            activeBall.Direction.Y);
-                        ball.ChangeDirection(newDirection);
-                        block.TakeDamage();
-                        block.RemoveIfDead();
-                        block.Update();
-                    }
-                    if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirUp || 
-                        ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirDown) {
-                        var newDirection = activeBall.Direction = new Vec2F(
-                            activeBall.Direction.X,
-                            activeBall.Direction.Y*(-1));
-                        ball.ChangeDirection(newDirection);
-                        block.TakeDamage();
-                        
-                        block.Update();
+                                ball.DirLR();
+                                block.TakeDamage();
+                        }
+                        if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirUp || 
+                            ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirDown) {
+                                ball.DirUD();
+                                block.TakeDamage();
+                        }
                     }
                 }
-            }
             ball.Move();   
-        }});
+            }
+        });
     }
 
     /// <summary> Renders the current game state, with background and menu buttons. </summary>
@@ -249,7 +214,7 @@ public class GameRunning : IGameState, IGameEventProcessor
     public void UpdateState()
     {
         player.Move();
-        IterateBlocks();
+        IterateCollision();
         UpdateBlocks();
         FindAndRemoveDeadBlocks(currentLevel.BlockContainer);
     }
