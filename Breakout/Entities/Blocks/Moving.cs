@@ -65,6 +65,7 @@ public class Moving : Entity, IBlock
     /// <return> Void. </return>
     public void TakeDamage() {
         hitpoints--;
+        RemoveIfDead();
     }
     public virtual void Update() {
         MoveMoving();

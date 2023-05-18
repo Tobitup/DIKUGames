@@ -178,14 +178,21 @@ public class GameRunning : IGameState, IGameEventProcessor
                     } else if (ballBlockDetect.Collision) {
                         if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirRight || 
                             ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirLeft) {
-                                ball.DirLR();
-                                block.TakeDamage();
-                        }
-                        if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirUp || 
-                            ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirDown) {
-                                ball.DirUD();
-                                block.TakeDamage();
-                        }
+                        var newDirection = activeBall.Direction = new Vec2F(
+                            activeBall.Direction.X*(-1),
+                            activeBall.Direction.Y);
+                        ball.ChangeDirection(newDirection);
+                        block.TakeDamage();
+                    }
+                    if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirUp || 
+                        ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirDown) {
+                        var newDirection = activeBall.Direction = new Vec2F(
+                            activeBall.Direction.X,
+                            activeBall.Direction.Y*(-1));
+                        ball.ChangeDirection(newDirection);
+                        block.TakeDamage();
+                        
+                        block.Update();
                     }
                 }
             ball.Move();   
