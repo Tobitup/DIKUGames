@@ -8,6 +8,7 @@ using DIKUArcade.Math;
 using System.IO;
 using System.Collections.Generic;
 using Breakout.Player;
+using Breakout.Effects;
 using Breakout.Levels;
 using Breakout.PlayerScore;
 using Breakout.Blocks;
@@ -21,6 +22,7 @@ public class GameRunning : IGameState, IGameEventProcessor
     private Entity backGroundImage;
     private Breakout.Player.Player player;
     private EntityContainer<Ball> ballContainer;
+    private EntityContainer<Entity> effectsContainer;
     private IBaseImage ballImage;
     private Level currentLevel;
     private int numericLevel = 1;
@@ -234,6 +236,7 @@ public class GameRunning : IGameState, IGameEventProcessor
         currentLevel.BlockContainer.RenderEntities();
         levelScore.RenderText();
         ballContainer.RenderEntities();
+        effectsContainer.RenderEntities();
     }
 
     /// <summary> Resets the state of the game paused screen to its initial state. </summary>
@@ -251,6 +254,7 @@ public class GameRunning : IGameState, IGameEventProcessor
         player.Move();
         IterateBlocks();
         UpdateBlocks();
+        UpdateEffects();
         FindAndRemoveDeadBlocks(currentLevel.BlockContainer);
     }
 
@@ -272,6 +276,12 @@ public class GameRunning : IGameState, IGameEventProcessor
         }
     }
 
+    private void UpdateEffects() {
+        foreach (IEffect effect in effectsContainer) {
+            effect.Update();
+        }
+    }
+
     private void FindAndRemoveDeadBlocks(EntityContainer<Entity> blocks)
     {
         foreach (IBlock block in currentLevel.BlockContainer)
@@ -281,11 +291,20 @@ public class GameRunning : IGameState, IGameEventProcessor
             }
         }
 
+        SpawnEffect();
         currentLevel.BlockContainer.Iterate(block => {
             if (block.IsDeleted()) {
                 block.DeleteEntity();
             }
         } );
+    }
+
+    private void SpawnEffect() {
+        foreach (ISpecialBlock block in currentLevel.BlockContainer) {
+            if (block.IsDead()) {
+                effectsContainer.AddEntity(block.GetEffect());
+            }
+        }
     }
 
 }

@@ -1,7 +1,9 @@
 using Breakout.Effects;
+using DIKUArcade.Entities;
 
 namespace Breakout.Blocks;
 
 public interface ISpecialBlock {
-    IEffect GetEffect();
+    bool IsDead();
+    Entity GetEffect();
 }

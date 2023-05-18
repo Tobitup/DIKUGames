@@ -18,6 +18,7 @@ public class PowerUpBlock : Entity, IBlock, ISpecialBlock {
 
     public int HitPoints {get {return hitpoints;}}
 
+
     /// <summary> Initializes a new instance of the Block class with the specified position 
     ///           and image. </summary>
     /// <param name="positionInArray"> The position of the block in the array. </param>
@@ -61,9 +62,12 @@ public class PowerUpBlock : Entity, IBlock, ISpecialBlock {
         }
     }
 
-    public IEffect GetEffect() {
-        throw new NotImplementedException();
+    public Entity GetEffect() {
+        return effect.GetEntity;
     }
 
-
+    Entity ISpecialBlock.GetEffect()
+    {
+        throw new NotImplementedException();
+    }
 }
