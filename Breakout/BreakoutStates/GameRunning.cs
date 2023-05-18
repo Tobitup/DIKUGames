@@ -50,6 +50,7 @@ public class GameRunning : IGameState, IGameEventProcessor
                             new Image(Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Images",
                                                                                     "player.png")));
 
+        effectsContainer = new EntityContainer<Entity>();
         ballContainer = new EntityContainer<Ball>();
         ballImage = new Image(Path.Combine(LevelLoader.MAIN_PATH, "Assets",
                                                                 "Images", "ball.png"));
@@ -218,6 +219,7 @@ public class GameRunning : IGameState, IGameEventProcessor
     {
         player.Move();
         IterateCollision();
+        CollisionEffect();
         UpdateBlocks();
         UpdateEffects();
         FindAndRemoveDeadBlocks(currentLevel.BlockContainer);
@@ -265,9 +267,18 @@ public class GameRunning : IGameState, IGameEventProcessor
     }
 
     private void SpawnEffect() {
-        foreach (ISpecialBlock block in currentLevel.BlockContainer) {
-            if (block.IsDead()) {
-                effectsContainer.AddEntity(block.GetEffect());
+        foreach (IBlock block in currentLevel.BlockContainer) {
+            var specialBlock = block as ISpecialBlock;
+            if (specialBlock != null && specialBlock.IsDead()) {
+                effectsContainer.AddEntity(specialBlock.GetEffect());
+            }
+        }
+    }
+
+    private void CollisionEffect() {
+        foreach (IEffect effect in effectsContainer) {
+            if (CollisionDetection.Aabb(player.Shape, effect.GetEntity.Shape).Collision) {
+                System.Console.WriteLine("Nice");
             }
         }
     }
