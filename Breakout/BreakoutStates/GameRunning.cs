@@ -8,7 +8,7 @@ using DIKUArcade.Math;
 using System.IO;
 using System.Collections.Generic;
 using Breakout.Player;
-using Breakout.Effects;
+using Breakout.Effect;
 using Breakout.Levels;
 using Breakout.PlayerScore;
 using Breakout.Blocks;
@@ -249,18 +249,12 @@ public class GameRunning : IGameState, IGameEventProcessor
         }
     }
 
-    private void FindAndRemoveDeadBlocks(EntityContainer<Entity> blocks)
-    {
-        foreach (IBlock block in currentLevel.BlockContainer)
-        {
-            if (block.IsDead()) {
-                levelScore.IncrementScore(block.Value);
-            }
-        }
-
-        SpawnEffect();
+    private void FindAndRemoveDeadBlocks(EntityContainer<Entity> blocks) {
         currentLevel.BlockContainer.Iterate(block => {
-            if (block.IsDeleted()) {
+            var currentBlock = block as IBlock;
+            if (currentBlock.IsDead()) {
+                levelScore.IncrementScore(currentBlock.Value);
+                SpawnEffect();
                 block.DeleteEntity();
             }
         } );
@@ -276,11 +270,13 @@ public class GameRunning : IGameState, IGameEventProcessor
     }
 
     private void CollisionEffect() {
-        foreach (IEffect effect in effectsContainer) {
-            if (CollisionDetection.Aabb(player.Shape, effect.GetEntity.Shape).Collision) {
-                System.Console.WriteLine("Nice");
+        effectsContainer.Iterate(effect => {
+            CollisionData collision = CollisionDetection.Aabb(effect.Shape.AsDynamicShape(), player.Shape);
+            if (collision.Collision) {
+                var collidedEffect = effect as IEffect;
+                collidedEffect.InitiateEffect();
+                effect.DeleteEntity();           
             }
-        }
+        });
     }
-
 }
