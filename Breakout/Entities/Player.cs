@@ -88,14 +88,25 @@ public class Player : IGameEventProcessor {
 
     private void BigJimAffected() {
         Vec2F bigJimSize = new Vec2F(Shape.Extent.X*2.0f, Shape.Extent.Y);
+        shape.Position.X -= bigJimSize.X/2.0f;
 
         shape.Extent = bigJimSize;
+    }
+
+    private void SlimJimAffected() {
+        Vec2F slimJimSize = new Vec2F(Shape.Extent.X/2.0f, Shape.Extent.Y);
+        shape.Position.X += slimJimSize.X/2.0f;
+
+        shape.Extent = slimJimSize;
     }
 
     private void initiateEffect(string effect) {
         switch (EffectTransformer.TransformStringToEffect(effect)) {
             case Effects.BigJim:
                 BigJimAffected();
+            break;
+            case Effects.SlimJim:
+                SlimJimAffected();
             break;
         }
 

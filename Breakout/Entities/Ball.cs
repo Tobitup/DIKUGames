@@ -62,4 +62,5 @@ public class Ball : Entity {
     public void ChangeDirection(Vec2F newDir) {
         base.Shape.AsDynamicShape().ChangeDirection(newDir);
     }
+
 }

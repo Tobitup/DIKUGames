@@ -9,6 +9,10 @@ public class EffectTransformer {
         switch (effect){
             case "BigJim_START":
                 return Effects.BigJim;
+            case "SlimJim_START":
+                return Effects.SlimJim;
+            case "Splitzy":
+                return Effects.Splitzy;
             default:
                 throw new ArgumentException("ERROR - Not a valid effect");
         }
@@ -23,9 +27,27 @@ public class EffectTransformer {
         switch (effect){
             case Effects.BigJim:
                 return "BigJim_START";
+            case Effects.SlimJim:
+                return "SlimJim_START";
+            case Effects.Splitzy:
+                return "Splitzy";
 
             default:
                 throw new NotImplementedException();
         }
     }
+
+    public static string TransformEffectToPath(Effects effect) {
+            switch (effect){
+                case Effects.BigJim:
+                    return "BigPowerUp.png";
+                case Effects.SlimJim:
+                    return "SlimJim.png";
+                case Effects.Splitzy:
+                    return "SplitPowerUp.png";
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
 }

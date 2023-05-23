@@ -52,12 +52,8 @@ public class GameRunning : IGameState, IGameEventProcessor
 
         effectsContainer = new EntityContainer<Entity>();
         ballContainer = new EntityContainer<Ball>();
-        ballImage = new Image(Path.Combine(LevelLoader.MAIN_PATH, "Assets",
-                                                                "Images", "ball.png"));
-        Ball newBall = new Ball(
-            new DynamicShape(new Vec2F(0.45f,0.22f), 
-                            new Vec2F(0.03f, 0.03f), new Vec2F(0.005f, 0.009f) ), ballImage);
-        ballContainer.AddEntity(newBall);
+
+        ballContainer.AddEntity(BallFactory.GenerateNormalBall());
 
         backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f, 0.0f),
                                         new Vec2F(1.0f, 1.0f)), new Image(Path.Combine(
@@ -235,9 +231,10 @@ public class GameRunning : IGameState, IGameEventProcessor
         {
             switch (gameEvent.Message)
             {
-                case "Test":
+                case "EFFECT":
                     // Do nothing
                     // Placeholder
+                    initiateEffect(gameEvent.StringArg1);
                     break;
             }
         }
@@ -278,5 +275,26 @@ public class GameRunning : IGameState, IGameEventProcessor
                 effect.DeleteEntity();           
             }
         });
+    }
+
+    private void SplitBalls() {
+        EntityContainer<Ball> tempBallContainer = new EntityContainer<Ball>();
+
+        foreach(Ball ball in ballContainer) {
+            tempBallContainer.AddEntity(ball);
+            for (int i=0; i<3; i++) {
+                tempBallContainer.AddEntity(BallFactory.GenerateRandomDirBall(ball.Shape.Position));
+            }
+        }
+        ballContainer = tempBallContainer;
+    }
+
+    private void initiateEffect(string effect) {
+        switch (EffectTransformer.TransformStringToEffect(effect)) {
+            case Effects.Splitzy:
+                SplitBalls();
+            break;
+        }
+
     }
 }

@@ -5,15 +5,33 @@ using DIKUArcade.Graphics;
 namespace Breakout.Effect;
 public static class EffectFactory {
     public static Random rnd = new Random();
+    private const float WIDTH = 0.05f;
+    private const float HEIGTH = 0.05f;
+
+
     public static IEffect GetRandomPowerUp(Vec2F pos) {
-        int randomNumber = rnd.Next(2);
+        int randomNumber = rnd.Next(4);
         switch (randomNumber) {
             case 1:
-                return new BigJimPowerUp(new DynamicShape(pos, new Vec2F(0.05f,0.05f)), new Image(Path.Combine("Assets", "Images",
-                                                                                    "player.png")));
+                return new BigJimPowerUp
+                                    (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
+                                    new Image(Path.Combine("Assets", "Images",
+                                    EffectTransformer.TransformEffectToPath(Effects.BigJim))));
+            case 2:
+                return new SlimJimHazard
+                                    (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
+                                    new Image(Path.Combine("Assets", "Images",
+                                    EffectTransformer.TransformEffectToPath(Effects.SlimJim))));
+            case 3:
+                return new SplitzyPowerUp
+                                    (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
+                                    new Image(Path.Combine("Assets", "Images",
+                                    EffectTransformer.TransformEffectToPath(Effects.Splitzy))));
             default:
-                return new BigJimPowerUp(new DynamicShape(pos, new Vec2F(0.05f,0.05f)), new Image(Path.Combine("Assets", "Images",
-                                                                                    "player.png")));
+                return new SlimJimHazard
+                                    (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
+                                    new Image(Path.Combine("Assets", "Images",
+                                    EffectTransformer.TransformEffectToPath(Effects.SlimJim))));
         }
     }
 }
