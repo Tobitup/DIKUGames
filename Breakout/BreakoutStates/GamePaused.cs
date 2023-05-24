@@ -4,6 +4,7 @@ using DIKUArcade.State;
 using DIKUArcade.Input;
 using DIKUArcade.Events;
 using DIKUArcade.Math;
+using DIKUArcade.Timers;
 using System.IO;
 
 namespace Breakout.BreakoutStates;
@@ -18,6 +19,7 @@ public class GamePaused : IGameState {
     /// <summary> Gets the singleton instance of the GamePaused state. </summary>
     /// <returns> The GamePaused instance. </returns>
     public static GamePaused GetInstance() {
+        StaticTimer.PauseTimer();
         if (GamePaused.instance == null) {
             GamePaused.instance = new GamePaused();
             GamePaused.instance.InitializeGameState();

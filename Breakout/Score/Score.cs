@@ -8,7 +8,7 @@ public class Score : Text{
 
     public uint GetCurrentScore { get {return score;}}
 
-    public Score() : base("Score: 0", new Vec2F(0.05f,0.45f), new Vec2F(0.5f,0.5f)) {
+    public Score() : base("Score: 0", new Vec2F(0.05f,0.45f), new Vec2F(0.3f,0.3f)) {
         this.SetColor(new Vec3I(255,255,255));
     }
 

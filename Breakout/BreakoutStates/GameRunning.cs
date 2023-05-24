@@ -8,6 +8,7 @@ using DIKUArcade.Math;
 using System.IO;
 using System.Collections.Generic;
 using Breakout.Player;
+using DIKUArcade.Timers;
 using Breakout.Effect;
 using Breakout.Levels;
 using Breakout.PlayerScore;
@@ -34,6 +35,8 @@ public class GameRunning : IGameState, IGameEventProcessor
     /// <summary> Gets the singleton instance of the GameRunning state. </summary>
     /// <returns> The GameRunning instance. </returns>
     public static GameRunning GetInstance() {
+        StaticTimer.ResumeTimer();
+
         if (GameRunning.instance == null) {
             GameRunning.instance = new GameRunning();
             GameRunning.instance.InitializeGameState();
@@ -197,6 +200,7 @@ public class GameRunning : IGameState, IGameEventProcessor
         backGroundImage.RenderEntity();
         player.Render();
         currentLevel.BlockContainer.RenderEntities();
+        currentLevel.Timer.TimerLabel.RenderText();
         levelScore.RenderText();
         ballContainer.RenderEntities();
         effectsContainer.RenderEntities();
@@ -219,6 +223,7 @@ public class GameRunning : IGameState, IGameEventProcessor
         CollisionEffect();
         UpdateBlocks();
         UpdateEffects();
+        currentLevel.Timer.UpdateTime();
         FindAndRemoveDeadBlocks(currentLevel.BlockContainer);
 
     }
