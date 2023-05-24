@@ -13,7 +13,7 @@ public class GameLost : IGameState {
     private int activeMenuButton;
 
     private uint finalScore = 0;
-    private Text finalScoreText = new Text ("SCORE:",new Vec2F(0.25f,-0.20f), new Vec2F(0.8f,0.8f));
+    private Text finalScoreText;
     private Text gameOverText = new Text("GAME OVER",new Vec2F(0.25f,-0.05f), new Vec2F(0.8f,0.8f));
     private Text[] menuButtons = {new Text("MAIN MENU",new Vec2F(0.25f,-0.10f), new Vec2F(0.5f,0.5f)),
                                 new Text("QUIT",new Vec2F(0.25f,-0.20f), new Vec2F(0.5f,0.5f))};

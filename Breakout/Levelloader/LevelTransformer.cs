@@ -51,7 +51,7 @@ public static class LevelTransformer
                                     new GameEvent {
                                         EventType = GameEventType.GameStateEvent, 
                                         Message = "CHANGE_STATE",
-                                        StringArg1 = "MENU"
+                                        StringArg1 = "GAME_WON"
                                     });
                 return SelectLevel.level1;
         }

@@ -12,6 +12,7 @@ using DIKUArcade.Timers;
 using Breakout.Effect;
 using Breakout.Levels;
 using Breakout.PlayerScore;
+using Breakout.PlayerLives;
 using Breakout.Blocks;
 using Breakout.BallClass;
 
@@ -20,7 +21,9 @@ namespace Breakout.BreakoutStates;
 public class GameRunning : IGameState, IGameEventProcessor
 {
     private GameEventBus eventBus;
+    private bool gameLost = false;
     private Entity backGroundImage;
+
     private Breakout.Player.Player player;
     private EntityContainer<Ball> ballContainer;
     private EntityContainer<Entity> effectsContainer;
@@ -31,6 +34,10 @@ public class GameRunning : IGameState, IGameEventProcessor
     private static GameRunning instance = null;
 
     private Score levelScore;
+
+    private Lives levelLives;
+
+    private Text timer = new Text("placeholder time", new Vec2F(0.35f,0.010f), new Vec2F(0.5f,0.5f));
 
     public uint GetCurrentScore = 0;
 
@@ -50,6 +57,7 @@ public class GameRunning : IGameState, IGameEventProcessor
     ///           subscribing to PlayerEvents, and creating the background image entity. </summary>
     /// <returns> Void. </returns>
     private void InitializeGameState() {
+        gameLost = false;
         player = new Player.Player(
                             new DynamicShape(new Vec2F(0.4f, 0.1f), new Vec2F(0.22f, 0.025f)),
                             new Image(Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Images",
@@ -70,9 +78,9 @@ public class GameRunning : IGameState, IGameEventProcessor
         eventBus.Subscribe(GameEventType.PlayerEvent, this);
 
         levelScore = new Score();
-
+        levelLives = new Lives(player.Lives);
         numericLevel = 1;
-
+        timer.SetColor(new Vec3I(255, 255, 255));
     }
 
     /// <summary> Switches to a new level by setting the current level to the loaded level. 
@@ -162,6 +170,35 @@ public class GameRunning : IGameState, IGameEventProcessor
         }
     }
 
+    public void LoseIfGameLost(){
+        if (levelLives.GetCurrentLives == 0){
+        gameLost = true;}
+        if (gameLost){
+        eventBus.RegisterEvent(
+         new GameEvent
+        {
+        EventType = GameEventType.GameStateEvent,
+        Message = "CHANGE_STATE",
+        StringArg1 = "GAME_LOST"
+                                    });            
+        }
+    }
+     public void ChangeLevelIfWon(){
+        if (currentLevel.BlockContainer.CountEntities()==0){
+        incrementLevel();
+        }
+
+    }
+
+    public void MakeNewBall(){
+        if (ballContainer.CountEntities()==0 & levelLives.GetCurrentLives != 0){
+        levelLives.LoseLife();
+       Ball newBall = new Ball(
+           new DynamicShape(new Vec2F(0.45f,0.22f), 
+                          new Vec2F(0.03f, 0.03f), new Vec2F(0.005f, 0.009f) ), ballImage);
+        ballContainer.AddEntity(newBall);}
+    }
+
     private void IterateCollision() {
         ballContainer.Iterate(ball => {
             var activeBall = ball.Shape.AsDynamicShape();
@@ -211,7 +248,9 @@ public class GameRunning : IGameState, IGameEventProcessor
         currentLevel.BlockContainer.RenderEntities();
         currentLevel.Timer.TimerLabel.RenderText();
         levelScore.RenderText();
+        //timer.RenderText();
         ballContainer.RenderEntities();
+        levelLives.LifeContainer.RenderEntities();
         effectsContainer.RenderEntities();
     }
 
@@ -235,6 +274,10 @@ public class GameRunning : IGameState, IGameEventProcessor
         currentLevel.Timer.UpdateTime();
         FindAndRemoveDeadBlocks(currentLevel.BlockContainer);
         GetCurrentScore = levelScore.GetCurrentScore;
+        MakeNewBall();
+        //CheckIfGameLost();
+        LoseIfGameLost();
+        levelLives.UpdateLifeContainer();
     }
 
     /// <summary> Processes a GameEvent by checking its type and message, and performs the 

@@ -17,6 +17,10 @@ public class Level
     public LevelTimer Timer {get {return levelTimer; }}
     private string[,] levelMap;
 
+    public uint Time;
+
+    public bool HasTime = true;
+
     /// <summary> Initializes a new instance of the Level class with the specified metadata, 
     ///           legend data, and level map. </summary>
     /// <param name="metaData"> A Dictionary object that represents the metadata linked with 
@@ -37,6 +41,7 @@ public class Level
             StaticTimer.RestartTimer();
         }
     }
+    
     /// <summary> Loops through metadata to find out which type of block a character is
     /// connected to  </summary>
     /// <param name="character"> The character as a string </param>
@@ -53,6 +58,7 @@ public class Level
         }
         return blocktype;
     }
+    
     /// <summary> Generates an entity container from the level map. </summary>
     /// <returns> Void. </returns>
     private void GenerateEntityContainer()

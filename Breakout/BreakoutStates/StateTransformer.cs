@@ -15,7 +15,7 @@ public class StateTransformer {
                 return GameStateType.GamePaused;
             case "MENU":
                 return GameStateType.MainMenu;
-            case "GAME_OVER":
+            case "GAME_LOST":
                 return GameStateType.GameLost;
             case "GAME_WON":
                 return GameStateType.GameWon;
@@ -38,7 +38,7 @@ public class StateTransformer {
             case GameStateType.MainMenu:
                 return "MENU";
             case GameStateType.GameLost:
-                return "GAME_OVER";
+                return "GAME_LOST";
             case GameStateType.GameWon:
                 return "GAME_WON";
             default:

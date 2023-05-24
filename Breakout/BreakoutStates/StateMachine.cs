@@ -6,7 +6,7 @@ public class StateMachine : IGameEventProcessor {
     public StateMachine() {
         BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
         BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
-        ActiveState = BreakoutStates.GameLost.GetInstance();
+        ActiveState = BreakoutStates.MainMenu.GetInstance();
     }
 
     private void SwitchState(GameStateType stateType) {
@@ -19,6 +19,12 @@ public class StateMachine : IGameEventProcessor {
                 break;
             case GameStateType.MainMenu:
                 ActiveState = MainMenu.GetInstance();
+                break;
+            case GameStateType.GameLost:
+                ActiveState = GameLost.GetInstance();
+                break;
+            case GameStateType.GameWon:
+                ActiveState = GameWon.GetInstance();
                 break;
             
         }
@@ -35,6 +41,12 @@ public class StateMachine : IGameEventProcessor {
                     SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
                     break;
                 case "MENU":
+                    SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
+                    break;
+                case "GAME_LOST":
+                    SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
+                    break;
+                case "GAME_WON":
                     SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
                     break;
                 default:

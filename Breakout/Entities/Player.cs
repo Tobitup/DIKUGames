@@ -15,6 +15,7 @@ public class Player : IGameEventProcessor {
     private GameEventBus eventBus;
     private Entity entity;
     private DynamicShape shape;
+    public uint Lives = 0;
     public DynamicShape Shape {
         get {return shape;}
     }
@@ -34,6 +35,7 @@ public class Player : IGameEventProcessor {
         this.shape = shape;
         eventBus = BreakoutBus.GetBus();
         eventBus.Subscribe(GameEventType.PlayerEvent, this);
+        Lives = 8;
     }
 
     /// <summary> Renders the player's game object. </summary>
