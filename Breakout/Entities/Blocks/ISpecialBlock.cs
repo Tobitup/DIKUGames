@@ -1,4 +1,4 @@
-using Breakout.Effects;
+using Breakout.Effect;
 using DIKUArcade.Entities;
 
 namespace Breakout.Blocks;

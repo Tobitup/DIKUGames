@@ -3,6 +3,8 @@ using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using Breakout.Blocks;
 using Breakout.BreakoutStates;
+using DIKUArcade.Timers;
+using Breakout.GameTimer;
 
 namespace Breakout.Levels;
 public class Level
@@ -10,7 +12,9 @@ public class Level
     private Dictionary<string, string> metaData;
     private Dictionary<string, string> legendData;
     private EntityContainer<Entity> blockContainer = new EntityContainer<Entity>();
+    private LevelTimer levelTimer = new LevelTimer();
     public EntityContainer<Entity> BlockContainer { get { return blockContainer; } }
+    public LevelTimer Timer {get {return levelTimer; }}
     private string[,] levelMap;
 
     /// <summary> Initializes a new instance of the Level class with the specified metadata, 
@@ -27,6 +31,11 @@ public class Level
         this.legendData = legendData;
         this.levelMap = levelMap;
         GenerateEntityContainer();
+
+        if (metaData.ContainsKey("Time")) {
+            levelTimer.SetDuration(int.Parse(metaData["Time"]));
+            StaticTimer.RestartTimer();
+        }
     }
     /// <summary> Loops through metadata to find out which type of block a character is
     /// connected to  </summary>

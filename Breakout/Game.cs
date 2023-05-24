@@ -20,7 +20,6 @@ public class Game : DIKUGame , IGameEventProcessor{
                                                               GameEventType.GameStateEvent });
         window.SetKeyEventHandler(KeyHandler);
         eventBus.Subscribe(GameEventType.WindowEvent, this);      
-        eventBus.Subscribe(GameEventType.PlayerEvent, this);
         eventBus.Subscribe(GameEventType.GameStateEvent, stateMachine);
         LevelLoader level = new LevelLoader(SelectLevel.level1);
     }

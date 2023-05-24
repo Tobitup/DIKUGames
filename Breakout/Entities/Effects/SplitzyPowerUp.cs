@@ -5,14 +5,14 @@ using DIKUArcade.Events;
 
 namespace Breakout.Effect;
 
-public class BigJimPowerUp : Entity, IEffect {
+public class SplitzyPowerUp : Entity, IEffect {
 
     private const float MOVEMENT_SPEED = 0.005f;
     //Entity GetEntity {get {return this;}}
 
     Entity IEffect.GetEntity => this;
 
-    public BigJimPowerUp(Shape shape, IBaseImage image) : base(shape, image){
+    public SplitzyPowerUp(Shape shape, IBaseImage image) : base(shape, image){
         base.Shape.AsDynamicShape().ChangeDirection(new Vec2F(0.0f, -0.009f));
     }
 
@@ -30,11 +30,12 @@ public class BigJimPowerUp : Entity, IEffect {
     }
 
     public void InitiateEffect() {
+        System.Console.WriteLine("InitF");
         BreakoutBus.GetBus().RegisterEvent(new GameEvent
                 {
                     EventType = GameEventType.PlayerEvent,
                     Message = "EFFECT",
-                    StringArg1 = EffectTransformer.TransformEffectToString(Effects.BigJim),
+                    StringArg1 = EffectTransformer.TransformEffectToString(Effects.Splitzy),
                 });
     }
 

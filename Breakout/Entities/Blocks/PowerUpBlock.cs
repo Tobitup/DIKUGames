@@ -1,7 +1,7 @@
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
-using Breakout.Effects;
+using Breakout.Effect;
 
 namespace Breakout.Blocks;
 
