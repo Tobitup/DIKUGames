@@ -1,5 +1,5 @@
 namespace Breakout.Effect;
-public class EffectTransformer {
+public static class EffectTransformer {
 
     /// <summary> Transforms a string representation of a GameState into the corresponding 
     ///           GameStateType. </summary>

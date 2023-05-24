@@ -30,6 +30,7 @@ public class SplitzyPowerUp : Entity, IEffect {
     }
 
     public void InitiateEffect() {
+        System.Console.WriteLine("InitF");
         BreakoutBus.GetBus().RegisterEvent(new GameEvent
                 {
                     EventType = GameEventType.PlayerEvent,

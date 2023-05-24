@@ -67,6 +67,7 @@ public class GameRunning : IGameState, IGameEventProcessor
         levelScore = new Score();
 
         numericLevel = 1;
+
     }
 
     /// <summary> Switches to a new level by setting the current level to the loaded level. 
@@ -219,6 +220,7 @@ public class GameRunning : IGameState, IGameEventProcessor
         UpdateBlocks();
         UpdateEffects();
         FindAndRemoveDeadBlocks(currentLevel.BlockContainer);
+
     }
 
     /// <summary> Processes a GameEvent by checking its type and message, and performs the 
@@ -234,6 +236,7 @@ public class GameRunning : IGameState, IGameEventProcessor
                 case "EFFECT":
                     // Do nothing
                     // Placeholder
+                    System.Console.WriteLine("EffectEvent");
                     initiateEffect(gameEvent.StringArg1);
                     break;
             }
@@ -272,14 +275,18 @@ public class GameRunning : IGameState, IGameEventProcessor
             if (collision.Collision) {
                 var collidedEffect = effect as IEffect;
                 collidedEffect.InitiateEffect();
+                System.Console.WriteLine("Collided");
                 effect.DeleteEntity();           
             }
+        if (effect.Shape.Position.Y < 0.0f) {
+            effect.DeleteEntity();
+        }
         });
     }
 
     private void SplitBalls() {
         EntityContainer<Ball> tempBallContainer = new EntityContainer<Ball>();
-
+        //System.Console.WriteLine(tempBallContainer.CountEntities());
         foreach(Ball ball in ballContainer) {
             tempBallContainer.AddEntity(ball);
             for (int i=0; i<3; i++) {
@@ -292,8 +299,14 @@ public class GameRunning : IGameState, IGameEventProcessor
     private void initiateEffect(string effect) {
         switch (EffectTransformer.TransformStringToEffect(effect)) {
             case Effects.Splitzy:
-                SplitBalls();
+                //SplitBalls();
+                System.Console.WriteLine("Splitzy");
+                break;
+            case Effects.SlimJim:
+                System.Console.WriteLine("SlimJim");
             break;
+            default:
+                break;
         }
 
     }
