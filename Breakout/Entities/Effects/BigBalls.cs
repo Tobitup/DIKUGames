@@ -6,7 +6,7 @@ using DIKUArcade.Timers;
 
 namespace Breakout.Effect;
 
-public class SlimJimHazard : Entity, IEffect {
+public class BigBalls : Entity, IEffect {
 
     private const float MOVEMENT_SPEED = 0.005f;
     private TimePeriod EFFECT_DURATION = DIKUArcade.Timers.TimePeriod.NewSeconds(5.0);
@@ -15,7 +15,7 @@ public class SlimJimHazard : Entity, IEffect {
 
     Entity IEffect.GetEntity => this;
 
-    public SlimJimHazard(Shape shape, IBaseImage image) : base(shape, image){
+    public BigBalls (Shape shape, IBaseImage image) : base(shape, image){
         base.Shape.AsDynamicShape().ChangeDirection(new Vec2F(0.0f, -0.009f));
     }
 
@@ -37,16 +37,16 @@ public class SlimJimHazard : Entity, IEffect {
                 {
                     EventType = GameEventType.PlayerEvent,
                     Message = "EFFECT",
-                    StringArg1 = EffectTransformer.TransformEffectToString(Effects.SlimJim),
+                    StringArg1 = EffectTransformer.TransformEffectToString(Effects.BigBalls),
                     StringArg2 = "START",
                 });
         BreakoutBus.GetBus().RegisterTimedEvent(new GameEvent
                 {
                     EventType = GameEventType.PlayerEvent,
                     Message = "EFFECT",
-                    StringArg1 = EffectTransformer.TransformEffectToString(Effects.SlimJim),
+                    StringArg1 = EffectTransformer.TransformEffectToString(Effects.BigBalls),
                     StringArg2 = "STOP",
-                    Id = (int) Effects.SlimJim,
+                    Id = (int) Effects.BigBalls,
                 }, EFFECT_DURATION);
     }
 

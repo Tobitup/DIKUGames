@@ -35,10 +35,12 @@ public class LevelTimer {
         }
     }
 
-    public void IsDead() {
-        if (durationDelta < 0) {
-            throw new Exception("GØR NOGET SEJT?");
+    public bool IsDead() {
+        if (durationDelta <= 0) {
+            return true;
+            //throw new Exception("GØR NOGET SEJT?");
         }
+        else {return false;}
     }
 
 

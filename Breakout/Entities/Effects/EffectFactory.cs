@@ -11,7 +11,8 @@ public static class EffectFactory {
 
 
     public static IEffect GetRandomPowerUp(Vec2F pos) {
-        int randomNumber = rnd.Next(4);
+        int randomNumber = rnd.Next(7,8);
+        //int randomNumber = 1;
         switch (randomNumber) {
             case 1:
                 return new BigJimPowerUp
@@ -28,6 +29,26 @@ public static class EffectFactory {
                                     (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
                                     new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
                                     EffectTransformer.TransformEffectToPath(Effects.Splitzy))));
+            case 4:
+                return new LifeUP
+                                    (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
+                                    new Image(Path.Combine("Assets", "Images",
+                                    EffectTransformer.TransformEffectToPath(Effects.LifeUp))));
+            case 5:
+                return new LifeDown
+                                    (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
+                                    new Image(Path.Combine("Assets", "Images",
+                                    EffectTransformer.TransformEffectToPath(Effects.LifeDown))));
+            case 6:
+                return new SpeedyGonzales
+                                    (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
+                                    new Image(Path.Combine("Assets", "Images",
+                                    EffectTransformer.TransformEffectToPath(Effects.SpeedyGonzales))));
+            case 7:
+                return new BigBalls
+                                    (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
+                                    new Image(Path.Combine("Assets", "Images",
+                                    EffectTransformer.TransformEffectToPath(Effects.BigBalls))));
             default:
                 return new SlimJimHazard
                                     (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 

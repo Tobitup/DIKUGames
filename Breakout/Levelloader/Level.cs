@@ -19,7 +19,7 @@ public class Level
 
     public uint Time;
 
-    public bool HasTime = true;
+    public bool HasTime = false;
 
     /// <summary> Initializes a new instance of the Level class with the specified metadata, 
     ///           legend data, and level map. </summary>
@@ -39,6 +39,7 @@ public class Level
         if (metaData.ContainsKey("Time")) {
             levelTimer.SetDuration(int.Parse(metaData["Time"]));
             StaticTimer.RestartTimer();
+            HasTime = true;
         }
     }
     

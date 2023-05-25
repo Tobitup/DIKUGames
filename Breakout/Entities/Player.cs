@@ -16,12 +16,17 @@ public class Player : IGameEventProcessor {
     private Entity entity;
     private DynamicShape shape;
     public uint Lives = 0;
+    private bool isSlimJimAffected = false;
+    private bool isBigJimAffected = false;
+    private bool isSpeedyAffected = false;
+
     public DynamicShape Shape {
         get {return shape;}
     }
     private float moveLeft = 0.0f;
     private float moveRight = 0.0f;
     const float MOVEMENT_SPEED = 0.02f;
+    float MovementSpeedMultiplier = 1;
 
     public Entity GetEntity() => entity;
 
@@ -50,7 +55,7 @@ public class Player : IGameEventProcessor {
     /// <returns> Void. </returns>
     private void SetMoveLeft(bool val) {
         if (val) {
-            moveLeft -= MOVEMENT_SPEED;
+            moveLeft -= MOVEMENT_SPEED*MovementSpeedMultiplier;
         } else { 
             moveLeft = 0f;
         }
@@ -62,7 +67,7 @@ public class Player : IGameEventProcessor {
     /// <returns> Void. </returns>
     private void SetMoveRight(bool val) {
         if (val) {
-            moveRight += MOVEMENT_SPEED;
+            moveRight += MOVEMENT_SPEED*MovementSpeedMultiplier;
         } else {
             moveRight = 0f;
         }
@@ -88,27 +93,65 @@ public class Player : IGameEventProcessor {
         }
     }
 
-    private void BigJimAffected() {
-        Vec2F bigJimSize = new Vec2F(Shape.Extent.X*2.0f, Shape.Extent.Y);
-        shape.Position.X -= bigJimSize.X/2.0f;
+    private void BigJimAffected(string state) {
+        if ((state == "START") && (isBigJimAffected == false)) {
+            isBigJimAffected = true;
+            Vec2F bigJimSize = new Vec2F(Shape.Extent.X*2.0f, Shape.Extent.Y);
 
-        shape.Extent = bigJimSize;
+            float newX = bigJimSize.X/2.0f/2.0f;
+            shape.Position.X -= newX;
+
+            shape.Extent = bigJimSize;
+        } else if (state == "STOP") {
+            isBigJimAffected = false;
+            Vec2F bigJimSize = new Vec2F(Shape.Extent.X/2.0f, Shape.Extent.Y);
+            shape.Position.X += bigJimSize.X/2.0f;
+
+            shape.Extent = bigJimSize;
+        }
+        
     }
 
-    private void SlimJimAffected() {
-        Vec2F slimJimSize = new Vec2F(Shape.Extent.X/2.0f, Shape.Extent.Y);
-        shape.Position.X += slimJimSize.X/2.0f;
+    private void SlimJimAffected(string state) {
+        if ((state == "START") && (!isSlimJimAffected)) {
+            isSlimJimAffected = true;
+            Vec2F slimJimSize = new Vec2F(Shape.Extent.X/2.0f, Shape.Extent.Y);
+            shape.Position.X += slimJimSize.X/2.0f;
 
-        shape.Extent = slimJimSize;
+            shape.Extent = slimJimSize;
+        } else if (state == "STOP") {
+            isSlimJimAffected = false;
+            Vec2F slimJimSize = new Vec2F(Shape.Extent.X*2.0f, Shape.Extent.Y);
+            float newX = slimJimSize.X/2.0f/2.0f;
+
+            shape.Position.X -= newX;
+
+            shape.Extent = slimJimSize;
+        }
     }
 
-    private void initiateEffect(string effect) {
+    private void SpeedyGonzalesAfected(string state) {
+        if ((state == "START") && (!isSpeedyAffected)) {
+            isSpeedyAffected = true;
+            MovementSpeedMultiplier = 2.0f;
+
+        } else if (state == "STOP") {
+            isSpeedyAffected = false;
+            MovementSpeedMultiplier = 1.0f;
+
+        }
+    }
+
+    private void initiateEffect(string effect, string state) {
         switch (EffectTransformer.TransformStringToEffect(effect)) {
             case Effects.BigJim:
-                BigJimAffected();
+                BigJimAffected(state);
             break;
             case Effects.SlimJim:
-                SlimJimAffected();
+                SlimJimAffected(state);
+            break;
+            case Effects.SpeedyGonzales:
+                SpeedyGonzalesAfected(state);
             break;
         }
 
@@ -134,8 +177,9 @@ public class Player : IGameEventProcessor {
                 case "MOVE_RIGHT_STOP":
                     this.SetMoveRight(false);
                     break;
+
                 case "EFFECT":
-                    initiateEffect(gameEvent.StringArg1);
+                    initiateEffect(gameEvent.StringArg1, gameEvent.StringArg2);
                     break;
                 
             }
