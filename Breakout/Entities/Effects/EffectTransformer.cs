@@ -17,6 +17,10 @@ public static class EffectTransformer {
                 return Effects.LifeUp;
             case "LifeDown":
                 return Effects.LifeDown;
+            case "SpeedyGonzales":
+                return Effects.SpeedyGonzales;
+            case "BigBalls":
+                return Effects.BigBalls;
             default:
                 throw new ArgumentException("ERROR - Not a valid effect");
         }
@@ -39,6 +43,10 @@ public static class EffectTransformer {
                 return "LifeUp";
             case Effects.LifeDown:
                 return "LifeDown";
+            case Effects.SpeedyGonzales:
+                return "SpeedyGonzales";
+            case Effects.BigBalls:
+                return "BigBalls";
             default:
                 throw new NotImplementedException();
         }
@@ -47,7 +55,7 @@ public static class EffectTransformer {
     public static string TransformEffectToPath(Effects effect) {
             switch (effect){
                 case Effects.BigJim:
-                    return "BigPowerUp.png";
+                    return "WidePowerUp.png";
                 case Effects.SlimJim:
                     return "SlimJim.png";
                 case Effects.Splitzy:
@@ -56,6 +64,10 @@ public static class EffectTransformer {
                     return "LifePickUp.png";
                 case Effects.LifeDown:
                     return "LoseLife.png";
+                case Effects.SpeedyGonzales:
+                    return "SpeedPickUp.png";
+                case Effects.BigBalls:
+                    return "BigPowerUp.png";
                 default:
                     throw new NotImplementedException();
             }

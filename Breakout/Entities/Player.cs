@@ -18,12 +18,15 @@ public class Player : IGameEventProcessor {
     public uint Lives = 0;
     private bool isSlimJimAffected = false;
     private bool isBigJimAffected = false;
+    private bool isSpeedyAffected = false;
+
     public DynamicShape Shape {
         get {return shape;}
     }
     private float moveLeft = 0.0f;
     private float moveRight = 0.0f;
     const float MOVEMENT_SPEED = 0.02f;
+    float MovementSpeedMultiplier = 1;
 
     public Entity GetEntity() => entity;
 
@@ -52,7 +55,7 @@ public class Player : IGameEventProcessor {
     /// <returns> Void. </returns>
     private void SetMoveLeft(bool val) {
         if (val) {
-            moveLeft -= MOVEMENT_SPEED;
+            moveLeft -= MOVEMENT_SPEED*MovementSpeedMultiplier;
         } else { 
             moveLeft = 0f;
         }
@@ -64,7 +67,7 @@ public class Player : IGameEventProcessor {
     /// <returns> Void. </returns>
     private void SetMoveRight(bool val) {
         if (val) {
-            moveRight += MOVEMENT_SPEED;
+            moveRight += MOVEMENT_SPEED*MovementSpeedMultiplier;
         } else {
             moveRight = 0f;
         }
@@ -127,6 +130,18 @@ public class Player : IGameEventProcessor {
         }
     }
 
+    private void SpeedyGonzalesAfected(string state) {
+        if ((state == "START") && (!isSpeedyAffected)) {
+            isSpeedyAffected = true;
+            MovementSpeedMultiplier = 2.0f;
+
+        } else if (state == "STOP") {
+            isSpeedyAffected = false;
+            MovementSpeedMultiplier = 1.0f;
+
+        }
+    }
+
     private void initiateEffect(string effect, string state) {
         switch (EffectTransformer.TransformStringToEffect(effect)) {
             case Effects.BigJim:
@@ -134,6 +149,9 @@ public class Player : IGameEventProcessor {
             break;
             case Effects.SlimJim:
                 SlimJimAffected(state);
+            break;
+            case Effects.SpeedyGonzales:
+                SpeedyGonzalesAfected(state);
             break;
         }
 

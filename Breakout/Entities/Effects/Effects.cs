@@ -5,4 +5,6 @@ public enum Effects {
     Splitzy,
     LifeUp,
     LifeDown,
+    SpeedyGonzales,
+    BigBalls,
 }
