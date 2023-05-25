@@ -27,7 +27,6 @@ public class GameRunning : IGameState, IGameEventProcessor
     private Breakout.Player.Player player;
     private EntityContainer<Ball> ballContainer;
     private EntityContainer<Entity> effectsContainer;
-    private IBaseImage ballImage;
     private Level currentLevel;
     private int numericLevel = 1;
     private LevelLoader levelLoader;
@@ -192,11 +191,9 @@ public class GameRunning : IGameState, IGameEventProcessor
 
     public void MakeNewBall(){
         if (ballContainer.CountEntities()==0 & levelLives.GetCurrentLives != 0){
-        levelLives.LoseLife();
-       Ball newBall = new Ball(
-           new DynamicShape(new Vec2F(0.45f,0.22f), 
-                          new Vec2F(0.03f, 0.03f), new Vec2F(0.005f, 0.009f) ), ballImage);
-        ballContainer.AddEntity(newBall);}
+            levelLives.LoseLife();
+            ballContainer.AddEntity(BallFactory.GenerateNormalBall());
+        }
     }
 
     private void IterateCollision() {
@@ -217,23 +214,15 @@ public class GameRunning : IGameState, IGameEventProcessor
                     } else if (ballBlockDetect.Collision) {
                         if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirRight || 
                             ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirLeft) {
-                        var newDirection = activeBall.Direction = new Vec2F(
-                            activeBall.Direction.X*(-1),
-                            activeBall.Direction.Y);
-                        ball.ChangeDirection(newDirection);
-                        block.TakeDamage();
+                                ball.DirLR();
+                                block.TakeDamage();
                     }
                     if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirUp || 
                         ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirDown) {
-                        var newDirection = activeBall.Direction = new Vec2F(
-                            activeBall.Direction.X,
-                            activeBall.Direction.Y*(-1));
-                        ball.ChangeDirection(newDirection);
-                        block.TakeDamage();
-                        
-                        block.Update();
+                            ball.DirUD();
+                            block.TakeDamage();
                     }
-                }
+                }}
             ball.Move();   
             }
         });

@@ -7,7 +7,7 @@ using DIKUArcade.Math;
 using System.IO;
 
 namespace Breakout.GameTimer;
-public class BigJimTimer : ITimer {
+public class BigJimTimer /*: ITimer*/ {
     private static BigJimTimer instance = null;
 
     public static BigJimTimer GetInstance() {
