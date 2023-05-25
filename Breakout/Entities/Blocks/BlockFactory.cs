@@ -10,9 +10,9 @@ public static class BlockFactory
         switch (type)
         {
             case "Unbreakable":
-                return new Unbreakable(positionInArray, image);
+                return new UnbreakableBlock(positionInArray, image);
             case "Moving":
-                return new Moving(positionInArray, image);
+                return new MovingBlock(positionInArray, image);
             case "Normal":
                 return new NormalBlock(positionInArray, image);
             case "PowerUp":

@@ -4,7 +4,7 @@ using DIKUArcade.Entities;
 
 namespace Breakout.Blocks;
 
-public class Unbreakable : Entity, IBlock {
+public class UnbreakableBlock : Entity, IBlock {
 
     private int hitpoints;
     public int HitPoints {get {return hitpoints;}}
@@ -13,20 +13,20 @@ public class Unbreakable : Entity, IBlock {
 
     public uint Value { get { return (uint)value; } }
 
-    private const float HEIGHT = 0.041f;
-    private const float WIDTH = 0.0833f;
+    private const float HEIGHT = WIDTH/2f;
+    private const float WIDTH = 1f/12;
+
+    private const float OFFSET = 3 * HEIGHT;
 
     /// <summary> Initializes a new instance of the Block class with the specified position 
     ///           and image. </summary>
     /// <param name="positionInArray"> The position of the block in the array. </param>
     /// <param name="image"> The image to be used for the block. </param>
     /// <return> Returns a Block with a given size, position and image. </return>
-    public Unbreakable(Vec2I positionInArray, IBaseImage image) : base(new DynamicShape(
-                new Vec2F(positionInArray.X * WIDTH, positionInArray.Y * HEIGHT),
+    public UnbreakableBlock(Vec2I positionInArray, IBaseImage image) : base(new DynamicShape(
+                new Vec2F(positionInArray.X * WIDTH, positionInArray.Y * HEIGHT-OFFSET),
                                                             new Vec2F(WIDTH, HEIGHT)), image) {
-        //placeholder hp
         hitpoints = 1;
-        //placeholder value
         value = 1;
     }
 
