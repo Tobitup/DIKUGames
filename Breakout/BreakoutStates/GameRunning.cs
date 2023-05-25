@@ -36,8 +36,6 @@ public class GameRunning : IGameState, IGameEventProcessor
 
     private Lives levelLives;
 
-    private Text timer = new Text("placeholder time", new Vec2F(0.35f,0.010f), new Vec2F(0.5f,0.5f));
-
     public uint GetCurrentScore = 0;
 
     /// <summary> Gets the singleton instance of the GameRunning state. </summary>
@@ -79,7 +77,6 @@ public class GameRunning : IGameState, IGameEventProcessor
         levelScore = new Score();
         levelLives = new Lives(player.Lives);
         numericLevel = 1;
-        timer.SetColor(new Vec3I(255, 255, 255));
     }
 
     /// <summary> Switches to a new level by setting the current level to the loaded level. 
@@ -170,7 +167,7 @@ public class GameRunning : IGameState, IGameEventProcessor
     }
 
     public void LoseIfGameLost(){
-        if (levelLives.GetCurrentLives == 0){
+        if (levelLives.GetCurrentLives == 0 || currentLevel.HasTime && currentLevel.Timer.IsDead()){
         gameLost = true;}
         if (gameLost){
         eventBus.RegisterEvent(
@@ -237,12 +234,10 @@ public class GameRunning : IGameState, IGameEventProcessor
         currentLevel.BlockContainer.RenderEntities();
         currentLevel.Timer.TimerLabel.RenderText();
         levelScore.RenderText();
-        //timer.RenderText();
         ballContainer.RenderEntities();
         levelLives.LifeContainer.RenderEntities();
         effectsContainer.RenderEntities();
     }
-
     /// <summary> Resets the state of the game paused screen to its initial state. </summary>
     /// <returns> Void. </returns>
     public void ResetState()
@@ -264,9 +259,9 @@ public class GameRunning : IGameState, IGameEventProcessor
         FindAndRemoveDeadBlocks(currentLevel.BlockContainer);
         GetCurrentScore = levelScore.GetCurrentScore;
         MakeNewBall();
-        //CheckIfGameLost();
         LoseIfGameLost();
         levelLives.UpdateLifeContainer();
+        ChangeLevelIfWon();
     }
 
     /// <summary> Processes a GameEvent by checking its type and message, and performs the 

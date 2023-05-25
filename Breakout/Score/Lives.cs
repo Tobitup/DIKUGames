@@ -25,9 +25,9 @@ public class Lives {
         UpdateLifeContainer();
     }
 
-    private Vec2F nextHeartPos(int heartNumber){
-        float floatHeartNumber = (float)heartNumber;
-        float newHeartX = (lastHeartPos.X-(heartSize.X*floatHeartNumber)-0.01f);
+    private Vec2F nextHeartPos(int heartIndex){
+        float distance = (float)originalLives-1-heartIndex;
+        float newHeartX = (lastHeartPos.X-(heartSize.X*distance)-0.01f);
         return new Vec2F(newHeartX,lastHeartPos.Y);
     } 
 
@@ -36,11 +36,10 @@ public class Lives {
         for (int i = originalLives - 1; i >= 0; i--){
             if (i >= lives){
                 lifeContainer.AddEntity(
-                    new Entity(new DynamicShape(nextHeartPos(originalLives - 1 - i), heartSize), emptyImage));}
+                    new Entity(new DynamicShape(nextHeartPos(i), heartSize), emptyImage));}
             else
             {   lifeContainer.AddEntity(
-                    new Entity(new DynamicShape(nextHeartPos(originalLives - 1 - i), heartSize), fullImage));}
-        }
+                    new Entity(new DynamicShape(nextHeartPos(i), heartSize), fullImage));}}
     }
     
     public void LoseLife(){
