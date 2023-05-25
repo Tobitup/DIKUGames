@@ -21,10 +21,11 @@ public class StateTransformer {
                 return GameStateType.GameWon;
             default:
                 throw new ArgumentException("ERROR - Not a valid StringState");
+                
         }
     }
 
-    /// <summary> Transforms a GameStateType into the corresponding string representation of a 
+    /* /// <summary> Transforms a GameStateType into the corresponding string representation of a 
     ///           GameState </summary>
     /// <param name="state"> The GameStateType to be transformed into its string representation. 
     /// </param>
@@ -44,5 +45,5 @@ public class StateTransformer {
             default:
                 throw new NotImplementedException();
         }
-    }
+    } */
 }

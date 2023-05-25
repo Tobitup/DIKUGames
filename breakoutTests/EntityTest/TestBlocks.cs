@@ -26,6 +26,8 @@ namespace breakoutTests.TestBlocks;
         private EntityContainer<Entity> normalBlockContainer = new EntityContainer<Entity>();
         private EntityContainer<Entity> unbreakableBlockContainer = new EntityContainer<Entity>();
         private EntityContainer<Entity> movingBlockContainer = new EntityContainer<Entity>();
+        private EntityContainer<Entity> powerUpBlockContainer = new EntityContainer<Entity>();
+        private EntityContainer<Entity> fakeBlockContainer = new EntityContainer<Entity>();
 
         [OneTimeSetUp]
         public void Init() {
@@ -35,6 +37,8 @@ namespace breakoutTests.TestBlocks;
             string normalBlockType = "Normal";
             string unbreakableBlockType = "Unbreakable";
             string movingBlockType = "Moving";
+            string powerUpBlockType = "PowerUp";
+            string falseStringBlockType = "I have of late but wherefore I know not lost all my mirth";
     
             normalBlockContainer.AddEntity(BlockFactory.CreateNewBlock
                     (normalBlockType, new Vec2I(0, 0), new Image(imagePath)));
@@ -44,6 +48,12 @@ namespace breakoutTests.TestBlocks;
             
             movingBlockContainer.AddEntity(BlockFactory.CreateNewBlock
                     (movingBlockType, new Vec2I(1, 0), new Image(imagePath)));
+
+            powerUpBlockContainer.AddEntity(BlockFactory.CreateNewBlock
+                    (powerUpBlockType, new Vec2I(1, 0), new Image(imagePath)));
+
+            fakeBlockContainer.AddEntity(BlockFactory.CreateNewBlock
+                    (falseStringBlockType, new Vec2I(1, 0), new Image(imagePath)));
         }
 
 
@@ -67,6 +77,7 @@ namespace breakoutTests.TestBlocks;
             foreach (IBlock block in normalBlockContainer) {
                 currentBlockHealth = block.HitPoints;
                 block.TakeDamage();
+                block.Update();
                 Assert.Less(block.HitPoints, currentBlockHealth);
            }
         }
@@ -125,6 +136,22 @@ namespace breakoutTests.TestBlocks;
            } 
         }
 
+        [Test]
+        public void TestMovingBlockMoving() {
+        /// ARRANGE
+           
+        /// ACT
+                
+        /// ASSERT
+            foreach (IBlock block in movingBlockContainer) {
+                var blockPos = block.Shape.Position.X;
+                for (int i = 0; i < 20000; i++) {
+                    block.Update();
+                }
+                Assert.AreNotEqual(blockPos, block.Shape.Position.X);
+           } 
+        }
+
          [Test]
         public void TestUnbreakableBlockInizialized() {
         /// ARRANGE
@@ -146,6 +173,7 @@ namespace breakoutTests.TestBlocks;
             foreach (IBlock block in unbreakableBlockContainer) {
                 currentBlockHealth = block.HitPoints;
                 block.TakeDamage();
+                block.Update();
                 Assert.That(block.HitPoints, Is.EqualTo(currentBlockHealth));
            }
             
@@ -164,5 +192,45 @@ namespace breakoutTests.TestBlocks;
                 block.TakeDamage();
                 Assert.That(block.IsDead(),Is.EqualTo(false));
            } 
+        }
+
+        [Test]
+        public void TestPowerUpBlockInizialized() {
+        /// ARRANGE
+            int blockCount;
+        /// ACT
+            blockCount =  powerUpBlockContainer.CountEntities();
+        /// ASSERT
+            Assert.That(blockCount, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void TestPowerUpBlockTakeDmg() {
+        /// ARRANGE
+            int currentBlockHealth;
+        /// ACT
+           
+        /// ASSERT
+            foreach (IBlock block in powerUpBlockContainer) {
+                currentBlockHealth = block.HitPoints;
+                block.TakeDamage();
+                Assert.Less(block.HitPoints, currentBlockHealth);
+           }
+        }
+
+        [Test]
+        public void TestPowerUpBlockDie() {
+        /// ARRANGE
+
+        /// ACT
+           
+        /// ASSERT
+            foreach (IBlock block in powerUpBlockContainer) {
+                block.TakeDamage();
+                block.TakeDamage();
+                block.TakeDamage();
+                block.Update();
+                Assert.That(block.IsDead(),Is.EqualTo(true));
+           }
         }
     }

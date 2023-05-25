@@ -5,12 +5,16 @@ using DIKUArcade.Input;
 using DIKUArcade.Events;
 using DIKUArcade.Math;
 using System.IO;
+using Breakout.Levels;
 
 namespace Breakout.BreakoutStates;
 public class GameWon : IGameState {
     private static GameWon instance = null;
     private Entity backGroundImage;
     private int activeMenuButton;
+
+    // Used for testing.
+    public int ActiveMenuButton {get {return activeMenuButton;}}
 
     private uint finalScore = 0;
     private Text finalScoreText = new Text ("SCORE:",new Vec2F(0.25f,-0.20f), new Vec2F(0.8f,0.8f));
@@ -46,7 +50,7 @@ public class GameWon : IGameState {
         finalScoreText.SetFont("Impact");
         backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f,0.0f),
                                 new Vec2F(1.0f,1.0f)),new Image(Path.Combine(
-                                                            "..","Breakout","Assets",
+                                                            LevelLoader.MAIN_PATH,"Assets",
                                                             "Images", "shipit_titlescreen.png")));
         activeMenuButton = 0;
     }

@@ -12,6 +12,8 @@ public class MainMenu : IGameState {
     private static MainMenu instance = null;
     private Entity backGroundImage;
     private int activeMenuButton;
+    
+    // Used for testing.
     public int ActiveMenuButton {get {return activeMenuButton;}}
     private Text[] menuButtons = {new Text("NEW GAME", new Vec2F(0.25f,0.15f), new Vec2F(0.5f,0.5f))
                                     ,new Text("QUIT", new Vec2F(0.25f,0.0f), new Vec2F(0.5f,0.5f))};

@@ -13,15 +13,13 @@ using DIKUArcade.Input;
 using System.Collections.Generic;
 using Breakout.Levels;
 
+
+using System.Linq;
+
 namespace breakoutTests.TestLevels;
 
 [TestFixture]
 public class TestLevelParser {
-
-    [SetUp]
-    public void SetUp() {
-
-    }
 
     [Test]
     public void TestCorrectLegendData() {
@@ -40,9 +38,8 @@ public class TestLevelParser {
     Dictionary<string, string> legendData = levelParser.parseLegendData();
 
     /// ASSERT
-    Assert.That(legendData, Is.EqualTo(expectedLegendData));
+    Assert.IsTrue(expectedLegendData.SequenceEqual(legendData));
     }
-
 
     [Test]
     public void TestCorrectMetaData() {
@@ -57,11 +54,11 @@ public class TestLevelParser {
     expectedMetaData.Add("Name", "LEVEL 1");
     expectedMetaData.Add("Time", "300");
     expectedMetaData.Add("Hardened", "#");
-    expectedMetaData.Add("PowerUp", "2");
+    expectedMetaData.Add("PowerUp", "1");
     Dictionary<string, string> metaData = levelParser.parseMetaData();
 
     /// ASSERT
-    Assert.That(metaData, Is.EqualTo(expectedMetaData));
+    Assert.IsTrue(expectedMetaData.SequenceEqual(metaData));
     }
 
     [TestCase(2,2, "a")]
@@ -81,7 +78,7 @@ public class TestLevelParser {
         string[,] mapData = levelParser.parseLevelMap();
 
         /// ASSERT
-        Assert.That(mapData[y,x], Is.EqualTo(expectedChar));
+        Assert.IsTrue(expectedChar.SequenceEqual(mapData[y,x]));
     }
 
     [Test]

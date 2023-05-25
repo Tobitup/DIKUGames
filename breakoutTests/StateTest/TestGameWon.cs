@@ -14,26 +14,31 @@ using System.Collections.Generic;
 using Breakout.BreakoutStates;
 using Breakout.Levels;
 
-namespace breakoutTests.TestMainMenu;
+namespace breakoutTests.TestGameWon;
 
 [TestFixture]
-public class MainMenuTesting {
+public class GameWonTesting {
     private StateMachine stateMachine;
     private GameEventBus eventBus = Breakout.BreakoutBus.GetBus();
-    private MainMenu menu;
+    private GameWon menu;
 
     [SetUp]
     public void InitiateStateMachine() {
         DIKUArcade.GUI.Window.CreateOpenGLContext();
         stateMachine = new StateMachine();
         eventBus.Subscribe(GameEventType.GameStateEvent, stateMachine);
-        menu = Breakout.BreakoutStates.MainMenu.GetInstance();
+        stateMachine.ProcessEvent(
+            new GameEvent{
+                EventType = GameEventType.GameStateEvent,
+                Message = "CHANGE_STATE",
+                StringArg1 = "GAME_WON" });
+        menu = Breakout.BreakoutStates.GameWon.GetInstance();
     }
 
     [Test]
     public void TestInitialState() {
     /// ASSERT
-        Assert.That(stateMachine.ActiveState, Is.InstanceOf<MainMenu>());
+        Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameWon>());
     }
 
     [Test]
@@ -44,17 +49,5 @@ public class MainMenuTesting {
         menu.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Down);
     /// ASSERT
         Assert.That(initialButtonPossition, Is.Not.EqualTo(menu.ActiveMenuButton));
-    }
-
-
-    [Test]
-    public void TestStateChangeToMainMenu() {
-        stateMachine.ProcessEvent(
-            new GameEvent{
-                EventType = GameEventType.GameStateEvent,
-                Message = "CHANGE_STATE",
-                StringArg1 = "MAIN_MENU" });
-        
-        Assert.That(stateMachine.ActiveState, Is.InstanceOf<MainMenu>());
     }
 }

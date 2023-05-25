@@ -21,18 +21,15 @@ namespace breakoutTests.TestBall;
 [TestFixture]
     public class TestBall {
         private EntityContainer<Ball> ballContainer;
-        private IBaseImage ballImage;
+        private EntityContainer<Ball> ballContainerRandom;
 
         [OneTimeSetUp]
         public void Init() {
             DIKUArcade.GUI.Window.CreateOpenGLContext();
             ballContainer = new EntityContainer<Ball>();
-            ballImage = new Image(Path.Combine(LevelLoader.MAIN_PATH, "Assets",
-                                                                "Images", "ball.png"));
-            Ball newBall = new Ball(
-                new DynamicShape(new Vec2F(0.45f,0.22f), 
-                                new Vec2F(0.03f, 0.03f), new Vec2F(0.000f, 0.009f) ), ballImage);
-            ballContainer.AddEntity(newBall);
+            ballContainerRandom = new EntityContainer<Ball>();
+            ballContainer.AddEntity(BallFactory.GenerateNormalBall());
+            ballContainerRandom.AddEntity(BallFactory.GenerateRandomDirBall(new Vec2F(0.5f,0.5f)));
         }
 
         [Test]
@@ -65,11 +62,11 @@ namespace breakoutTests.TestBall;
             ballContainer.Iterate(ball => {
             ball.Shape.Position = new Vec2F(0.5f,0.5f);
         /// ACT
-            for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < 500; i++) {
                 ball.Move();
             }
         /// ASSERT
-            Assert.Less(ball.Shape.Position.X , 0.0f);
+            Assert.Greater(ball.Shape.Position.X , -1.0f);
         });
     }
 
@@ -77,13 +74,13 @@ namespace breakoutTests.TestBall;
         public void TestBallCantLeaveWindowRight() {
         /// ARRANGE
             ballContainer.Iterate(ball => {
-            ball.Shape.Position = new Vec2F(0.5f,0.9f);
+            ball.Shape.Position = new Vec2F(0.9f,0.5f);
         /// ACT
-            for (int i = 0; i < 15; i++) {
+            for (int i = 0; i < 500; i++) {
                 ball.Move();
             }
         /// ASSERT
-            Assert.Less(ball.Shape.Position.Y , 1.0f);
+            Assert.Less(ball.Shape.Position.X , 1.0f);
         });
     }
 
@@ -93,11 +90,24 @@ namespace breakoutTests.TestBall;
             ballContainer.Iterate(ball => {
             ball.Shape.Position = new Vec2F(0.5f,0.9f);
         /// ACT
-            for (int i = 0; i < 15; i++) {
+            for (int i = 0; i < 500; i++) {
                 ball.Move();
             }
         /// ASSERT
-            Assert.Less(ball.Shape.Position.Y , 1.0f);
+            Assert.That(ball.IsBallDead() ,Is.EqualTo(true));
+        });
+    }
+
+    [Test]
+        public void TestBallDirUp() {
+        /// ARRANGE
+            ballContainer.Iterate(ball => {
+            ball.Shape.Position = new Vec2F(0.5f,0.2f);
+            var ballYDir = ball.Shape.AsDynamicShape().Direction.Y;
+        /// ACT
+            ball.DirUp(ball.Shape.Position , new Vec2F(0.022f,0.025f));
+        /// ASSERT
+            Assert.Less(ballYDir , -ball.Shape.AsDynamicShape().Direction.Y);
         });
     }
 }

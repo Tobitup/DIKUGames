@@ -9,7 +9,6 @@ namespace Breakout.Blocks
         bool IsDead();
         void RemoveIfDead();
         Shape Shape {get;}
-
         int HitPoints {get;}
     }
 }

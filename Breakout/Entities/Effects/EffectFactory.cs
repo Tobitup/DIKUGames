@@ -1,6 +1,7 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
+using Breakout.Levels;
 
 namespace Breakout.Effect;
 public static class EffectFactory {
@@ -16,17 +17,17 @@ public static class EffectFactory {
             case 1:
                 return new BigJimPowerUp
                                     (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
-                                    new Image(Path.Combine("Assets", "Images",
+                                    new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
                                     EffectTransformer.TransformEffectToPath(Effects.BigJim))));
             case 2:
                 return new SlimJimHazard
                                     (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
-                                    new Image(Path.Combine("Assets", "Images",
+                                    new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
                                     EffectTransformer.TransformEffectToPath(Effects.SlimJim))));
             case 3:
                 return new SplitzyPowerUp
                                     (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
-                                    new Image(Path.Combine("Assets", "Images",
+                                    new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
                                     EffectTransformer.TransformEffectToPath(Effects.Splitzy))));
             case 4:
                 return new LifeUP
@@ -51,7 +52,7 @@ public static class EffectFactory {
             default:
                 return new SlimJimHazard
                                     (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
-                                    new Image(Path.Combine("Assets", "Images",
+                                    new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
                                     EffectTransformer.TransformEffectToPath(Effects.SlimJim))));
         }
     }

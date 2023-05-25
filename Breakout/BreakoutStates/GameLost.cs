@@ -5,12 +5,16 @@ using DIKUArcade.Input;
 using DIKUArcade.Events;
 using DIKUArcade.Math;
 using System.IO;
+using Breakout.Levels;
 
 namespace Breakout.BreakoutStates;
 public class GameLost : IGameState {
     private static GameLost instance = null;
     private Entity backGroundImage;
     private int activeMenuButton;
+
+    // Used for Testing.
+    public int ActiveMenuButton {get {return activeMenuButton;}}
 
     private uint finalScore = 0;
     private Text finalScoreText;
@@ -46,7 +50,7 @@ public class GameLost : IGameState {
         finalScoreText.SetFont("Impact");
         backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f,0.0f),
                                 new Vec2F(1.0f,1.0f)),new Image(Path.Combine(
-                                                            "..","Breakout","Assets",
+                                                            LevelLoader.MAIN_PATH,"Assets",
                                                             "Images", "shipit_titlescreen.png")));
         activeMenuButton = 0;
     }

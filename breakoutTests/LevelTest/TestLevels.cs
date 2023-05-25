@@ -30,7 +30,7 @@ public class LevelTesting {
     /// ACT
         string[] testValue = FileReader.ReadFile(
                                     Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
-                                                                            "Level1.txt"));
+                                                                            "level1.txt"));
                                                                             
     /// ASSERT
         Assert.That(testValue.GetType(), Is.EqualTo(typeof(string[])));
@@ -43,7 +43,7 @@ public class LevelTesting {
 
     /// ACT
         string invalidFilePath = Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Levels",
-                                                                            "Level8.txt");
+                                                                            "level8.txt");
 
     /// ASSERT
         Assert.That(FileReader.ReadFile(invalidFilePath), Is.EqualTo(new string[0]));
