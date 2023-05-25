@@ -28,18 +28,30 @@ public class Ball : Entity {
         }
     }
 
-
     // Called from GameRunning to handle Ball's new dirrection when colliding with Player.
-    public void DirUp(float playerPos , float playerExtend) {
+    public void DirUp(Vec2F playerPos , Vec2F playerExtend) {
         var activeBall = this.Shape.AsDynamicShape();
-        var ballAngle = ((activeBall.Position.X - playerPos) / playerPos);
-        var newDirection = activeBall.Direction = new Vec2F(
-                (float)((activeBall.Direction.X * Math.Cos(ballAngle) + 
-                        activeBall.Direction.Y * Math.Sin(ballAngle))),
-                        activeBall.Direction.Y*-1);
-        newDirection *= (float)(activeBall.Direction.Length() / newDirection.Length());
-        ChangeDirection(newDirection);
+        // Calculate players middle X possition.
+        var playerMidX = playerPos + playerExtend / 2;
 
+        // Calculates ball middle X possition.
+        var ballMidX = activeBall.Position + activeBall.Extent / 2;
+        
+        // Calculates the different between the player middle and ball middle. 
+        // Used to calculate the new vector for the balls dirrection.
+        var ballPlayerDif = ballMidX - playerMidX;
+
+        // Gets the balls speed so that it's magnitude will always stay constant.
+        var ballSpeed = activeBall.Direction.Length();
+
+        // Normalizes the vector and clamps it so if the ball collides with the player on the very 
+        // left or right side, the ball won't shoot off almost sideways.
+        var normalizedPos = Math.Clamp(Vec2F.Normalize(ballPlayerDif).X, -0.8f,0.8f);
+
+        // "Draws" a half circle around the player to calculate the dirrection of the new Y vector,
+        // Then times it with the vectors magnitude to have a constant speed. 
+        var newDir = new Vec2F(normalizedPos, MathF.Sqrt(1.0f - normalizedPos * normalizedPos)) * (float)ballSpeed;
+        ChangeDirection(newDir);
     }
 
     // Called from GameRunning to update ball direction when collision is detected Left and Right.
@@ -64,4 +76,11 @@ public class Ball : Entity {
         base.Shape.AsDynamicShape().ChangeDirection(newDir);
     }
 
+    public bool IsBallDead() {
+        if (Shape.Position.Y <= 0.01f || Shape.Position.Y + Shape.Extent.Y <= 0.01f) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

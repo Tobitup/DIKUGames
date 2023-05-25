@@ -178,8 +178,7 @@ public class GameRunning : IGameState, IGameEventProcessor
         {
         EventType = GameEventType.GameStateEvent,
         Message = "CHANGE_STATE",
-        StringArg1 = "GAME_LOST"
-                                    });            
+        StringArg1 = "GAME_LOST" });            
         }
     }
      public void ChangeLevelIfWon(){
@@ -190,7 +189,7 @@ public class GameRunning : IGameState, IGameEventProcessor
     }
 
     public void MakeNewBall(){
-        if (ballContainer.CountEntities()==0 & levelLives.GetCurrentLives != 0){
+        if (ballContainer.CountEntities()==0 & levelLives.GetCurrentLives != 0) {
             levelLives.LoseLife();
             ballContainer.AddEntity(BallFactory.GenerateNormalBall());
         }
@@ -202,7 +201,7 @@ public class GameRunning : IGameState, IGameEventProcessor
             var activePlayer = player.Shape;
             var ballPlayerDetect = CollisionDetection.Aabb(activeBall, activePlayer);
             if (ballPlayerDetect.Collision) {
-                    ball.DirUp(activePlayer.Position.X , activePlayer.Extent.X);
+                    ball.DirUp(activePlayer.Position , activePlayer.Extent);
             } else {
                 foreach (IBlock block in currentLevel.BlockContainer) {
                     // Deletes ball if it leaves the window.
@@ -245,16 +244,14 @@ public class GameRunning : IGameState, IGameEventProcessor
 
     /// <summary> Resets the state of the game paused screen to its initial state. </summary>
     /// <returns> Void. </returns>
-    public void ResetState()
-    {
+    public void ResetState() {
         InitializeGameState();
     }
 
     /// <summary> Updates the game state by invoking the Move() method and update the players 
     ///           position. </summary>
     /// <returns> Void. </returns>
-    public void UpdateState()
-    {
+    public void UpdateState() {
         player.Move();
         IterateCollision();
         CollisionEffect();
@@ -273,12 +270,9 @@ public class GameRunning : IGameState, IGameEventProcessor
     ///           subsequent action. </summary>
     /// <param name="gameEvent"> A GameEvent object that represents the event to be processed. 
     /// </param>
-    public void ProcessEvent(GameEvent gameEvent)
-    {
-        if (gameEvent.EventType == GameEventType.PlayerEvent)
-        {
-            switch (gameEvent.Message)
-            {
+    public void ProcessEvent(GameEvent gameEvent) {
+        if (gameEvent.EventType == GameEventType.PlayerEvent) {
+            switch (gameEvent.Message) {
                 case "EFFECT":
                     // Do nothing
                     // Placeholder
@@ -303,7 +297,7 @@ public class GameRunning : IGameState, IGameEventProcessor
                 SpawnEffect();
                 block.DeleteEntity();
             }
-        } );
+        });
     }
 
     private void SpawnEffect() {
@@ -324,15 +318,14 @@ public class GameRunning : IGameState, IGameEventProcessor
                 System.Console.WriteLine("Collided");
                 effect.DeleteEntity();           
             }
-        if (effect.Shape.Position.Y < 0.0f) {
-            effect.DeleteEntity();
-        }
+            if (effect.Shape.Position.Y < 0.0f) {
+                effect.DeleteEntity();
+            }
         });
     }
 
     private void SplitBalls() {
         EntityContainer<Ball> tempBallContainer = new EntityContainer<Ball>();
-        //System.Console.WriteLine(tempBallContainer.CountEntities());
         foreach(Ball ball in ballContainer) {
             tempBallContainer.AddEntity(ball);
             for (int i=0; i<3; i++) {
@@ -354,6 +347,5 @@ public class GameRunning : IGameState, IGameEventProcessor
             default:
                 break;
         }
-
     }
 }
