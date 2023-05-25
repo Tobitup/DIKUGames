@@ -16,6 +16,8 @@ public class Player : IGameEventProcessor {
     private Entity entity;
     private DynamicShape shape;
     public uint Lives = 0;
+    private bool isSlimJimAffected = false;
+    private bool isBigJimAffected = false;
     public DynamicShape Shape {
         get {return shape;}
     }
@@ -88,27 +90,50 @@ public class Player : IGameEventProcessor {
         }
     }
 
-    private void BigJimAffected() {
-        Vec2F bigJimSize = new Vec2F(Shape.Extent.X*2.0f, Shape.Extent.Y);
-        shape.Position.X -= bigJimSize.X/2.0f;
+    private void BigJimAffected(string state) {
+        if ((state == "START") && (isBigJimAffected == false)) {
+            isBigJimAffected = true;
+            Vec2F bigJimSize = new Vec2F(Shape.Extent.X*2.0f, Shape.Extent.Y);
 
-        shape.Extent = bigJimSize;
+            float newX = bigJimSize.X/2.0f/2.0f;
+            shape.Position.X -= newX;
+
+            shape.Extent = bigJimSize;
+        } else if (state == "STOP") {
+            isBigJimAffected = false;
+            Vec2F bigJimSize = new Vec2F(Shape.Extent.X/2.0f, Shape.Extent.Y);
+            shape.Position.X += bigJimSize.X/2.0f;
+
+            shape.Extent = bigJimSize;
+        }
+        
     }
 
-    private void SlimJimAffected() {
-        Vec2F slimJimSize = new Vec2F(Shape.Extent.X/2.0f, Shape.Extent.Y);
-        shape.Position.X += slimJimSize.X/2.0f;
+    private void SlimJimAffected(string state) {
+        if ((state == "START") && (!isSlimJimAffected)) {
+            isSlimJimAffected = true;
+            Vec2F slimJimSize = new Vec2F(Shape.Extent.X/2.0f, Shape.Extent.Y);
+            shape.Position.X += slimJimSize.X/2.0f;
 
-        shape.Extent = slimJimSize;
+            shape.Extent = slimJimSize;
+        } else if (state == "STOP") {
+            isSlimJimAffected = false;
+            Vec2F slimJimSize = new Vec2F(Shape.Extent.X*2.0f, Shape.Extent.Y);
+            float newX = slimJimSize.X/2.0f/2.0f;
+
+            shape.Position.X -= newX;
+
+            shape.Extent = slimJimSize;
+        }
     }
 
-    private void initiateEffect(string effect) {
+    private void initiateEffect(string effect, string state) {
         switch (EffectTransformer.TransformStringToEffect(effect)) {
             case Effects.BigJim:
-                BigJimAffected();
+                BigJimAffected(state);
             break;
             case Effects.SlimJim:
-                SlimJimAffected();
+                SlimJimAffected(state);
             break;
         }
 
@@ -134,8 +159,9 @@ public class Player : IGameEventProcessor {
                 case "MOVE_RIGHT_STOP":
                     this.SetMoveRight(false);
                     break;
+
                 case "EFFECT":
-                    initiateEffect(gameEvent.StringArg1);
+                    initiateEffect(gameEvent.StringArg1, gameEvent.StringArg2);
                     break;
                 
             }

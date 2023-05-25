@@ -13,6 +13,10 @@ public static class EffectTransformer {
                 return Effects.SlimJim;
             case "Splitzy":
                 return Effects.Splitzy;
+            case "LifeUp":
+                return Effects.LifeUp;
+            case "LifeDown":
+                return Effects.LifeDown;
             default:
                 throw new ArgumentException("ERROR - Not a valid effect");
         }
@@ -31,7 +35,10 @@ public static class EffectTransformer {
                 return "SlimJim_START";
             case Effects.Splitzy:
                 return "Splitzy";
-
+            case Effects.LifeUp:
+                return "LifeUp";
+            case Effects.LifeDown:
+                return "LifeDown";
             default:
                 throw new NotImplementedException();
         }
@@ -45,6 +52,10 @@ public static class EffectTransformer {
                     return "SlimJim.png";
                 case Effects.Splitzy:
                     return "SplitPowerUp.png";
+                case Effects.LifeUp:
+                    return "LifePickUp.png";
+                case Effects.LifeDown:
+                    return "LoseLife.png";
                 default:
                     throw new NotImplementedException();
             }

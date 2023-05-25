@@ -3,4 +3,6 @@ public enum Effects {
     BigJim,
     SlimJim,
     Splitzy,
+    LifeUp,
+    LifeDown,
 }
