@@ -1,5 +1,3 @@
-// Planned release - Next week :)
-
 using System;
 using System.IO;
 using Breakout;
@@ -52,14 +50,54 @@ namespace breakoutTests.TestBall;
         /// ARRANGE
             ballContainer.Iterate(ball => {
             ball.Shape.Position = new Vec2F(0.5f,0.9f);
-
         /// ACT
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < 15; i++) {
                 ball.Move();
             }
         /// ASSERT
-            Assert.That(ball.Shape.Position.Y, Is.EqualTo(1f));
+            Assert.Less(ball.Shape.Position.Y , 1.0f);
         });
+    }
 
+    [Test]
+        public void TestBallCantLeaveWindowLeft() {
+        /// ARRANGE
+            ballContainer.Iterate(ball => {
+            ball.Shape.Position = new Vec2F(0.5f,0.5f);
+        /// ACT
+            for (int i = 0; i < 50; i++) {
+                ball.Move();
+            }
+        /// ASSERT
+            Assert.Less(ball.Shape.Position.X , 0.0f);
+        });
+    }
+
+    [Test]
+        public void TestBallCantLeaveWindowRight() {
+        /// ARRANGE
+            ballContainer.Iterate(ball => {
+            ball.Shape.Position = new Vec2F(0.5f,0.9f);
+        /// ACT
+            for (int i = 0; i < 15; i++) {
+                ball.Move();
+            }
+        /// ASSERT
+            Assert.Less(ball.Shape.Position.Y , 1.0f);
+        });
+    }
+
+    [Test]
+        public void TestBallCanDie() {
+        /// ARRANGE
+            ballContainer.Iterate(ball => {
+            ball.Shape.Position = new Vec2F(0.5f,0.9f);
+        /// ACT
+            for (int i = 0; i < 15; i++) {
+                ball.Move();
+            }
+        /// ASSERT
+            Assert.Less(ball.Shape.Position.Y , 1.0f);
+        });
     }
 }

@@ -37,6 +37,7 @@ public class Ball : Entity {
                 (float)((activeBall.Direction.X * Math.Cos(ballAngle) + 
                         activeBall.Direction.Y * Math.Sin(ballAngle))),
                         activeBall.Direction.Y*-1);
+        newDirection *= (float)(activeBall.Direction.Length() / newDirection.Length());
         ChangeDirection(newDirection);
 
     }
