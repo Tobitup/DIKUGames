@@ -55,7 +55,6 @@ public class GameLostTesting {
     public void TestAllMenuButtonNavigation() {
     /// ARRANGE
         int initialButtonPossition = menu.ActiveMenuButton;
-        System.Console.WriteLine(menu.ActiveMenuButton);
     /// ACT
         menu.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Enter);
         menu.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Up);

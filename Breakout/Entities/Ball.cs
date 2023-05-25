@@ -84,9 +84,10 @@ public class Ball : Entity, IGameEventProcessor {
             return true;
         } else {
             return false;
-	}
+	    }
+    }
 					
-   private void BigAffected(string state) {
+    private void BigAffected(string state) {
         if ((state == "START") && (!isBig)) {
             isBig = true;
 
@@ -119,7 +120,6 @@ public class Ball : Entity, IGameEventProcessor {
                 case "EFFECT":
                     initiateEffect(gameEvent.StringArg1, gameEvent.StringArg2);
                     break;
-                
             }
         }
     }
