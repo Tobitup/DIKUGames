@@ -19,6 +19,7 @@ namespace breakoutTests.TestGamePaused;
 [TestFixture]
 public class GamePausedTesting {
     private StateMachine stateMachine;
+    private GamePaused gamePaused = GamePaused.GetInstance();
     private GameEventBus eventBus = Breakout.BreakoutBus.GetBus();
     private GamePaused menu;
 
@@ -38,6 +39,8 @@ public class GamePausedTesting {
     [Test]
     public void TestInitialState() {
     /// ASSERT
+        gamePaused.UpdateState();
+        gamePaused.RenderState();
         Assert.That(stateMachine.ActiveState, Is.InstanceOf<GamePaused>());
     }
 }

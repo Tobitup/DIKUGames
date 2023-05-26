@@ -18,24 +18,39 @@ using Breakout.BallClass;
 
 namespace Breakout.BreakoutStates;
 
-public class GameRunning : IGameState, IGameEventProcessor
-{
+public class GameRunning : IGameState , IGameEventProcessor {
     private GameEventBus eventBus;
-    private bool gameLost = false;
     private Entity backGroundImage;
-
-    private Breakout.Player.Player player;
+    private Player.Player player;
+    public Player.Player Player {get { return Player;}}
     private EntityContainer<Ball> ballContainer;
     private EntityContainer<Entity> effectsContainer;
+    private bool gameLost;
+    public bool GameLost {
+        get { return gameLost; }
+        set { gameLost = value; }
+    }
     private Level currentLevel;
+    public Level CurrentLevel {
+        get { return currentLevel; }
+        set { currentLevel = value; }
+    }
     private int numericLevel = 1;
+    public int NumericLevel {
+        get {return numericLevel;}
+        set {numericLevel = value;}
+    }
     private LevelLoader levelLoader;
+    public LevelLoader LevelLoader {
+        get { return levelLoader; }
+        set { levelLoader = value; }
+    }
     private static GameRunning instance = null;
 
     private Score levelScore;
 
     private Lives levelLives;
-
+    public Lives LevelLives {get { return levelLives; }}
     public uint GetCurrentScore = 0;
 
     /// <summary> Gets the singleton instance of the GameRunning state. </summary>
@@ -72,18 +87,9 @@ public class GameRunning : IGameState, IGameEventProcessor
         levelLoader = new LevelLoader(SelectLevel.level1);
         currentLevel = levelLoader.Level;
         eventBus = BreakoutBus.GetBus();
-        eventBus.Subscribe(GameEventType.PlayerEvent, this);
-
         levelScore = new Score();
         levelLives = new Lives(player.Lives);
         numericLevel = 1;
-    }
-
-    /// <summary> Switches to a new level by setting the current level to the loaded level. 
-    /// </summary>
-    private void SwitchLevel(SelectLevel newlevel) {
-        levelLoader = new LevelLoader(newlevel);
-        currentLevel = levelLoader.Level;
     }
 
     /// <summary> Responds to a key press by registering a game event with the 
@@ -115,14 +121,9 @@ public class GameRunning : IGameState, IGameEventProcessor
                 });
                 break;
             case KeyboardKey.Up:
-                incrementLevel();
+                LevelController.incrementLevel();
                 break;
         }
-    }
-
-    private void incrementLevel() {
-        numericLevel += 1;
-        SwitchLevel(LevelTransformer.TransformIntToLevel(numericLevel));
     }
 
     /// <summary> Responds to a key release by registering a game event to stop the given player 
@@ -158,76 +159,10 @@ public class GameRunning : IGameState, IGameEventProcessor
             KeyRelease(key);
         }
     }
-    /// <summary> Updates the blocks. </summary>
-    /// <returns> Void. </returns>
-    public void UpdateBlocks() {
-        foreach (IBlock block in currentLevel.BlockContainer) {
-                block.Update();
-        }
-    }
-
-    public void LoseIfGameLost(){
-        if (levelLives.GetCurrentLives == 0 || currentLevel.HasTime && currentLevel.Timer.IsDead()){
-        gameLost = true;}
-        if (gameLost){
-        eventBus.RegisterEvent(
-         new GameEvent
-        {
-        EventType = GameEventType.GameStateEvent,
-        Message = "CHANGE_STATE",
-        StringArg1 = "GAME_LOST" });            
-        }
-    }
-     public void ChangeLevelIfWon(){
-        if (currentLevel.BlockContainer.CountEntities()==0){
-        incrementLevel();
-        }
-
-    }
-
-    public void MakeNewBall(){
-        if (ballContainer.CountEntities()==0 & levelLives.GetCurrentLives != 0) {
-            levelLives.LoseLife();
-            ballContainer.AddEntity(BallFactory.GenerateNormalBall());
-        }
-    }
-
-    private void IterateCollision() {
-        ballContainer.Iterate(ball => {
-            var activeBall = ball.Shape.AsDynamicShape();
-            var activePlayer = player.Shape;
-            var ballPlayerDetect = CollisionDetection.Aabb(activeBall, activePlayer);
-            if (ballPlayerDetect.Collision) {
-                    ball.DirUp(activePlayer.Position , activePlayer.Extent);
-            } else {
-                foreach (IBlock block in currentLevel.BlockContainer) {
-                    // Deletes ball if it leaves the window.
-                    var ballBlockDetect = CollisionDetection.Aabb(activeBall, block.Shape);
-                    if (activeBall.Position.Y <= 0.01f || 
-                        activeBall.Position.Y + activeBall.Extent.Y <= 0.01f) {
-                            ball.DeleteEntity();
-
-                    } else if (ballBlockDetect.Collision) {
-                        if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirRight || 
-                            ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirLeft) {
-                                ball.DirLR();
-                                block.TakeDamage();
-                    }
-                    if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirUp || 
-                        ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirDown) {
-                            ball.DirUD();
-                            block.TakeDamage();
-                    }
-                }}
-            ball.Move();   
-            }
-        });
-    }
 
     /// <summary> Renders the current game state, with background and menu buttons. </summary>
     /// <returns> Void. </returns>
-    public void RenderState()
-    {
+    public void RenderState() {
         backGroundImage.RenderEntity();
         player.Render();
         currentLevel.BlockContainer.RenderEntities();
@@ -248,17 +183,17 @@ public class GameRunning : IGameState, IGameEventProcessor
     /// <returns> Void. </returns>
     public void UpdateState() {
         player.Move();
-        IterateCollision();
-        CollisionEffect();
-        UpdateBlocks();
-        UpdateEffects();
+        CollisionController.IterateCollision(ballContainer,player,currentLevel.BlockContainer);
+        EffectController.CollisionEffect(effectsContainer,player);
+        BlockController.UpdateBlocks(currentLevel);
+        EffectController.UpdateEffects(effectsContainer);
         currentLevel.Timer.UpdateTime();
-        FindAndRemoveDeadBlocks(currentLevel.BlockContainer);
+        BlockController.FindAndRemoveDeadBlocks(currentLevel.BlockContainer,effectsContainer,levelScore);
         GetCurrentScore = levelScore.GetCurrentScore;
-        MakeNewBall();
-        LoseIfGameLost();
+        CollisionController.MakeNewBall(ballContainer,levelLives);
+        LevelController.LoseIfGameLost();
         levelLives.UpdateLifeContainer();
-        ChangeLevelIfWon();
+        LevelController.ChangeLevelIfWon(currentLevel.BlockContainer);
     }
 
     /// <summary> Processes a GameEvent by checking its type and message, and performs the 
@@ -272,75 +207,9 @@ public class GameRunning : IGameState, IGameEventProcessor
                     // Do nothing
                     // Placeholder
                     System.Console.WriteLine("EffectEvent");
-                    initiateEffect(gameEvent.StringArg1);
+                    EffectController.InitiateEffect(gameEvent.StringArg1);
                     break;
             }
-        }
-    }
-
-    private void UpdateEffects() {
-        foreach (IEffect effect in effectsContainer) {
-            effect.Update();
-        }
-    }
-
-    private void FindAndRemoveDeadBlocks(EntityContainer<Entity> blocks) {
-        currentLevel.BlockContainer.Iterate(block => {
-            var currentBlock = block as IBlock;
-            if (currentBlock.IsDead()) {
-                levelScore.IncrementScore(currentBlock.Value);
-                SpawnEffect();
-                block.DeleteEntity();
-            }
-        });
-    }
-
-    private void SpawnEffect() {
-        foreach (IBlock block in currentLevel.BlockContainer) {
-            var specialBlock = block as ISpecialBlock;
-            if (specialBlock != null && specialBlock.IsDead()) {
-                effectsContainer.AddEntity(specialBlock.GetEffect());
-            }
-        }
-    }
-
-    private void CollisionEffect() {
-        effectsContainer.Iterate(effect => {
-            CollisionData collision = CollisionDetection.Aabb(effect.Shape.AsDynamicShape(), player.Shape);
-            if (collision.Collision) {
-                var collidedEffect = effect as IEffect;
-                collidedEffect.InitiateEffect();
-                System.Console.WriteLine("Collided");
-                effect.DeleteEntity();           
-            }
-            if (effect.Shape.Position.Y < 0.0f) {
-                effect.DeleteEntity();
-            }
-        });
-    }
-
-    private void SplitBalls() {
-        EntityContainer<Ball> tempBallContainer = new EntityContainer<Ball>();
-        foreach(Ball ball in ballContainer) {
-            tempBallContainer.AddEntity(ball);
-            for (int i=0; i<3; i++) {
-                tempBallContainer.AddEntity(BallFactory.GenerateRandomDirBall(ball.Shape.Position));
-            }
-        }
-        ballContainer = tempBallContainer;
-    }
-
-    private void initiateEffect(string effect) {
-        switch (EffectTransformer.TransformStringToEffect(effect)) {
-            case Effects.Splitzy:
-                //SplitBalls();
-                System.Console.WriteLine("Splitzy");
-                break;
-            case Effects.SlimJim:
-                System.Console.WriteLine("SlimJim");
-            break;
-            default:
-                break;
         }
     }
 }

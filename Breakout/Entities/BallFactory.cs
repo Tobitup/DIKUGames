@@ -9,7 +9,7 @@ public static class BallFactory {
     private const float WIDTH = 0.03f;
     private const float HEIGTH = 0.03f;
     private const float DIRX = 0.005f;
-    private const float DIRY = 0.009f;
+    private const float DIRY = 0.012f;
     private const float POSX = 0.45f;
     private const float POSY = 0.22f;
 

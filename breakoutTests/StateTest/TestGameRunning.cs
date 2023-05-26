@@ -19,6 +19,7 @@ namespace breakoutTests.TestStateMachine;
 [TestFixture]
 public class GameRunningTesting {
     private StateMachine stateMachine;
+    GameRunning gameRunning = GameRunning.GetInstance();
     private GameEventBus eventBus = Breakout.BreakoutBus.GetBus();
 
     [SetUp]
@@ -35,6 +36,17 @@ public class GameRunningTesting {
 
     [Test]
     public void TestInitialState() {
+        gameRunning.UpdateState();
+        gameRunning.RenderState();
+        Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameRunning>());
+    }
+
+    [Test]
+    public void TestKeypress() {
+        gameRunning.HandleKeyEvent(KeyboardAction.KeyPress,KeyboardKey.Left);
+        gameRunning.HandleKeyEvent(KeyboardAction.KeyPress,KeyboardKey.Right);
+        gameRunning.HandleKeyEvent(KeyboardAction.KeyRelease,KeyboardKey.Left);
+        gameRunning.HandleKeyEvent(KeyboardAction.KeyRelease,KeyboardKey.Left);
         Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameRunning>());
     }
 }
