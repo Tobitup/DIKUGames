@@ -19,6 +19,7 @@ namespace breakoutTests.TestMainMenu;
 [TestFixture]
 public class MainMenuTesting {
     private StateMachine stateMachine;
+    MainMenu mainMenu = MainMenu.GetInstance();
     private GameEventBus eventBus = Breakout.BreakoutBus.GetBus();
     private MainMenu menu;
 
@@ -33,6 +34,8 @@ public class MainMenuTesting {
     [Test]
     public void TestInitialState() {
     /// ASSERT
+        mainMenu.UpdateState();
+        mainMenu.RenderState();
         Assert.That(stateMachine.ActiveState, Is.InstanceOf<MainMenu>());
     }
 

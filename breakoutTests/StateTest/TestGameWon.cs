@@ -19,6 +19,7 @@ namespace breakoutTests.TestGameWon;
 [TestFixture]
 public class GameWonTesting {
     private StateMachine stateMachine;
+    GameWon gameWon = GameWon.GetInstance();
     private GameEventBus eventBus = Breakout.BreakoutBus.GetBus();
     private GameWon menu;
 
@@ -38,6 +39,8 @@ public class GameWonTesting {
     [Test]
     public void TestInitialState() {
     /// ASSERT
+        gameWon.UpdateState();
+        gameWon.RenderState();
         Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameWon>());
     }
 

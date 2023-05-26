@@ -19,6 +19,7 @@ namespace breakoutTests.TestGameLost;
 [TestFixture]
 public class GameLostTesting {
     private StateMachine stateMachine;
+    GameLost gameLost = GameLost.GetInstance();
     private GameEventBus eventBus = Breakout.BreakoutBus.GetBus();
     private GameLost menu;
 
@@ -38,6 +39,8 @@ public class GameLostTesting {
     [Test]
     public void TestInitialState() {
     /// ASSERT
+        gameLost.UpdateState();
+        gameLost.RenderState();
         Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameLost>());
     }
 

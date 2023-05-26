@@ -1,12 +1,7 @@
-using DIKUArcade;
-using DIKUArcade.GUI;
 using DIKUArcade.Events;
-using DIKUArcade.Input;
-using System.Collections.Generic;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using Breakout;
 using Breakout.Effect;
 
 namespace Breakout.Player;
@@ -40,11 +35,11 @@ public class Player : IGameEventProcessor {
         this.shape = shape;
         eventBus = BreakoutBus.GetBus();
         eventBus.Subscribe(GameEventType.PlayerEvent, this);
-        Lives = 8;
+        Lives = 2;
     }
 
     /// <summary> Renders the player's game object. </summary>
-     /// <returns> Void. </returns>
+    /// <returns> Void. </returns>
     public void Render() {
         entity.RenderEntity();
     }
@@ -106,7 +101,6 @@ public class Player : IGameEventProcessor {
             isBigJimAffected = false;
             Vec2F bigJimSize = new Vec2F(Shape.Extent.X/2.0f, Shape.Extent.Y);
             shape.Position.X += bigJimSize.X/2.0f;
-
             shape.Extent = bigJimSize;
         }
         
@@ -177,7 +171,7 @@ public class Player : IGameEventProcessor {
                 case "MOVE_RIGHT_STOP":
                     this.SetMoveRight(false);
                     break;
-
+                    
                 case "EFFECT":
                     initiateEffect(gameEvent.StringArg1, gameEvent.StringArg2);
                     break;

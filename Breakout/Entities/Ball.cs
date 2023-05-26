@@ -102,7 +102,7 @@ public class Ball : Entity, IGameEventProcessor {
         }
     }
 
-    private void initiateEffect(string effect, string state) {
+    private void InitiateEffect(string effect, string state) {
         switch (EffectTransformer.TransformStringToEffect(effect)) {
             case Effects.BigBalls:
                 BigAffected(state);
@@ -118,7 +118,7 @@ public class Ball : Entity, IGameEventProcessor {
         if (gameEvent.EventType == GameEventType.PlayerEvent) {
             switch(gameEvent.Message) {
                 case "EFFECT":
-                    initiateEffect(gameEvent.StringArg1, gameEvent.StringArg2);
+                    InitiateEffect(gameEvent.StringArg1, gameEvent.StringArg2);
                     break;
             }
         }
