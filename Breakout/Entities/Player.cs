@@ -35,7 +35,7 @@ public class Player : IGameEventProcessor {
         this.shape = shape;
         eventBus = BreakoutBus.GetBus();
         eventBus.Subscribe(GameEventType.PlayerEvent, this);
-        Lives = 2;
+        Lives = 5;
     }
 
     /// <summary> Renders the player's game object. </summary>
