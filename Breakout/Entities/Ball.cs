@@ -94,7 +94,7 @@ public class Ball : Entity, IGameEventProcessor {
             Shape.Extent.X *= 2.0f;
             Shape.Extent.Y *= 2.0f;
 
-        } else if (state == "STOP") {
+        } else if (state == "STOP" && (isBig)) {
             isBig = false;
 
             Shape.Extent.X /= 2.0f;

@@ -11,8 +11,7 @@ public static class EffectFactory {
 
 
     public static IEffect GetRandomPowerUp(Vec2F pos) {
-        int randomNumber = rnd.Next(7,8);
-        //int randomNumber = 1;
+        int randomNumber = rnd.Next(1,9);
         switch (randomNumber) {
             case 1:
                 return new BigJimPowerUp

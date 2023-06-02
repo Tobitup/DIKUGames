@@ -18,7 +18,7 @@ using Breakout.BallClass;
 
 namespace Breakout.BreakoutStates;
 
-public class GameRunning : IGameState , IGameEventProcessor {
+public class GameRunning : IGameState {
     private GameEventBus eventBus;
     private Entity backGroundImage;
     private Player.Player player;
@@ -194,22 +194,5 @@ public class GameRunning : IGameState , IGameEventProcessor {
         LevelController.LoseIfGameLost();
         levelLives.UpdateLifeContainer();
         LevelController.ChangeLevelIfWon(currentLevel.BlockContainer);
-    }
-
-    /// <summary> Processes a GameEvent by checking its type and message, and performs the 
-    ///           subsequent action. </summary>
-    /// <param name="gameEvent"> A GameEvent object that represents the event to be processed. 
-    /// </param>
-    public void ProcessEvent(GameEvent gameEvent) {
-        if (gameEvent.EventType == GameEventType.PlayerEvent) {
-            switch (gameEvent.Message) {
-                case "EFFECT":
-                    // Do nothing
-                    // Placeholder
-                    System.Console.WriteLine("EffectEvent");
-                    EffectController.InitiateEffect(gameEvent.StringArg1);
-                    break;
-            }
-        }
     }
 }
