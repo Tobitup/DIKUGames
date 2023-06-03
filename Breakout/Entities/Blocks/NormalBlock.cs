@@ -10,10 +10,6 @@ public class NormalBlock : Entity, IBlock {
 
     private int value;
 
-    private const float HEIGHT = WIDTH/2f;
-    private const float WIDTH = 1f/12;
-
-    private const float OFFSET = 3 * HEIGHT;
     public uint Value { get { return (uint)value; } }
 
     public int HitPoints {get {return hitpoints;}}
@@ -23,9 +19,8 @@ public class NormalBlock : Entity, IBlock {
     /// <param name="positionInArray"> The position of the block in the array. </param>
     /// <param name="image"> The image to be used for the block. </param>
     /// <return> Returns a Block with a given size, position and image. </return>
-    public NormalBlock(Vec2I positionInArray, IBaseImage image) : base(new DynamicShape(
-                new Vec2F(positionInArray.X * WIDTH, positionInArray.Y * HEIGHT-OFFSET),
-                                                            new Vec2F(WIDTH, HEIGHT)), image) {
+    public NormalBlock(Vec2F position, Vec2F size, IBaseImage image) : 
+    base(new DynamicShape(position, size), image) {
         hitpoints = 1;
         value = 1;
     }
