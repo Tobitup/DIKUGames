@@ -39,21 +39,28 @@ namespace breakoutTests.TestBlocks;
             string movingBlockType = "Moving";
             string powerUpBlockType = "PowerUp";
             string falseStringBlockType = "I have of late but wherefore I know not lost all my mirth";
+            float blockWidth = 1f/12f;
+            float blockHeight = blockWidth /2f;
     
             normalBlockContainer.AddEntity(BlockFactory.CreateNewBlock
-                    (normalBlockType, new Vec2I(0, 0), new Image(imagePath)));
+                    (normalBlockType, new Vec2F(0, 0), new Vec2F (blockWidth,blockHeight), 
+                                                                    new Image(imagePath)));
 
             unbreakableBlockContainer.AddEntity(BlockFactory.CreateNewBlock
-                    (unbreakableBlockType, new Vec2I(0, 1), new Image(imagePath)));
+                    (unbreakableBlockType, new Vec2F(0, 1), new Vec2F (blockWidth,blockHeight), 
+                                                                        new Image(imagePath)));
             
             movingBlockContainer.AddEntity(BlockFactory.CreateNewBlock
-                    (movingBlockType, new Vec2I(1, 0), new Image(imagePath)));
+                    (movingBlockType, new Vec2F(1, 0), new Vec2F (blockWidth,blockHeight), 
+                                                                    new Image(imagePath)));
 
             powerUpBlockContainer.AddEntity(BlockFactory.CreateNewBlock
-                    (powerUpBlockType, new Vec2I(1, 0), new Image(imagePath)));
+                    (powerUpBlockType, new Vec2F(1, 0), new Vec2F (blockWidth,blockHeight), 
+                                                                    new Image(imagePath)));
 
             fakeBlockContainer.AddEntity(BlockFactory.CreateNewBlock
-                    (falseStringBlockType, new Vec2I(1, 0), new Image(imagePath)));
+                    (falseStringBlockType, new Vec2F(1, 0), new Vec2F (blockWidth,blockHeight), 
+                                                                        new Image(imagePath)));
         }
 
 
