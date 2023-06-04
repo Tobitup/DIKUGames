@@ -148,7 +148,7 @@ namespace breakoutTests.TestBlocks;
                 for (int i = 0; i < 20000; i++) {
                     block.Update();
                 }
-                Assert.AreNotEqual(blockPos, block.Shape.Position.X);
+                Assert.That(blockPos, Is.Not.EqualTo(block.Shape.Position.X));
            } 
         }
 

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using Breakout;
 using Breakout.Effect;
 
 namespace Breakout.BallClass;
@@ -79,6 +78,7 @@ public class Ball : Entity, IGameEventProcessor {
         base.Shape.AsDynamicShape().ChangeDirection(newDir);
     }
 
+    // Used primarry for testing of Ball, to assert the balls in BallContainer can die.
 	 public bool IsBallDead() {
         if (Shape.Position.Y <= 0.01f || Shape.Position.Y + Shape.Extent.Y <= 0.01f) {
             return true;
