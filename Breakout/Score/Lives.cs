@@ -22,6 +22,10 @@ public class Lives : IGameEventProcessor{
 
     public uint GetCurrentLives { get {return lives;}}
 
+    /// <summary> Initializes a new instance of the Lives class with a starting number of lives 
+    ///</summary>
+    /// <param name="playerLives"> The beginning number of lives </param>
+    /// <return> Returns a Lives object. </return>
     public Lives(uint playerLives){
 
         BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
@@ -29,13 +33,19 @@ public class Lives : IGameEventProcessor{
         originalLives = (int)playerLives;
         UpdateLifeContainer();
     }
-
+    /// <summary> Calculates the position of the next heart 
+    ///</summary>
+    /// <param name="heartIndex"> the index of the heart </param>
+    /// <return> Returns a Vec2F position. </return>
     private Vec2F nextHeartPos(int heartIndex){
         float distance = (float)originalLives + NumberOfExtraLives() - 1 -heartIndex;
         float newHeartX = (lastHeartPos.X-(heartSize.X*distance)-0.01f);
         return new Vec2F(newHeartX,lastHeartPos.Y);
     } 
 
+    /// <summary> updates the lifecontainer according to how many lives are left
+    ///</summary>
+    /// <return> Void </return>
     public void UpdateLifeContainer(){
         lifeContainer.ClearContainer();
         for (int i = originalLives + NumberOfExtraLives() - 1; i >= 0; i--){
@@ -47,6 +57,10 @@ public class Lives : IGameEventProcessor{
                     new Entity(new DynamicShape(nextHeartPos(i), heartSize), fullImage));}}
     }
 
+    /// <summary> calculate how many extra lives should be rendered in event of powerup when life
+    /// is full
+    ///</summary>
+    /// <return> returns int, the amount of extra lives </return>
     private int NumberOfExtraLives() {
         // Ekstra lives pickedup
         if (lives > originalLives) {
@@ -57,20 +71,30 @@ public class Lives : IGameEventProcessor{
 
     }
     
+    /// <summary> Decrement lives by one
+    ///</summary>
+    /// <return> Void. </return>
     public void LoseLife(){
         if (lives>0)
         {lives--;}
     }
-
+    /// <summary> Reset lives to 0
+    ///</summary>
+    /// <return> Void. </return>
     public void ResetLife() {
         lives = 0;
     }
+    /// <summary> Adds one life unless maximum lives has been reached
+    ///</summary>
+    /// <return> Void. </return>
     private void AddLife() {
         if (lives + 1 < MAX_LIVES) {
             lives += 1;
         }
     }
 
+    /// <summary> Processes events </summary>
+    /// <return> Void. </return>
     void IGameEventProcessor.ProcessEvent(GameEvent gameEvent) {
         if (gameEvent.Message == "EFFECT") {
             switch (EffectTransformer.TransformStringToEffect(gameEvent.StringArg1)) {
