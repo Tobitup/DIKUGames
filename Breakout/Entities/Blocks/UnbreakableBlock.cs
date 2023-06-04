@@ -4,31 +4,31 @@ using DIKUArcade.Entities;
 
 namespace Breakout.Blocks;
 
-public class NormalBlock : Entity, IBlock {
+public class UnbreakableBlock : Entity, IBlock {
 
     private int hitpoints;
+    public int HitPoints {get {return hitpoints;}}
 
     private int value;
 
     public uint Value { get { return (uint)value; } }
 
-    public int HitPoints {get {return hitpoints;}}
 
     /// <summary> Initializes a new instance of the Block class with the specified position 
     ///           and image. </summary>
     /// <param name="positionInArray"> The position of the block in the array. </param>
     /// <param name="image"> The image to be used for the block. </param>
     /// <return> Returns a Block with a given size, position and image. </return>
-    public NormalBlock(Vec2F position, Vec2F size, IBaseImage image) : 
+    public UnbreakableBlock(Vec2F position, Vec2F size, IBaseImage image) : 
     base(new DynamicShape(position, size), image) {
         hitpoints = 1;
         value = 1;
     }
-    /// <summary> Reduces the hitpoints of a block by 1. </summary>
+
+    /// <summary> Makes sure unbreakable blocks do not break </summary>
     /// <return> Void. </return>
     public void TakeDamage() {
-        hitpoints--;
-        RemoveIfDead();
+        //do nothing
     }
 
     public virtual void Update() {

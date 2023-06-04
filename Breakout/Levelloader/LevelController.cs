@@ -1,5 +1,6 @@
 using DIKUArcade.Events;
 using DIKUArcade.Entities;
+using Breakout.Blocks;
 
 namespace Breakout.Levels;
 
@@ -21,10 +22,16 @@ public static class LevelController{
     }
 
     public static void ChangeLevelIfWon(EntityContainer<Entity> blockContainer) {
-        if (blockContainer.CountEntities()==0){
+        int unbreakables = 0;
+        foreach (IBlock block in blockContainer) {
+                if (block is UnbreakableBlock){
+                    unbreakables++;
+                }
+        }
+        if (blockContainer.CountEntities()-unbreakables==0){
             incrementLevel();
         }
-    }
+        }
 
     public static void LoseIfGameLost() {
         BreakoutStates.GameRunning gameRunning = BreakoutStates.GameRunning.GetInstance();

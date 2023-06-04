@@ -11,6 +11,11 @@ public class Level
 {
     private Dictionary<string, string> metaData;
     private Dictionary<string, string> legendData;
+    private float blockWidth;
+    private float blockHeight;
+    private float blockYOffset;
+
+    private float blockXOffset;
     private EntityContainer<Entity> blockContainer = new EntityContainer<Entity>();
     private LevelTimer levelTimer = new LevelTimer();
     public EntityContainer<Entity> BlockContainer { get { return blockContainer; } }
@@ -31,6 +36,11 @@ public class Level
     public Level(Dictionary<string, string> metaData, Dictionary<string, string> legendData,
                                                                             string[,] levelMap)
     {
+        blockWidth = 1f / 12;
+        blockHeight = blockWidth / 2f;
+        blockYOffset = -1*3*blockHeight;
+        blockXOffset = 0F;
+
         this.metaData = metaData;
         this.legendData = legendData;
         this.levelMap = levelMap;
@@ -76,8 +86,11 @@ public class Level
                     (LevelLoader.MAIN_PATH, "Assets", "Images", legendData[character]);
                     string blocktype = GetBlockType(character);
 
+                    float xpos = j*blockWidth+blockXOffset;
+                    float ypos = (levelMap.GetLength(0)-i)*blockHeight+blockYOffset;
                     blockContainer.AddEntity(BlockFactory.CreateNewBlock
-                        (blocktype, new Vec2I(j, levelMap.GetLength(0)-i), new Image(imagePath)));
+                        (blocktype, new Vec2F(xpos, ypos), new Vec2F(blockWidth,blockHeight), 
+                        new Image(imagePath)));
                 }
             }
         }
