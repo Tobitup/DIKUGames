@@ -24,6 +24,10 @@ public class GameRunning : IGameState {
     private Player.Player player;
     public Player.Player Player {get { return Player;}}
     private EntityContainer<Ball> ballContainer;
+    public EntityContainer<Ball> BallContainer {
+        get { return ballContainer; }
+        set { ballContainer = value; }
+    }
     private EntityContainer<Entity> effectsContainer;
     private bool gameLost;
     public bool GameLost {

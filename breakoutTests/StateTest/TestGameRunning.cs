@@ -46,7 +46,8 @@ public class GameRunningTesting {
         gameRunning.HandleKeyEvent(KeyboardAction.KeyPress,KeyboardKey.Left);
         gameRunning.HandleKeyEvent(KeyboardAction.KeyPress,KeyboardKey.Right);
         gameRunning.HandleKeyEvent(KeyboardAction.KeyRelease,KeyboardKey.Left);
-        gameRunning.HandleKeyEvent(KeyboardAction.KeyRelease,KeyboardKey.Left);
+        gameRunning.HandleKeyEvent(KeyboardAction.KeyRelease,KeyboardKey.Right);
+        gameRunning.HandleKeyEvent(KeyboardAction.KeyRelease,KeyboardKey.Escape);
         Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameRunning>());
     }
 }
