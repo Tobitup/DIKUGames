@@ -24,12 +24,9 @@ public class EffectBlock : Entity, IBlock, ISpecialBlock {
     /// <param name="positionInArray"> The position of the block in the array. </param>
     /// <param name="image"> The image to be used for the block. </param>
     /// <return> Returns a Block with a given size, position and image. </return>
-    public EffectBlock(Vec2I positionInArray, IBaseImage image) : base(new DynamicShape(
-                new Vec2F(positionInArray.X * WIDTH, positionInArray.Y * HEIGHT-HEIGHT),
-                                                            new Vec2F(WIDTH, HEIGHT)), image) {
-        // Temporary HitPoints for Normal Block.
+    public EffectBlock(Vec2F position, Vec2F size, IBaseImage image) : 
+    base(new DynamicShape(position, size), image) {
         hitpoints = 1;
-        // Temporary Value for Normal Block.
         value = 1;
 
         effect = EffectFactory.GetRandomEffect(base.Shape.Position);
