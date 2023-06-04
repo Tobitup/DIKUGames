@@ -16,7 +16,7 @@ public static class BlockFactory
             case "Normal":
                 return new NormalBlock(positionInArray, image);
             case "PowerUp":
-                return new PowerUpBlock(positionInArray, image);
+                return new EffectBlock(positionInArray, image);
             default:
                 return new NormalBlock(positionInArray, image);
         }
