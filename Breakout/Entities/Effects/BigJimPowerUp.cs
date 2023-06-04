@@ -10,7 +10,6 @@ public class BigJimPowerUp : Entity, IEffect {
 
     private const float MOVEMENT_SPEED = 0.005f;
     private TimePeriod EFFECT_DURATION = DIKUArcade.Timers.TimePeriod.NewSeconds(1.0);
-    //Entity GetEntity {get {return this;}}
 
     Entity IEffect.GetEntity => this;
 

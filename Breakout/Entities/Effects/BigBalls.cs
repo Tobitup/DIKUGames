@@ -11,8 +11,6 @@ public class BigBalls : Entity, IEffect {
     private const float MOVEMENT_SPEED = 0.005f;
     private TimePeriod EFFECT_DURATION = DIKUArcade.Timers.TimePeriod.NewSeconds(5.0);
 
-    //Entity GetEntity {get {return this;}}
-
     Entity IEffect.GetEntity => this;
 
     public BigBalls (Shape shape, IBaseImage image) : base(shape, image){
