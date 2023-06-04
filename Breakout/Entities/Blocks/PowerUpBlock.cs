@@ -32,7 +32,7 @@ public class PowerUpBlock : Entity, IBlock, ISpecialBlock {
         // Temporary Value for Normal Block.
         value = 1;
 
-        effect = EffectFactory.GetRandomPowerUp(base.Shape.Position);
+        effect = EffectFactory.GetRandomEffect(base.Shape.Position);
     }
     /// <summary> Reduces the hitpoints of a block by 1. </summary>
     /// <return> Void. </return>

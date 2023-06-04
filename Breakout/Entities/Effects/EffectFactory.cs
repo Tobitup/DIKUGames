@@ -10,7 +10,7 @@ public static class EffectFactory {
     private const float HEIGTH = 0.05f;
 
 
-    public static IEffect GetRandomPowerUp(Vec2F pos) {
+    public static IEffect GetRandomEffect(Vec2F pos) {
         int randomNumber = rnd.Next(1,9);
         switch (randomNumber) {
             case 1:
