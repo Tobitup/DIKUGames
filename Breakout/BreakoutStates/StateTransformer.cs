@@ -24,26 +24,4 @@ public class StateTransformer {
                 
         }
     }
-
-    /* /// <summary> Transforms a GameStateType into the corresponding string representation of a 
-    ///           GameState </summary>
-    /// <param name="state"> The GameStateType to be transformed into its string representation. 
-    /// </param>
-    /// <returns> The corresponding GameState string representation. </returns>
-    public static string TransformStateToString(GameStateType state) {
-        switch (state){
-            case GameStateType.GameRunning:
-                return "GAME_RUNNING";
-            case GameStateType.GamePaused:
-                return "GAME_PAUSED";
-            case GameStateType.MainMenu:
-                return "MENU";
-            case GameStateType.GameLost:
-                return "GAME_LOST";
-            case GameStateType.GameWon:
-                return "GAME_WON";
-            default:
-                throw new NotImplementedException();
-        }
-    } */
 }

@@ -30,7 +30,9 @@ public class MovingBlock : Entity, IBlock
         value = 1;
     }
 
-  
+    ///<summary>
+    /// Moves the block horizontally based on its current position and movement speed.
+    ///</summary>  
     public void MoveMoving() {
         if (this.Shape.Position.X >= 1.0f - Shape.Extent.X) {
             movingRight = false;
@@ -42,7 +44,7 @@ public class MovingBlock : Entity, IBlock
             float newPosition = currentPosition + movementSpeed;
             this.Shape.Position.X = newPosition;
 
-        } else /*moving left*/ {
+        } else {
             float currentPosition = this.Shape.Position.X;
             float newPosition = currentPosition - movementSpeed;
             this.Shape.Position.X = newPosition;
@@ -55,6 +57,7 @@ public class MovingBlock : Entity, IBlock
         hitpoints--;
         RemoveIfDead();
     }
+    /// <summary> updates the block according to its special properties <summary>
     public virtual void Update() {
         MoveMoving();
     }

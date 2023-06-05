@@ -45,7 +45,10 @@ public class Level
         this.legendData = legendData;
         this.levelMap = levelMap;
         GenerateEntityContainer();
-
+        findTimer();
+    }
+    /// <summary> Initializes the timer if the level contains one </summary>
+    private void findTimer (){
         if (metaData.ContainsKey("Time")) {
             levelTimer.SetDuration(int.Parse(metaData["Time"]));
             StaticTimer.RestartTimer();
@@ -71,7 +74,6 @@ public class Level
     }
     
     /// <summary> Generates an entity container from the level map. </summary>
-    /// <returns> Void. </returns>
     private void GenerateEntityContainer()
     {
         for (int i = 0; i < levelMap.GetLength(0); i++)

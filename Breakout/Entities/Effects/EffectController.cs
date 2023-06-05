@@ -7,12 +7,21 @@ namespace Breakout.Effect;
 
 public static class EffectController {
 
+    /// <summary>
+    /// Updates the effects in an entitycontainer.
+    /// <param name="effectsContainer"> The entitycontainer to update. </param>
+    /// </summary> 
     public static void UpdateEffects(EntityContainer<Entity> effectsContainer) {
         foreach (IEffect effect in effectsContainer) {
             effect.Update();
         }
     }
 
+    ///<summary>
+    /// Checks if special blocks are dead and if so, spawns an effect.
+    ///</summary>
+    ///<param name="blockContainer">The container of blocks to check for special blocks.</param>
+    ///<param name="effectsContainer">The container to add the spawned effects to.</param>
     public static void SpawnEffect(EntityContainer<Entity> blockContainer,
                                                         EntityContainer<Entity> effectsContainer) {
         foreach (IBlock block in blockContainer) {
@@ -23,6 +32,11 @@ public static class EffectController {
         }
     }
 
+    ///<summary>
+    /// Handles collision between entities in the effects container and the player.
+    ///</summary>
+    ///<param name="effectsContainer">The container of effects to check for collisions.</param>
+    ///<param name="player">The player entity.</param>
     public static void CollisionEffect(EntityContainer<Entity> effectsContainer, Player.Player player) {
         effectsContainer.Iterate(effect => {
             var effects = effect.Shape.AsDynamicShape();
@@ -30,37 +44,12 @@ public static class EffectController {
             if (collision.Collision) {
                 var collidedEffect = effect as IEffect;
                 collidedEffect.InitiateEffect();
-                System.Console.WriteLine("Collided");
                 effect.DeleteEntity();           
             }
             if (effect.Shape.Position.Y < 0.0f) {
                 effect.DeleteEntity();
             }
         });
-    }
-    public static void InitiateEffect(string effect) {
-        switch (EffectTransformer.TransformStringToEffect(effect)) {
-            case Effects.Splitzy:
-                //SplitBalls();
-                System.Console.WriteLine("Splitzy");
-                break;
-            case Effects.SlimJim:
-                System.Console.WriteLine("SlimJim");
-            break;
-            default:
-                break;
-        }
-    }
-
-    private static void SplitBalls(EntityContainer<Ball> ballContainer) {
-        EntityContainer<Ball> tempBallContainer = new EntityContainer<Ball>();
-        foreach(Ball ball in ballContainer) {
-            tempBallContainer.AddEntity(ball);
-            for (int i=0; i<3; i++) {
-                tempBallContainer.AddEntity(BallFactory.GenerateRandomDirBall(ball.Shape.Position));
-            }
-        }
-        ballContainer = tempBallContainer;
     }
 
 }

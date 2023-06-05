@@ -8,28 +8,41 @@ namespace Breakout.Effect;
 
 public class BigJimPowerUp : Entity, IEffect {
 
-    private const float MOVEMENT_SPEED = 0.005f;
     private TimePeriod EFFECT_DURATION = DIKUArcade.Timers.TimePeriod.NewSeconds(1.0);
 
     Entity IEffect.GetEntity => this;
 
+    ///<summary>
+    /// Represents an effect that enlarges the player.
+    ///</summary>
     public BigJimPowerUp(Shape shape, IBaseImage image) : base(shape, image){
         base.Shape.AsDynamicShape().ChangeDirection(new Vec2F(0.0f, -0.009f));
     }
 
+    /// <summary>
+    /// Updates the effect.
+    /// </summary>  
     public void Update() {
         MoveEffect();
     }
 
+    /// <summary>
+    /// Moves the effect by calling the Move method of the base Shape.
+    /// </summary>
     private void MoveEffect() {
         base.Shape.Move();
     }
 
-    
+    /// <summary>
+    /// Gets the shape of the effect entity.
+    /// </summary>      
     public Shape GetShape() {
         return base.Shape;
     }
 
+    /// <summary>
+    /// Initiates the effect by registering the necessary game events.
+    /// </summary>
     public void InitiateEffect() {
         BreakoutBus.GetBus().RegisterEvent(new GameEvent
                 {

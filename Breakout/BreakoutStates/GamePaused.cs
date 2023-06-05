@@ -41,14 +41,13 @@ public class GamePaused : IGameState {
         menuButtons[1].SetFont("Impact");
         backGroundImage = new Entity(new StationaryShape(new Vec2F(0.0f,0.0f),
                                 new Vec2F(1.0f,1.0f)),new Image(Path.Combine(
-                                                            "..","Breakout","Assets",
-                                                            "Images", "BreakoutTitleScreen.png")));
+                                "..","Breakout","Assets", "Images", "BreakoutTitleScreen.png")));
         activeMenuButton = 0;
     }
 
-    /// <summary> In charge of handeling Keyboard input from user, along with registering events
+    /// <summary> In charge of handling Keyboard input from user, along with registering events
     ///           forwarded to the eventbus. </summary>
-    /// <param name="action"> The Keybaord Action the Eventhandler listens for. </param>
+    /// <param name="action"> The Keyboard Action the Eventhandler listens for. </param>
     /// <param name="key"> The given key the user presses. </param>
     /// <returns> Void </returns>
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {

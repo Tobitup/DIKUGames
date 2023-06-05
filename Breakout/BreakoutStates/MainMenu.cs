@@ -45,9 +45,9 @@ public class MainMenu : IGameState {
         }
 
 
-    /// <summary> In charge of handeling Keyboard input from user, along with registering events
+    /// <summary> In charge of handling Keyboard input from user, along with registering events
     ///           forwarded to the eventbus. </summary>
-    /// <param name="action"> The Keybaord Action the Eventhandler listens for. </param>
+    /// <param name="action"> The Keyboard Action the Eventhandler listens for. </param>
     /// <param name="key"> The given key the user presses. </param>
     /// <returns> Void </returns>
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {

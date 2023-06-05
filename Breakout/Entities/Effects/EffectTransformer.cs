@@ -1,10 +1,10 @@
 namespace Breakout.Effect;
 public static class EffectTransformer {
 
-    /// <summary> Transforms a string representation of a GameState into the corresponding 
-    ///           GameStateType. </summary>
-    /// <param name="state"> The string representation of the GameState. </param>
-    /// <returns> The corresponding GameStateType enum. </returns>
+    /// <summary> Transforms a string representation of an effect into the corresponding 
+    ///           effect type. </summary>
+    /// <param name="state"> The string representation of the effect. </param>
+    /// <returns> The corresponding effect enum. </returns>
     public static Effects TransformStringToEffect(string effect) {
         switch (effect){
             case "BigJim_START":
@@ -26,11 +26,11 @@ public static class EffectTransformer {
         }
     }
 
-    /// <summary> Transforms a GameStateType into the corresponding string representation of a 
-    ///           GameState </summary>
-    /// <param name="state"> The GameStateType to be transformed into its string representation. 
+    /// <summary> Transforms an effect into the corresponding string representation of an 
+    ///       effect </summary>
+    /// <param name="state"> The effect type to be transformed into its string representation. 
     /// </param>
-    /// <returns> The corresponding GameState string representation. </returns>
+    /// <returns> The corresponding effect string representation. </returns>
     public static string TransformEffectToString(Effects effect) {
         switch (effect){
             case Effects.BigJim:
@@ -51,7 +51,11 @@ public static class EffectTransformer {
                 throw new NotImplementedException();
         }
     }
-
+ 
+    /// <summary> Given an effect enum returns the file path to the asset for that effect </summary>
+    /// <param name="effect"> the effect enum. 
+    /// </param>
+    /// <returns> The corresponding file path for the effect. </returns>
     public static string TransformEffectToPath(Effects effect) {
             switch (effect){
                 case Effects.BigJim:

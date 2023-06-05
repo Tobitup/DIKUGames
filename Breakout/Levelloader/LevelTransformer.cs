@@ -10,18 +10,12 @@ public static class LevelTransformer
     /// </returns>
     public static string TransformLevelToString(SelectLevel level) {
         switch (level) {
-            case SelectLevel.central_mass:
-                return "central-mass.txt";
-            case SelectLevel.columns:
-                return "columns.txt";
             case SelectLevel.level1:
                 return "level1.txt";
             case SelectLevel.level2:
                 return "level2.txt";
             case SelectLevel.level3:
                 return "level3.txt";
-            case SelectLevel.wall:
-                return "wall.txt";
             case SelectLevel.level4:
                 return "level4.txt";
             default:
@@ -39,13 +33,6 @@ public static class LevelTransformer
                 return SelectLevel.level3;
             case 4:
                 return SelectLevel.level4;
-            // BONUS REMOVE IN FINAL VERSION FOR TA TO TEST LEVELS
-            case 5:
-                return SelectLevel.central_mass;
-            case 6:
-                return SelectLevel.columns;
-            case 7: 
-                return SelectLevel.wall;
             default:
                 BreakoutBus.GetBus().RegisterEvent(
                                     new GameEvent {

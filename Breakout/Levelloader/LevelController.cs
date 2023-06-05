@@ -15,12 +15,19 @@ public static class LevelController{
         gameRunning.CurrentLevel = gameRunning.LevelLoader.Level;
     }
 
+    /// <summary> 
+    /// Increments the numeric level by one
+    /// </summary>
     public static void incrementLevel() {
         BreakoutStates.GameRunning gameRunning = BreakoutStates.GameRunning.GetInstance();
         gameRunning.NumericLevel += 1;
         SwitchLevel(LevelTransformer.TransformIntToLevel(gameRunning.NumericLevel));
     }
-
+    
+    /// <summary> 
+    /// Check if the level has been won by seeing if all the blocks except unbreakables are dead
+    /// <param name="blockContainer"> The entitycontainer to iterate through </param>
+    /// </summary>
     public static void ChangeLevelIfWon(EntityContainer<Entity> blockContainer) {
         int unbreakables = 0;
         foreach (IBlock block in blockContainer) {
@@ -33,6 +40,10 @@ public static class LevelController{
         }
         }
 
+    /// <summary> 
+    /// Check if the game has been lost either if the lives are used up or the timer has run out
+    /// <param name="blockContainer"> The entitycontainer to iterate through </param>
+    /// </summary>
     public static void LoseIfGameLost() {
         BreakoutStates.GameRunning gameRunning = BreakoutStates.GameRunning.GetInstance();
         GameEventBus eventBus;

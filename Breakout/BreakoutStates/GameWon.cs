@@ -42,8 +42,8 @@ public class GameWon : IGameState {
         finalScoreText = new Text ($"SCORE: {finalScore}",new Vec2F(0.25f,-0.20f), new Vec2F(0.8f,0.8f));
         menuButtons[0].SetColor(new Vec3I(255,255,255));
         menuButtons[1].SetColor(new Vec3I(255,255,255));
-        gameOverText.SetColor(new Vec3I(196,10,28));
-        finalScoreText.SetColor(new Vec3I(196,10,28));
+        gameOverText.SetColor(new Vec3I(23, 64, 212));
+        finalScoreText.SetColor(new Vec3I(23, 64, 212));
         menuButtons[0].SetFont("Impact");
         menuButtons[1].SetFont("Impact");
         gameOverText.SetFont("Impact");

@@ -44,7 +44,6 @@ public class Player : IGameEventProcessor {
         entity.RenderEntity();
     }
     
-
     /// <summary> Sets the player's movement to the left. </summary>
     /// <param name="val"> Boolean value for starting or stopping player movement. </param>
     /// <returns> Void. </returns>
@@ -87,7 +86,10 @@ public class Player : IGameEventProcessor {
             shape.Move();
         }
     }
-
+    /// <summary>
+    /// Initializes the BigJim effect according to state
+    /// <param name="state"> The current state of the effect </param>
+    /// </summary> 
     private void BigJimAffected(string state) {
         if ((state == "START") && (isBigJimAffected == false)) {
             isBigJimAffected = true;
@@ -105,7 +107,10 @@ public class Player : IGameEventProcessor {
         }
         
     }
-
+    /// <summary>
+    /// Initializes the SlimJim effect according to state
+    /// <param name="state"> The current state of the effect </param>
+    /// </summary> 
     private void SlimJimAffected(string state) {
         if ((state == "START") && (!isSlimJimAffected)) {
             isSlimJimAffected = true;
@@ -123,8 +128,12 @@ public class Player : IGameEventProcessor {
             shape.Extent = slimJimSize;
         }
     }
+    /// <summary>
+    /// Initializes the SpeedyGonzalez effect according to state
+    /// <param name="state"> The current state of the effect </param>
+    /// </summary> 
 
-    private void SpeedyGonzalesAfected(string state) {
+    private void SpeedyGonzalesAffected(string state) {
         if ((state == "START") && (!isSpeedyAffected)) {
             isSpeedyAffected = true;
             MovementSpeedMultiplier = 2.0f;
@@ -136,6 +145,11 @@ public class Player : IGameEventProcessor {
         }
     }
 
+    /// <summary>
+    /// Initializes an effect that effects the player 
+    /// <param name="state"> The current state of the effect </param>
+    /// <param name="effect"> The effect to be initialized </param>
+    /// </summary> 
     private void initiateEffect(string effect, string state) {
         switch (EffectTransformer.TransformStringToEffect(effect)) {
             case Effects.BigJim:
@@ -145,7 +159,7 @@ public class Player : IGameEventProcessor {
                 SlimJimAffected(state);
             break;
             case Effects.SpeedyGonzales:
-                SpeedyGonzalesAfected(state);
+                SpeedyGonzalesAffected(state);
             break;
         }
 

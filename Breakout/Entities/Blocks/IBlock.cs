@@ -2,6 +2,9 @@ using DIKUArcade.Entities;
 
 namespace Breakout.Blocks
 {
+    /// <summary>
+    /// Interface for Blocks
+    /// </summary>
     public interface IBlock {
         uint Value { get; }
         void TakeDamage();

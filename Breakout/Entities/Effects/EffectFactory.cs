@@ -9,7 +9,11 @@ public static class EffectFactory {
     private const float WIDTH = 0.05f;
     private const float HEIGTH = 0.05f;
 
-
+    ///<summary>
+    /// Returns a randomly selected power-up effect at the specified position.
+    ///</summary>
+    ///<param name="pos">The position where the power-up effect will be spawned.</param>
+    ///<returns>The randomly selected power-up effect.</returns>
     public static IEffect GetRandomEffect(Vec2F pos) {
         int randomNumber = rnd.Next(1,9);
         switch (randomNumber) {
@@ -24,26 +28,21 @@ public static class EffectFactory {
                                     new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
                                     EffectTransformer.TransformEffectToPath(Effects.SlimJim))));
             case 3:
-                return new SplitzyPowerUp
-                                    (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
-                                    new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
-                                    EffectTransformer.TransformEffectToPath(Effects.Splitzy))));
-            case 4:
                 return new LifeUP
                                     (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
                                     new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
                                     EffectTransformer.TransformEffectToPath(Effects.LifeUp))));
-            case 5:
+            case 4:
                 return new LifeDown
                                     (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
                                     new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
                                     EffectTransformer.TransformEffectToPath(Effects.LifeDown))));
-            case 6:
+            case 5:
                 return new SpeedyGonzales
                                     (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
                                     new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
                                     EffectTransformer.TransformEffectToPath(Effects.SpeedyGonzales))));
-            case 7:
+            case 6:
                 return new BigBalls
                                     (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
                                     new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",

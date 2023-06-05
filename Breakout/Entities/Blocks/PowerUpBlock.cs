@@ -57,6 +57,7 @@ public class PowerUpBlock : Entity, IBlock, ISpecialBlock {
         }
     }
 
+    /// <summary> returns the effect belonging to the block </summary>
     public Entity GetEffect() {
         return effect.GetEntity;
     }
