@@ -45,7 +45,8 @@ public class Ball : Entity, IGameEventProcessor {
         }
     }
 
-    private void InitiateEffect(string effect, string state) {
+    // Public for testing
+    public void InitiateEffect(string effect, string state) {
         switch (EffectTransformer.TransformStringToEffect(effect)) {
             case Effects.BigBalls:
                 BigAffected(state);

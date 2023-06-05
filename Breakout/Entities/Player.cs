@@ -21,9 +21,10 @@ public class Player : IGameEventProcessor {
     private float moveLeft = 0.0f;
     private float moveRight = 0.0f;
     const float MOVEMENT_SPEED = 0.02f;
-    float MovementSpeedMultiplier = 1;
+    float movementSpeedMultiplier = 1;
 
     public Entity GetEntity() => entity;
+    public float MovementSpeedMultiplier {get {return movementSpeedMultiplier;}}
 
     /// <summary> Creates a new Player object with the specified shape and image. </summary>
     /// <param name="shape"> The shape of the player's game object. </param>
@@ -49,7 +50,7 @@ public class Player : IGameEventProcessor {
     /// <returns> Void. </returns>
     private void SetMoveLeft(bool val) {
         if (val) {
-            moveLeft -= MOVEMENT_SPEED*MovementSpeedMultiplier;
+            moveLeft -= MOVEMENT_SPEED*movementSpeedMultiplier;
         } else { 
             moveLeft = 0f;
         }
@@ -61,7 +62,7 @@ public class Player : IGameEventProcessor {
     /// <returns> Void. </returns>
     private void SetMoveRight(bool val) {
         if (val) {
-            moveRight += MOVEMENT_SPEED*MovementSpeedMultiplier;
+            moveRight += MOVEMENT_SPEED*movementSpeedMultiplier;
         } else {
             moveRight = 0f;
         }
@@ -91,7 +92,7 @@ public class Player : IGameEventProcessor {
     /// <param name="state"> The current state of the effect </param>
     /// </summary> 
     private void BigJimAffected(string state) {
-        if ((state == "START") && (isBigJimAffected == false)) {
+        if ((state == "START") && (!isBigJimAffected)) {
             isBigJimAffected = true;
             Vec2F bigJimSize = new Vec2F(Shape.Extent.X*2.0f, Shape.Extent.Y);
 
@@ -99,7 +100,7 @@ public class Player : IGameEventProcessor {
             shape.Position.X -= newX;
 
             shape.Extent = bigJimSize;
-        } else if (state == "STOP") {
+        } else if ((state == "STOP") && (isBigJimAffected)) {
             isBigJimAffected = false;
             Vec2F bigJimSize = new Vec2F(Shape.Extent.X/2.0f, Shape.Extent.Y);
             shape.Position.X += bigJimSize.X/2.0f;
@@ -118,7 +119,7 @@ public class Player : IGameEventProcessor {
             shape.Position.X += slimJimSize.X/2.0f;
 
             shape.Extent = slimJimSize;
-        } else if (state == "STOP") {
+        } else if ((state == "STOP") && (isSlimJimAffected)) {
             isSlimJimAffected = false;
             Vec2F slimJimSize = new Vec2F(Shape.Extent.X*2.0f, Shape.Extent.Y);
             float newX = slimJimSize.X/2.0f/2.0f;
@@ -136,11 +137,11 @@ public class Player : IGameEventProcessor {
     private void SpeedyGonzalesAffected(string state) {
         if ((state == "START") && (!isSpeedyAffected)) {
             isSpeedyAffected = true;
-            MovementSpeedMultiplier = 2.0f;
+            movementSpeedMultiplier = 2.0f;
 
-        } else if (state == "STOP") {
+        } else if ((state == "STOP") && (isSpeedyAffected)) {
             isSpeedyAffected = false;
-            MovementSpeedMultiplier = 1.0f;
+            movementSpeedMultiplier = 1.0f;
 
         }
     }
@@ -150,7 +151,8 @@ public class Player : IGameEventProcessor {
     /// <param name="state"> The current state of the effect </param>
     /// <param name="effect"> The effect to be initialized </param>
     /// </summary> 
-    private void initiateEffect(string effect, string state) {
+    // Public for testing
+    public void initiateEffect(string effect, string state) {
         switch (EffectTransformer.TransformStringToEffect(effect)) {
             case Effects.BigJim:
                 BigJimAffected(state);
