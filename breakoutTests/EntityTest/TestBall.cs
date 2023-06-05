@@ -49,7 +49,7 @@ namespace breakoutTests.TestBall;
             ball.Shape.Position = new Vec2F(0.5f,0.9f);
         /// ACT
             for (int i = 0; i < 15; i++) {
-                ball.Move(ball);
+                CollisionController.Move(ball);
             }
         /// ASSERT
             Assert.Less(ball.Shape.Position.Y , 1.0f);
@@ -63,7 +63,7 @@ namespace breakoutTests.TestBall;
             ball.Shape.Position = new Vec2F(0.5f,0.5f);
         /// ACT
             for (int i = 0; i < 500; i++) {
-                ball.Move(ball);
+                CollisionController.Move(ball);
             }
         /// ASSERT
             Assert.Greater(ball.Shape.Position.X , -1.0f);
@@ -77,7 +77,7 @@ namespace breakoutTests.TestBall;
             ball.Shape.Position = new Vec2F(0.9f,0.5f);
         /// ACT
             for (int i = 0; i < 500; i++) {
-                ball.Move(ball);
+                CollisionController.Move(ball);
             }
         /// ASSERT
             Assert.Less(ball.Shape.Position.X , 1.0f);
@@ -91,7 +91,7 @@ namespace breakoutTests.TestBall;
             ball.Shape.Position = new Vec2F(0.5f,0.9f);
         /// ACT
             for (int i = 0; i < 500; i++) {
-                ball.Move(ball);
+                CollisionController.Move(ball);
             }
         /// ASSERT
             Assert.That(ball.IsBallDead() ,Is.EqualTo(true));

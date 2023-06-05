@@ -13,7 +13,7 @@ public class Ball : Entity, IGameEventProcessor {
         BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
     }
 
-    // Used primarry for testing of Ball, to assert the balls in BallContainer can die.
+    // Used primary for testing of Ball, to assert the balls in BallContainer can die.
 	 public bool IsBallDead() {
         if (Shape.Position.Y <= 0.01f || Shape.Position.Y + Shape.Extent.Y <= 0.01f) {
             return true;
