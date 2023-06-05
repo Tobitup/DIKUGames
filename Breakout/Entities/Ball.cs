@@ -12,19 +12,6 @@ public class Ball : Entity, IGameEventProcessor {
     public Ball(DynamicShape shape, IBaseImage image) : base (shape, image) {
         BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
     }
-    public void Move(Ball activeBall) {
-        if (Shape.Position.X > 0.0f && Shape.Position.X + Shape.Extent.X< 1.0f
-                && Shape.Position.Y > 0.0f && Shape.Position.Y + Shape.Extent.Y< 1.0f ) {
-            base.Shape.Move();
-            }
-        if (Shape.Position.X <= 0.01f || Shape.Position.X + Shape.Extent.X <= 0.01f || 
-                Shape.Position.X >= 0.99f || Shape.Position.X + Shape.Extent.X >= 0.99f) {
-            BallMath.DirLR(activeBall);
-        }
-        if (Shape.Position.Y >= 0.99f || Shape.Position.Y + Shape.Extent.Y >= 0.99f) {
-            BallMath.DirUD(activeBall);
-        }
-    }
 
     // Used primarry for testing of Ball, to assert the balls in BallContainer can die.
 	 public bool IsBallDead() {
