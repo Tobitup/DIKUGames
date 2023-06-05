@@ -38,7 +38,7 @@ namespace breakoutTests.TestBlocks;
             string unbreakableBlockType = "Unbreakable";
             string movingBlockType = "Moving";
             string powerUpBlockType = "PowerUp";
-            string falseStringBlockType = "I have of late but wherefore I know not lost all my mirth";
+            string falseStringBlockType = "Therefor I am unable to can";
             float blockWidth = 1f/12f;
             float blockHeight = blockWidth /2f;
     

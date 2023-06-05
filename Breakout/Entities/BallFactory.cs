@@ -36,11 +36,4 @@ public static class BallFactory {
                              new Vec2F((float)rndDirX/100f, (float)rndDirY/100f) ), ballImage);
         return newBall;
     }
-
-    public static void MakeNewBall(EntityContainer<Ball> ballContainer, Lives levelLives){
-        if (ballContainer.CountEntities()==0 & levelLives.GetCurrentLives != 0) {
-            levelLives.LoseLife();
-            ballContainer.AddEntity(BallFactory.GenerateNormalBall());
-        }
-    }
 }

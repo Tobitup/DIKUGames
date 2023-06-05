@@ -3,11 +3,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.State;
 using DIKUArcade.Input;
 using DIKUArcade.Events;
-using DIKUArcade.Physics;
 using DIKUArcade.Math;
-using System.IO;
-using System.Collections.Generic;
-using Breakout.Player;
 using DIKUArcade.Timers;
 using Breakout.Effect;
 using Breakout.Levels;
@@ -192,9 +188,10 @@ public class GameRunning : IGameState {
         BlockController.UpdateBlocks(currentLevel);
         EffectController.UpdateEffects(effectsContainer);
         currentLevel.Timer.UpdateTime();
-        BlockController.FindAndRemoveDeadBlocks(currentLevel.BlockContainer,effectsContainer,levelScore);
+        BlockController.FindAndRemoveDeadBlocks(currentLevel.BlockContainer,
+                                                effectsContainer,levelScore);
         GetCurrentScore = levelScore.GetCurrentScore;
-        BallFactory.MakeNewBall(ballContainer,levelLives);
+        Ball.MakeNewBall(ballContainer,levelLives);
         LevelController.LoseIfGameLost();
         levelLives.UpdateLifeContainer();
         LevelController.ChangeLevelIfWon(currentLevel.BlockContainer);

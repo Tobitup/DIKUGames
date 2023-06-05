@@ -1,12 +1,8 @@
-using DIKUArcade;
-using DIKUArcade.GUI;
 using DIKUArcade.Events;
-using DIKUArcade.Input;
-using System.Collections.Generic;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using DIKUArcade.Math;
 using Breakout.Effect;
+using Breakout.PlayerLives;
 
 namespace Breakout.BallClass;
 
@@ -37,6 +33,13 @@ public class Ball : Entity, IGameEventProcessor {
         } else {
             return false;
 	    }
+    }
+
+    public static void MakeNewBall(EntityContainer<Ball> ballContainer, Lives levelLives){
+        if (ballContainer.CountEntities()==0 & levelLives.GetCurrentLives != 0) {
+            levelLives.LoseLife();
+            ballContainer.AddEntity(BallFactory.GenerateNormalBall());
+        }
     }
 					
     private void BigAffected(string state) {
