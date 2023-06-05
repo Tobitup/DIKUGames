@@ -14,14 +14,16 @@ using System.Collections.Generic;
 using Breakout.BreakoutStates;
 using Breakout.Player;
 using Breakout.Levels;
+using Breakout.PlayerLives;
 
 namespace breakoutTests.TestPlayer;
 
-    [TestFixture]
+[TestFixture]
     public class TestPlayer {
         private Player player;
         private GameEventBus eventBus = Breakout.BreakoutBus.GetBus();
         private bool isBusInitilized;
+        private Lives levelLives;
 
         [SetUp]
         public void Init() {
@@ -116,5 +118,27 @@ namespace breakoutTests.TestPlayer;
                     Message = "MOVE_RIGHT_STOP" });
         /// ASSERT
             Assert.IsTrue(initialPos.X <= 1.0f);
+        }
+
+        [Test]
+        public void TestAddingLife() {
+        /// ARRANGE
+            levelLives = new Lives(3);
+            var expectedLives = 4;
+        /// ACT
+            levelLives.AddLife();
+        /// ASSERT
+            Assert.That(levelLives.GetCurrentLives,Is.EqualTo(expectedLives));
+        }
+
+        [Test]
+        public void TestResetingLives() {
+        /// ARRANGE
+            levelLives = new Lives(3);
+            var expectedLives = 0;
+        /// ACT
+            levelLives.ResetLife();
+        /// ASSERT
+            Assert.That(levelLives.GetCurrentLives,Is.EqualTo(expectedLives));
         }
 }

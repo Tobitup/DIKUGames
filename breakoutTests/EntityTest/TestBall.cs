@@ -29,7 +29,8 @@ namespace breakoutTests.TestBall;
             ballContainer = new EntityContainer<Ball>();
             ballContainerRandom = new EntityContainer<Ball>();
             ballContainer.AddEntity(BallFactory.GenerateNormalBall());
-            ballContainerRandom.AddEntity(BallFactory.GenerateRandomDirBall(new Vec2F(0.5f,0.5f)));
+            ballContainerRandom.AddEntity(BallFactory.GenerateSemiRandomDirBall
+                                                        (new Vec2F(0.5f,0.5f)));
         }
 
         [Test]

@@ -80,7 +80,7 @@ public class Lives : IGameEventProcessor{
     }
     /// <summary> Adds one life unless maximum lives has been reached
     ///</summary>
-    private void AddLife() {
+    public void AddLife() {
         if (lives + 1 < MAX_LIVES) {
             lives += 1;
         }

@@ -24,7 +24,7 @@ public static class BallFactory {
         return newBall;
     }
 
-    public static Ball GenerateRandomDirBall(Vec2F pos) {
+    public static Ball GenerateSemiRandomDirBall(Vec2F pos) {
         Image ballImage = new Image(Path.Combine(LevelLoader.MAIN_PATH,
                                                                 "Assets", "Images", "ball.png"));
         Random rnd = new Random();

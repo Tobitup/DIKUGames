@@ -26,7 +26,7 @@ public class Ball : Entity, IGameEventProcessor {
     public static void MakeNewBall(EntityContainer<Ball> ballContainer, Lives levelLives){
         if (ballContainer.CountEntities()==0 & levelLives.GetCurrentLives != 0) {
             levelLives.LoseLife();
-            ballContainer.AddEntity(BallFactory.GenerateRandomDirBall(new Vec2F(0.45f,0.30f)));
+            ballContainer.AddEntity(BallFactory.GenerateSemiRandomDirBall(new Vec2F(0.45f,0.30f)));
         }
     }
 					

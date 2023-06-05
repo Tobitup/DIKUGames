@@ -55,4 +55,16 @@ public class StateMachineTesting {
     /// ASSERT
         Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameRunning>());
     }
+
+    [Test]
+    public void TestEventMainMenu() {
+    /// ACT
+        stateMachine.ProcessEvent(
+        new GameEvent{
+            EventType = GameEventType.GameStateEvent,
+            Message = "CHANGE_STATE",
+            StringArg1 = "MENU" });
+    /// ASSERT
+        Assert.That(stateMachine.ActiveState, Is.InstanceOf<MainMenu>());
+    }
 }

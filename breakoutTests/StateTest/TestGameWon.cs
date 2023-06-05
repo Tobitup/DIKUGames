@@ -50,6 +50,11 @@ public class GameWonTesting {
         int initialButtonPossition = menu.ActiveMenuButton;
     /// ACT
         menu.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Down);
+        menu.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Enter);
+        menu.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Up);
+        menu.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Enter);
+        menu.HandleKeyEvent(KeyboardAction.KeyPress, KeyboardKey.Down);
+        
     /// ASSERT
         Assert.That(initialButtonPossition, Is.Not.EqualTo(menu.ActiveMenuButton));
     }
