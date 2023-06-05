@@ -2,10 +2,10 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using Breakout.Levels;
+using Breakout.PlayerLives;
 
 namespace Breakout.BallClass;
 public static class BallFactory {
-    public static Random rnd = new Random();
     private const float WIDTH = 0.03f;
     private const float HEIGTH = 0.03f;
     private const float DIRX = 0.005f;
@@ -35,5 +35,12 @@ public static class BallFactory {
                             new Vec2F(WIDTH, HEIGTH),
                              new Vec2F((float)rndDirX/100f, (float)rndDirY/100f) ), ballImage);
         return newBall;
+    }
+
+    public static void MakeNewBall(EntityContainer<Ball> ballContainer, Lives levelLives){
+        if (ballContainer.CountEntities()==0 & levelLives.GetCurrentLives != 0) {
+            levelLives.LoseLife();
+            ballContainer.AddEntity(BallFactory.GenerateNormalBall());
+        }
     }
 }

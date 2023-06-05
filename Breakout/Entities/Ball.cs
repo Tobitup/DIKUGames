@@ -16,66 +16,18 @@ public class Ball : Entity, IGameEventProcessor {
     public Ball(DynamicShape shape, IBaseImage image) : base (shape, image) {
         BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
     }
-    public void Move() {
+    public void Move(Ball activeBall) {
         if (Shape.Position.X > 0.0f && Shape.Position.X + Shape.Extent.X< 1.0f
                 && Shape.Position.Y > 0.0f && Shape.Position.Y + Shape.Extent.Y< 1.0f ) {
             base.Shape.Move();
             }
         if (Shape.Position.X <= 0.01f || Shape.Position.X + Shape.Extent.X <= 0.01f || 
                 Shape.Position.X >= 0.99f || Shape.Position.X + Shape.Extent.X >= 0.99f) {
-            DirLR();
+            BallMath.DirLR(activeBall);
         }
         if (Shape.Position.Y >= 0.99f || Shape.Position.Y + Shape.Extent.Y >= 0.99f) {
-            DirUD();
+            BallMath.DirUD(activeBall);
         }
-    }
-
-    // Called from GameRunning to handle Ball's new dirrection when colliding with Player.
-    public void DirUp(Vec2F playerPos , Vec2F playerExtend) {
-        var activeBall = this.Shape.AsDynamicShape();
-        // Calculate players middle X possition.
-        var playerMidX = playerPos + playerExtend / 2;
-
-        // Calculates ball middle X possition.
-        var ballMidX = activeBall.Position + activeBall.Extent / 2;
-        
-        // Calculates the different between the player middle and ball middle. 
-        // Used to calculate the new vector for the balls dirrection.
-        var ballPlayerDif = ballMidX - playerMidX;
-
-        // Gets the balls speed so that it's magnitude will always stay constant.
-        var ballSpeed = activeBall.Direction.Length();
-
-        // Normalizes the vector and clamps it so if the ball collides with the player on the very 
-        // left or right side, the ball won't shoot off almost sideways.
-        var normalizedPos = Math.Clamp(Vec2F.Normalize(ballPlayerDif).X, -0.8f,0.8f);
-
-        // "Draws" a half circle around the player to calculate the dirrection of the new Y vector,
-        // Then times it with the vectors magnitude to have a constant speed. 
-        var newDir = new Vec2F(normalizedPos, MathF.Sqrt(1.0f - normalizedPos * normalizedPos)) * (float)ballSpeed;
-        ChangeDirection(newDir);
-    }
-
-    // Called from GameRunning to update ball direction when collision is detected Left and Right.
-    public void DirLR() {
-        var activeBall = this.Shape.AsDynamicShape();
-        var newDirection = activeBall.Direction = new Vec2F(
-                                activeBall.Direction.X*(-1),
-                                activeBall.Direction.Y);
-        ChangeDirection(newDirection);
-    }
-
-    // Called from GameRunning to update ball direction when collision is detected Up and Down.
-    public void DirUD() {
-        var activeBall = this.Shape.AsDynamicShape();
-        var newDirection = activeBall.Direction = new Vec2F(
-                            activeBall.Direction.X,
-                            activeBall.Direction.Y*(-1));
-        ChangeDirection(newDirection);
-    }
-    
-    public void ChangeDirection(Vec2F newDir) {
-        base.Shape.AsDynamicShape().ChangeDirection(newDir);
     }
 
     // Used primarry for testing of Ball, to assert the balls in BallContainer can die.

@@ -13,7 +13,7 @@ public static class CollisionController {
             var activePlayer = player.Shape;
             var ballPlayerDetect = CollisionDetection.Aabb(activeBall, activePlayer);
             if (ballPlayerDetect.Collision) {
-                    ball.DirUp(activePlayer.Position , activePlayer.Extent);
+                    BallMath.DirUp(ball,activePlayer.Position , activePlayer.Extent);
             } else {
                 foreach (IBlock block in blockContainer) {
                     // Deletes ball if it leaves the window.
@@ -25,24 +25,17 @@ public static class CollisionController {
                     } else if (ballBlockDetect.Collision) {
                         if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirRight || 
                             ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirLeft) {
-                                ball.DirLR();
+                                BallMath.DirLR(ball);
                                 block.TakeDamage();
                         }
                         if (ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirUp || 
                             ballBlockDetect.CollisionDir == CollisionDirection.CollisionDirDown) {
-                                ball.DirUD();
+                                BallMath.DirUD(ball);
                                 block.TakeDamage();
                         }
                     }}
-            ball.Move();   
+            ball.Move(ball);   
             }
         });
-    }
-
-    public static void MakeNewBall(EntityContainer<Ball> ballContainer, Lives levelLives){
-        if (ballContainer.CountEntities()==0 & levelLives.GetCurrentLives != 0) {
-            levelLives.LoseLife();
-            ballContainer.AddEntity(BallFactory.GenerateNormalBall());
-        }
     }
 }

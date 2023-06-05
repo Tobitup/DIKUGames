@@ -194,7 +194,7 @@ public class GameRunning : IGameState {
         currentLevel.Timer.UpdateTime();
         BlockController.FindAndRemoveDeadBlocks(currentLevel.BlockContainer,effectsContainer,levelScore);
         GetCurrentScore = levelScore.GetCurrentScore;
-        CollisionController.MakeNewBall(ballContainer,levelLives);
+        BallFactory.MakeNewBall(ballContainer,levelLives);
         LevelController.LoseIfGameLost();
         levelLives.UpdateLifeContainer();
         LevelController.ChangeLevelIfWon(currentLevel.BlockContainer);
