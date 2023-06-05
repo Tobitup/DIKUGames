@@ -8,12 +8,12 @@ namespace Breakout.BallClass;
 public static class CollisionController {
 
     public static void Move(Ball activeBall) {
-        if (activeBall.Shape.Position.X > 0.0f && activeBall.Shape.Position.X + 
-                            activeBall.Shape.Extent.X< 1.0f
-                            && activeBall.Shape.Position.Y > 0.0f && activeBall.Shape.Position.Y + 
-                            activeBall.Shape.Extent.Y< 1.0f) {
-            activeBall.Shape.Move();
-            }
+        // if (activeBall.Shape.Position.X > 0.0f && activeBall.Shape.Position.X + 
+        //                     activeBall.Shape.Extent.X< 1.0f
+        //                     && activeBall.Shape.Position.Y > 0.0f && activeBall.Shape.Position.Y + 
+        //                     activeBall.Shape.Extent.Y< 1.0f) {
+        //     activeBall.Shape.Move();
+        //     }
         if (activeBall.Shape.Position.X <= 0.01f || activeBall.Shape.Position.X + 
             activeBall.Shape.Extent.X <= 0.01f || activeBall.Shape.Position.X >= 0.99f 
             || activeBall.Shape.Position.X + activeBall.Shape.Extent.X >= 0.99f) {

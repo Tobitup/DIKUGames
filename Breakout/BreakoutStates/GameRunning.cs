@@ -148,6 +148,12 @@ public class GameRunning : IGameState {
         }
     }
 
+    private void MoveBalls() {
+        ballContainer.Iterate(ball =>
+            ball.Shape.Move()
+        );
+    }
+
     /// <summary> Handles a keyboard event by invoking either KeyPress() or KeyRelease() method 
     ///           based on the action type. </summary>
     /// <returns> Void. </returns>
@@ -183,6 +189,7 @@ public class GameRunning : IGameState {
     /// <returns> Void. </returns>
     public void UpdateState() {
         player.Move();
+        MoveBalls();
         CollisionController.IterateCollision(ballContainer,player,currentLevel.BlockContainer);
         EffectController.CollisionEffect(effectsContainer,player);
         BlockController.UpdateBlocks(currentLevel);
