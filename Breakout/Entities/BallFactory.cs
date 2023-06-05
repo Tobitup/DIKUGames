@@ -29,11 +29,10 @@ public static class BallFactory {
                                                                 "Assets", "Images", "ball.png"));
         Random rnd = new Random();
         int rndDirX = rnd.Next(-10,10);
-        int rndDirY = rnd.Next(-10,10);
         Ball newBall = new Ball(
             new DynamicShape(pos, 
                             new Vec2F(WIDTH, HEIGTH),
-                             new Vec2F((float)rndDirX/100f, (float)rndDirY/100f) ), ballImage);
+                             new Vec2F((float)rndDirX/1000f, DIRY) ), ballImage);
         return newBall;
     }
 }
