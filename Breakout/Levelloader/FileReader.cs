@@ -2,8 +2,7 @@ namespace Breakout.Levels;
 
 public static class FileReader {
 
-    /// <summary> Reads the lines in a file and returns the contents as a string array.
-    /// </summary>
+    /// <summary> Reads the lines in a file and returns the contents as a string array. </summary>
     /// <param name="inputPath"> The path to the file to read. </param>
     /// <returns> An array of strings containing the lines of the file. </returns>
     public static string[] ReadFile(string inputPath) {
@@ -19,7 +18,7 @@ public static class FileReader {
 
     /// <summary> Checks if the data is in a valid map format. </summary>
     /// <param name="rawData"> An array of strings containing the lines of the file. </param>
-    /// <returns> true if the data is valid false if it is invalid. </returns>
+    /// <returns> True if the data is valid false if it is invalid. </returns>
     public static bool IsDataValid(string[] rawData) {
         bool isValid = true;
         // Checking if every tag exists

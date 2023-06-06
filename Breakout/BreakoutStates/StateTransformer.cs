@@ -3,8 +3,9 @@ using System;
 namespace Breakout.BreakoutStates;
 public class StateTransformer {
 
-    /// <summary> Transforms a string representation of a GameState into the corresponding 
-    ///           GameStateType. </summary>
+    /// <summary> 
+    /// Transforms a string representation of a GameState into the corresponding GameStateType. 
+    /// </summary>
     /// <param name="state"> The string representation of the GameState. </param>
     /// <returns> The corresponding GameStateType enum. </returns>
     public static GameStateType TransformStringToState(string state) {

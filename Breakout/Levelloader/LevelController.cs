@@ -4,7 +4,7 @@ using Breakout.Blocks;
 
 namespace Breakout.Levels;
 
-public static class LevelController{
+public static class LevelController {
 
     /// <summary> 
     /// Switches to a new level by setting the current level to the loaded level. 
@@ -15,9 +15,7 @@ public static class LevelController{
         gameRunning.CurrentLevel = gameRunning.LevelLoader.Level;
     }
 
-    /// <summary> 
-    /// Increments the numeric level by one
-    /// </summary>
+    /// <summary> Increments the numeric level by one. </summary>
     public static void incrementLevel() {
         BreakoutStates.GameRunning gameRunning = BreakoutStates.GameRunning.GetInstance();
         gameRunning.NumericLevel += 1;
@@ -25,9 +23,9 @@ public static class LevelController{
     }
     
     /// <summary> 
-    /// Check if the level has been won by seeing if all the blocks except unbreakables are dead
-    /// <param name="blockContainer"> The entitycontainer to iterate through </param>
+    /// Check if the level has been won by seeing if all the blocks except unbreakables are dead.
     /// </summary>
+    /// <param name="blockContainer"> The entitycontainer to iterate through. </param>
     public static void ChangeLevelIfWon(EntityContainer<Entity> blockContainer) {
         int unbreakables = 0;
         foreach (IBlock block in blockContainer) {
@@ -38,12 +36,12 @@ public static class LevelController{
         if (blockContainer.CountEntities()-unbreakables==0){
             incrementLevel();
         }
-        }
+    }
 
     /// <summary> 
-    /// Check if the game has been lost either if the lives are used up or the timer has run out
-    /// <param name="blockContainer"> The entitycontainer to iterate through </param>
+    /// Check if the game has been lost either if the lives are used up or the timer has run out.
     /// </summary>
+    /// <param name="blockContainer"> The entitycontainer to iterate through. </param>
     public static void LoseIfGameLost() {
         BreakoutStates.GameRunning gameRunning = BreakoutStates.GameRunning.GetInstance();
         GameEventBus eventBus;

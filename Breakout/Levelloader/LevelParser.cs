@@ -5,8 +5,10 @@ public class LevelParser {
         rawLinesFromFile = textLines;
     }
 
-    /// <summary> Generates a Level object from the findMetaData(), findLegendData() and 
-    ///           findLevelMap() data. </summary>
+    /// <summary> 
+    /// Generates a Level object from the findMetaData(), findLegendData() and 
+    /// findLevelMap() data. 
+    /// </summary>
     /// <returns> A new Level object. </returns>
     public Level GenerateLevel() {
         return new Level(parseMetaData(), parseLegendData(), parseLevelMap());
@@ -32,7 +34,6 @@ public class LevelParser {
                     } else {
                         levelMap[i,j] = rawLinesFromFile[mapLocation.Item1+i][j].ToString();
                     }
-
                 }
             }
         }
@@ -66,10 +67,12 @@ public class LevelParser {
     }
 
 
-    /// <summary> Finds the beginning and end location of a given tag in an array of raw lines
-    ///           from a file. </summary>
+    /// <summary> 
+    /// Finds the beginning and end location of a given tag in an array of raw lines from a file. 
+    /// </summary>
     /// <param name="tag"> The tag to search for. </param>
-    /// <returns> A tuple of two integers representing the beginning and end location of the tag. 
+    /// <returns> 
+    /// A tuple of two integers representing the beginning and end location of the tag. 
     /// </returns>
     public (int, int) findTag(string tag) {
         int tagBeginsAt = Array.IndexOf(rawLinesFromFile, $"{tag}:") + 1;
@@ -77,9 +80,12 @@ public class LevelParser {
         return (tagBeginsAt,tagEndsAt);
     }
 
+    /// <summary> Initializes an empty map with the specified width and height. </summary>
+    /// <param name="width"> The width of the map. </param>
+    /// <param name="height"> The height of the map. </param>
+    /// <returns> A 2D array representing the initialized empty map. </returns>
     public string[,] initEmptyMap(int width, int height) {
         string[,] map = new string [height,width];
-
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 map[i,j] = "-";

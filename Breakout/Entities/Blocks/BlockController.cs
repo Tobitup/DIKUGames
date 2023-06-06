@@ -8,7 +8,6 @@ namespace Breakout.Blocks;
 public static class BlockController {
 
     /// <summary> Updates the blocks. </summary>
-    /// <returns> Void. </returns>
     public static void UpdateBlocks(Level currentLevel) {
         foreach (IBlock block in currentLevel.BlockContainer) {
                 block.Update();
@@ -18,9 +17,9 @@ public static class BlockController {
     /// <summary>
     /// Finds and removes dead blocks from the specified block container, while updating the score.
     /// </summary>
-    /// <param name="blockContainer">The container that holds the blocks.</param>
-    /// <param name="effectsContainer">The container that holds the effects.</param>
-    /// <param name="levelScore">The score object representing the level score.</param>
+    /// <param name="blockContainer"> The container that holds the blocks. </param>
+    /// <param name="effectsContainer"> The container that holds the effects. </param>
+    /// <param name="levelScore"> The score object representing the level score. </param>
     public static void FindAndRemoveDeadBlocks(EntityContainer<Entity> blockContainer,
                                                 EntityContainer<Entity> effectsContainer, 
                                                 Score levelScore) {

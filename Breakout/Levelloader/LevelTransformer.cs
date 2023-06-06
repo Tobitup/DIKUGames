@@ -1,12 +1,13 @@
 using DIKUArcade.Events;
 
 namespace Breakout.Levels;
-public static class LevelTransformer
-{
-    /// <summary> Transforms a SelectLevel enum value to its corresponding file name string.
+public static class LevelTransformer {
+    /// <summary> 
+    /// Transforms a SelectLevel enum value to its corresponding file name string.
     /// </summary>
     /// <param name="level"> The SelectLevel enum value to transform. </param>
-    /// <returns> The file name string representation of the specified SelectLevel enum value. 
+    /// <returns> 
+    /// The file name string representation of the specified SelectLevel enum value. 
     /// </returns>
     public static string TransformLevelToString(SelectLevel level) {
         switch (level) {
@@ -23,6 +24,11 @@ public static class LevelTransformer
         }
     }
 
+    /// <summary>
+    /// Transforms an integer value representing a level into a corresponding SelectLevel enum.
+    /// </summary>
+    /// <param name="numericLevel"> The numeric level value. </param>
+    /// <returns> The corresponding SelectLevel enum value. </returns>
     public static SelectLevel TransformIntToLevel(int numericLevel) {
         switch (numericLevel) {
             case 1:

@@ -9,11 +9,11 @@ public static class BlockFactory
     /// Simple factory which creates a new block entity of the specified type with the given 
     /// position, size, and image.
     /// </summary>
-    /// <param name="type">The type of the block to create.</param>
-    /// <param name="position">The position of the block.</param>
-    /// <param name="size">The size of the block.</param>
-    /// <param name="image">The image of the block.</param>
-    /// <returns>The newly created block entity.</returns>
+    /// <param name="type"> The type of the block to create. </param>
+    /// <param name="position"> The position of the block. </param>
+    /// <param name="size"> The size of the block. </param>
+    /// <param name="image"> The image of the block. </param>
+    /// <returns> The newly created block entity. </returns>
     public static Entity CreateNewBlock(string type, Vec2F position, Vec2F size, IBaseImage image)
     {
         switch (type)

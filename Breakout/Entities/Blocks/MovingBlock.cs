@@ -4,23 +4,18 @@ using DIKUArcade.Entities;
 
 namespace Breakout.Blocks;
 
-public class MovingBlock : Entity, IBlock
-{
+public class MovingBlock : Entity, IBlock {
 
     private int hitpoints;
     public int HitPoints {get {return hitpoints;}}
-
     public uint Value { get { return (uint)value; } }
     private int value;
-
     bool movingRight = false;
-
     private float movementSpeed = 0.004f;
 
-    public Shape GetShape {get {return base.Shape;}}
-
-    /// <summary> Initializes a new instance of the Block class with the specified position 
-    ///           and image. </summary>
+    /// <summary> 
+    /// Initializes a new instance of the Block class with the specified position and image. 
+    /// </summary>
     /// <param name="positionInArray"> The position of the block in the array. </param>
     /// <param name="image"> The image to be used for the block. </param>
     /// <return> Returns a Block with a given size, position and image. </return>
@@ -30,9 +25,9 @@ public class MovingBlock : Entity, IBlock
         value = 1;
     }
 
-    ///<summary>
+    /// <summary>
     /// Moves the block horizontally based on its current position and movement speed.
-    ///</summary>  
+    /// </summary>  
     public void MoveMoving() {
         if (this.Shape.Position.X >= 1.0f - Shape.Extent.X) {
             movingRight = false;
@@ -52,7 +47,6 @@ public class MovingBlock : Entity, IBlock
     }
 
     /// <summary> Reduces the hitpoints of a block by 1. </summary>
-    /// <return> Void. </return>
     public void TakeDamage() {
         hitpoints--;
         RemoveIfDead();
@@ -72,7 +66,6 @@ public class MovingBlock : Entity, IBlock
     }
 
     /// <summary> Checks if a block IsDead and if true deletes the entity. </summary>
-    /// <return> Void. </return>
     public void RemoveIfDead() {
         if (IsDead()) {
             DeleteEntity();

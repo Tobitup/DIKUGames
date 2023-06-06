@@ -6,12 +6,12 @@ public class LevelLoader {
     // Static readonly Path to insure breakoutTests always pulls Assets from the correct directory.
     public static readonly string MAIN_PATH = 
                     Path.Combine(Directory.GetParent(FileIO.GetProjectPath())!.FullName,"Breakout");
-
     private Level level;
     public Level Level {get {return level;}}
 
-    /// <summary> Constructs a new LevelLoader object, which loads the specified level file. 
-    ///          </summary>
+    /// <summary> 
+    /// Constructs a new LevelLoader object, which loads the specified level file. 
+    /// </summary>
     /// <param name="levelToBeLoaded"> The SelectLevel enum value of the level to be loaded.</param>
     /// <return> Returns a Level that has been loaded. </returns>
     public LevelLoader(SelectLevel levelToBeLoaded) {
@@ -29,8 +29,9 @@ public class LevelLoader {
 
     /// <summary> Attempts to load a level from the specified raw file data. </summary>
     /// <param name="rawFileData"> The raw file data to be used for level loading. </param>
-    /// <returns> A loaded Level object if the raw file data is valid, an empty Level object 
-    ///           otherwise.</returns>
+    /// <returns> A loaded Level object if the raw file data is valid, 
+    /// an empty Level object otherwise.
+    /// </returns>
     private Level AttemptLevelLoad(string[] rawFileData) {
         // Load level if data is valid else load empty level
         if ((rawFileData.Length != 0) && (FileReader.IsDataValid(rawFileData))) {

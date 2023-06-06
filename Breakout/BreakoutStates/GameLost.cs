@@ -18,8 +18,9 @@ public class GameLost : IGameState {
     private uint finalScore = 0;
     private Text finalScoreText;
     private Text gameOverText = new Text("GAME OVER",new Vec2F(0.25f,-0.05f), new Vec2F(0.8f,0.8f));
-    private Text[] menuButtons = {new Text("MAIN MENU",new Vec2F(0.25f,-0.10f), new Vec2F(0.5f,0.5f)),
-                                new Text("QUIT",new Vec2F(0.25f,-0.20f), new Vec2F(0.5f,0.5f))};
+    private Text[] menuButtons = {new Text("MAIN MENU",new Vec2F(0.25f,-0.10f), 
+                                    new Vec2F(0.5f,0.5f)),
+                                    new Text("QUIT",new Vec2F(0.25f,-0.20f), new Vec2F(0.5f,0.5f))};
 
 
     /// <summary> Gets the singleton instance of the GameLost state. </summary>
@@ -35,7 +36,6 @@ public class GameLost : IGameState {
     /// <summary> Initializes the game state by setting the color and font of menu buttons, 
     ///           creating an entity for the background image, and setting the active menu button.
     /// </summary>
-    /// <returns> Void. </returns>
     private void InitializeGameState() {
         finalScore = GameRunning.GetInstance().GetCurrentScore;
         finalScoreText = new Text ($"SCORE: {finalScore}",new Vec2F(0.25f,-0.20f), new Vec2F(0.8f,0.8f));
@@ -58,7 +58,6 @@ public class GameLost : IGameState {
     ///           forwarded to the eventbus. </summary>
     /// <param name="action"> The Keyboard Action the Eventhandler listens for. </param>
     /// <param name="key"> The given key the user presses. </param>
-    /// <returns> Void </returns>
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
         if (action == KeyboardAction.KeyPress) {
             switch (key) {
@@ -93,7 +92,6 @@ public class GameLost : IGameState {
     }
 
     /// <summary> Renders the current game state, with background and menu buttons. </summary>
-    /// <returns> Void. </returns>
     public void RenderState() {
         backGroundImage.RenderEntity();
         menuButtons[0].RenderText();
@@ -103,7 +101,6 @@ public class GameLost : IGameState {
     }
 
     /// <summary> Resets GameLost state to its initial state. </summary>
-    /// <returns> Void. </returns>
     public void ResetState() {
         GameLost.instance.InitializeGameState();
     }
@@ -111,7 +108,6 @@ public class GameLost : IGameState {
     /// <summary> Updates the GameLost state based on the active menu button, and
     ///          sets the color of the active menu button to green and the inactive button to white. 
     /// </summary>
-    /// <returns> Void. </returns>
     public void UpdateState() {
         switch (activeMenuButton) {
             case 0:

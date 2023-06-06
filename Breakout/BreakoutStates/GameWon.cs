@@ -4,7 +4,6 @@ using DIKUArcade.State;
 using DIKUArcade.Input;
 using DIKUArcade.Events;
 using DIKUArcade.Math;
-using System.IO;
 using Breakout.Levels;
 
 namespace Breakout.BreakoutStates;
@@ -18,9 +17,11 @@ public class GameWon : IGameState {
 
     private uint finalScore = 0;
     private Text finalScoreText = new Text ("SCORE:",new Vec2F(0.25f,-0.20f), new Vec2F(0.8f,0.8f));
-    private Text gameOverText = new Text("GAME WON :D",new Vec2F(0.25f,-0.05f), new Vec2F(0.8f,0.8f));
-    private Text[] menuButtons = {new Text("MAIN MENU",new Vec2F(0.25f,-0.10f), new Vec2F(0.5f,0.5f)),
-                                new Text("QUIT",new Vec2F(0.25f,-0.20f), new Vec2F(0.5f,0.5f))};
+    private Text gameOverText = new Text("GAME WON :D",new Vec2F(0.25f,-0.05f), 
+                                new Vec2F(0.8f,0.8f));
+    private Text[] menuButtons = {new Text("MAIN MENU",new Vec2F(0.25f,-0.10f), 
+                                    new Vec2F(0.5f,0.5f)),
+                                    new Text("QUIT",new Vec2F(0.25f,-0.20f), new Vec2F(0.5f,0.5f))};
 
 
     /// <summary> Gets the singleton instance of the GameLost state. </summary>
@@ -33,13 +34,14 @@ public class GameWon : IGameState {
         return GameWon.instance;
     }
 
-    /// <summary> Initializes the game state by setting the color and font of menu buttons, 
-    ///           creating an entity for the background image, and setting the active menu button.
+    /// <summary> 
+    /// Initializes the game state by setting the color and font of menu buttons, 
+    /// creating an entity for the background image, and setting the active menu button.
     /// </summary>
-    /// <returns> Void. </returns>
     private void InitializeGameState() {
         finalScore = GameRunning.GetInstance().GetCurrentScore;
-        finalScoreText = new Text ($"SCORE: {finalScore}",new Vec2F(0.25f,-0.20f), new Vec2F(0.8f,0.8f));
+        finalScoreText = new Text ($"SCORE: {finalScore}",new Vec2F(0.25f,-0.20f), 
+                                                          new Vec2F(0.8f,0.8f));
         menuButtons[0].SetColor(new Vec3I(255,255,255));
         menuButtons[1].SetColor(new Vec3I(255,255,255));
         gameOverText.SetColor(new Vec3I(23, 64, 212));
@@ -55,11 +57,12 @@ public class GameWon : IGameState {
         activeMenuButton = 0;
     }
 
-    /// <summary> In charge of handling Keyboard input from user, along with registering events
-    ///           forwarded to the eventbus. </summary>
+    /// <summary> 
+    /// In charge of handling Keyboard input from user, along with registering events
+    /// forwarded to the eventbus. 
+    /// </summary>
     /// <param name="action"> The Keybaord Action the Eventhandler listens for. </param>
     /// <param name="key"> The given key the user presses. </param>
-    /// <returns> Void </returns>
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
         if (action == KeyboardAction.KeyPress) {
             switch (key) {
@@ -94,7 +97,6 @@ public class GameWon : IGameState {
     }
 
     /// <summary> Renders the current game state, with background and menu buttons. </summary>
-    /// <returns> Void. </returns>
     public void RenderState() {
         backGroundImage.RenderEntity();
         menuButtons[0].RenderText();
@@ -104,15 +106,14 @@ public class GameWon : IGameState {
     }
 
     /// <summary> Resets the state of the game paused screen to its initial state. </summary>
-    /// <returns> Void. </returns>
     public void ResetState() {
         GameWon.instance.InitializeGameState();
     }
 
-    /// <summary> Updates the state of the game paused screen based on the active menu button, and
-    ///          sets the color of the active menu button to green and the inactive button to white. 
+    /// <summary> 
+    /// Updates the state of the game paused screen based on the active menu button, and
+    /// sets the color of the active menu button to green and the inactive button to white. 
     /// </summary>
-    /// <returns> Void. </returns>
     public void UpdateState() {
         switch (activeMenuButton) {
             case 0:

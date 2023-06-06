@@ -59,10 +59,13 @@ public class TestLevelController {
             levelLives.LoseLife();
         } if (levelLives.GetCurrentLives == 0) {
             gameRunning.GameLost = true;
-            eventBus.ProcessEventsSequentially();
+            stateMachine.ProcessEvent(
+            new GameEvent{
+                EventType = GameEventType.GameStateEvent,
+                Message = "CHANGE_STATE",
+                StringArg1 = "GAME_LOST" });
         }
     /// ASSERT
-        //Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameLost>());
-        Assert.That(levelLives.GetCurrentLives, Is.Not.EqualTo(playerLives));
+        Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameLost>());
     }
 }

@@ -12,10 +12,8 @@ public class StateMachine : IGameEventProcessor {
         ActiveState = BreakoutStates.MainMenu.GetInstance();
     }
 
-    /// <summary>
-    /// Switches the active state based on the specified state type.
-    /// <param name="stateType"> the state to switch to </param>
-    /// </summary>
+    /// <summary> Switches the active state based on the specified state type. </summary>
+    /// <param name="stateType"> The state to switch to </param>
     private void SwitchState(GameStateType stateType) {
         switch (stateType) {
             case GameStateType.GamePaused:
@@ -36,10 +34,8 @@ public class StateMachine : IGameEventProcessor {
             
         }
     }
-    /// <summary>
-    /// Processes a game event.
+    /// <summary> Processes a game event. </summary>
     /// <param name="gameEvent"> the game event to be processed </param>
-    /// </summary>
     public void ProcessEvent(GameEvent gameEvent) {
         if (gameEvent.EventType == GameEventType.GameStateEvent) {
             if (gameEvent.Message == "CHANGE_STATE") {

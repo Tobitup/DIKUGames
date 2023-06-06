@@ -2,7 +2,6 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using Breakout.Levels;
-using Breakout.PlayerLives;
 
 namespace Breakout.BallClass;
 public static class BallFactory {
@@ -14,16 +13,24 @@ public static class BallFactory {
     private const float POSY = 0.22f;
 
 
+    /// <summary> Generates a new normal ball. </summary>
+    /// <returns> 
+    /// A new instance of the Ball class representing a normal or standard ball.
+    /// </returns>
     public static Ball GenerateNormalBall() {
         Image ballImage = new Image(Path.Combine(LevelLoader.MAIN_PATH, 
                                                             "Assets", "Images", "ball.png"));
         Ball newBall = new Ball(
             new DynamicShape(new Vec2F(POSX, POSY), 
                             new Vec2F(WIDTH, HEIGTH), new Vec2F(DIRX, DIRY) ), ballImage);
-
         return newBall;
     }
 
+    /// <summary> Generates a new ball with a semi-random direction. </summary>
+    /// <param name="pos"> The desired spawn position of the ball. </param>
+    /// <returns> 
+    /// A new instance of the Ball class with a semi-random direction and given possition. 
+    /// </returns>
     public static Ball GenerateSemiRandomDirBall(Vec2F pos) {
         Image ballImage = new Image(Path.Combine(LevelLoader.MAIN_PATH,
                                                                 "Assets", "Images", "ball.png"));

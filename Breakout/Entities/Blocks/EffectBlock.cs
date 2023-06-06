@@ -28,18 +28,13 @@ public class EffectBlock : Entity, IBlock, ISpecialBlock {
     base(new DynamicShape(position, size), image) {
         hitpoints = 1;
         value = 1;
-
         effect = EffectFactory.GetRandomEffect(base.Shape.Position);
     }
+
     /// <summary> Reduces the hitpoints of a block by 1. </summary>
-    /// <return> Void. </return>
     public void TakeDamage() {
         hitpoints--;
         RemoveIfDead();
-    }
-
-    public virtual void Update() {
-        //do nothing
     }
 
     /// <summary> Checks if a block has 0 or less Hitpoints, in which case it is dead. </summary>
@@ -52,15 +47,19 @@ public class EffectBlock : Entity, IBlock, ISpecialBlock {
     }
 
     /// <summary> Checks if a block IsDead and if true deletes the entity. </summary>
-    /// <return> Void. </return>
     public void RemoveIfDead() {
         if (IsDead()) {
             DeleteEntity();
         }
     }
 
+    /// <summary> Retrieves the entity associated with the effect. </summary>
     public Entity GetEffect() {
         return effect.GetEntity;
+    }
+
+    public virtual void Update() {
+        //Do nothing
     }
 
 }

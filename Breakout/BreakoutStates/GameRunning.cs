@@ -20,10 +20,6 @@ public class GameRunning : IGameState {
     private Player.Player player;
     public Player.Player Player {get { return Player;}}
     private EntityContainer<Ball> ballContainer;
-    public EntityContainer<Ball> BallContainer {
-        get { return ballContainer; }
-        set { ballContainer = value; }
-    }
     private EntityContainer<Entity> effectsContainer;
     private bool gameLost;
     public bool GameLost {
@@ -46,9 +42,7 @@ public class GameRunning : IGameState {
         set { levelLoader = value; }
     }
     private static GameRunning instance = null;
-
     private Score levelScore;
-
     private Lives levelLives;
     public Lives LevelLives {get { return levelLives; }}
     public uint GetCurrentScore = 0;
@@ -65,9 +59,10 @@ public class GameRunning : IGameState {
         return GameRunning.instance;
     }
 
-    /// <summary> Initializes the game state by creating a new player object, loading a level, 
-    ///           subscribing to PlayerEvents, and creating the background image entity. </summary>
-    /// <returns> Void. </returns>
+    /// <summary> 
+    /// Initializes the game state by creating a new player object, loading a level, 
+    /// subscribing to PlayerEvents, and creating the background image entity. 
+    /// </summary>
     private void InitializeGameState() {
         gameLost = false;
         player = new Player.Player(
@@ -92,8 +87,9 @@ public class GameRunning : IGameState {
         numericLevel = 1;
     }
 
-    /// <summary> Responds to a key press by registering a game event with the 
-    ///           appropriate message. </summary>
+    /// <summary> 
+    /// Responds to a key press by registering a game event with the appropriate message. 
+    /// </summary>
     /// <param name="key"> A KeyboardKey enum that represents the key that was pressed. </param>
     private void KeyPress(KeyboardKey key) {
         switch (key) {
@@ -126,8 +122,9 @@ public class GameRunning : IGameState {
         }
     }
 
-    /// <summary> Responds to a key release by registering a game event to stop the given player 
-    ///           movement. </summary>
+    /// <summary> 
+    /// Responds to a key release by registering a game event to stop the given player movement. 
+    /// </summary>
     /// <param name="key"> A KeyboardKey enum that represents the key that was released. </param>
     private void KeyRelease(KeyboardKey key) {
         switch (key){
@@ -148,9 +145,9 @@ public class GameRunning : IGameState {
         }
     }
 
-    /// <summary> Handles a keyboard event by invoking either KeyPress() or KeyRelease() method 
-    ///           based on the action type. </summary>
-    /// <returns> Void. </returns>
+    /// <summary> 
+    /// Handles a keyboard event by invoking either KeyPress() or KeyRelease() method 
+    /// based on the action type. </summary>
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
         if (action == KeyboardAction.KeyPress) {
             KeyPress(key);
@@ -161,7 +158,6 @@ public class GameRunning : IGameState {
     }
 
     /// <summary> Renders the current game state, with background and menu buttons. </summary>
-    /// <returns> Void. </returns>
     public void RenderState() {
         backGroundImage.RenderEntity();
         player.Render();
@@ -173,14 +169,13 @@ public class GameRunning : IGameState {
         effectsContainer.RenderEntities();
     }
     /// <summary> Resets the state of the game paused screen to its initial state. </summary>
-    /// <returns> Void. </returns>
     public void ResetState() {
         InitializeGameState();
     }
 
-    /// <summary> Updates the game state by invoking the Move() method and update the players 
-    ///           position. </summary>
-    /// <returns> Void. </returns>
+    /// <summary> 
+    /// Updates the game state by invoking the Move() method and update the players position. 
+    /// </summary>
     public void UpdateState() {
         player.Move();
         CollisionController.IterateCollision(ballContainer,player,currentLevel.BlockContainer);

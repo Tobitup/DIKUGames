@@ -7,15 +7,13 @@ namespace Breakout.Blocks;
 public class NormalBlock : Entity, IBlock {
 
     private int hitpoints;
-
     private int value;
-
     public uint Value { get { return (uint)value; } }
-
     public int HitPoints {get {return hitpoints;}}
 
-    /// <summary> Initializes a new instance of the Block class with the specified position 
-    ///           and image. </summary>
+    /// <summary> 
+    /// Initializes a new instance of the Block class with the specified position and image. 
+    /// </summary>
     /// <param name="positionInArray"> The position of the block in the array. </param>
     /// <param name="image"> The image to be used for the block. </param>
     /// <return> Returns a Block with a given size, position and image. </return>
@@ -24,15 +22,11 @@ public class NormalBlock : Entity, IBlock {
         hitpoints = 1;
         value = 1;
     }
+    
     /// <summary> Reduces the hitpoints of a block by 1. </summary>
-    /// <return> Void. </return>
     public void TakeDamage() {
         hitpoints--;
         RemoveIfDead();
-    }
-
-    public virtual void Update() {
-        //do nothing
     }
 
     /// <summary> Checks if a block has 0 or less Hitpoints, in which case it is dead. </summary>
@@ -45,10 +39,13 @@ public class NormalBlock : Entity, IBlock {
     }
 
     /// <summary> Checks if a block IsDead and if true deletes the entity. </summary>
-    /// <return> Void. </return>
     public void RemoveIfDead() {
         if (IsDead()) {
             DeleteEntity();
         }
+    }
+
+    public virtual void Update() {
+        //do nothing
     }
 }

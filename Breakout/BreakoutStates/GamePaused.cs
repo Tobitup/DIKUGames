@@ -5,7 +5,6 @@ using DIKUArcade.Input;
 using DIKUArcade.Events;
 using DIKUArcade.Math;
 using DIKUArcade.Timers;
-using System.IO;
 
 namespace Breakout.BreakoutStates;
 public class GamePaused : IGameState {
@@ -33,7 +32,6 @@ public class GamePaused : IGameState {
     /// <summary> Initializes the game state by setting the color and font of menu buttons, 
     ///           creating an entity for the background image, and setting the active menu button.
     /// </summary>
-    /// <returns> Void. </returns>
     private void InitializeGameState() {
         menuButtons[0].SetColor(new Vec3I(255,255,255));
         menuButtons[1].SetColor(new Vec3I(255,255,255));
@@ -49,7 +47,6 @@ public class GamePaused : IGameState {
     ///           forwarded to the eventbus. </summary>
     /// <param name="action"> The Keyboard Action the Eventhandler listens for. </param>
     /// <param name="key"> The given key the user presses. </param>
-    /// <returns> Void </returns>
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
         if (action == KeyboardAction.KeyPress) {
             switch (key) {
@@ -87,7 +84,6 @@ public class GamePaused : IGameState {
     }
 
     /// <summary> Renders the current game state, with background and menu buttons. </summary>
-    /// <returns> Void. </returns>
     public void RenderState() {
         backGroundImage.RenderEntity();
         menuButtons[0].RenderText();
@@ -95,15 +91,14 @@ public class GamePaused : IGameState {
     }
 
     /// <summary> Resets the state of the game paused screen to its initial state. </summary>
-    /// <returns> Void. </returns>
     public void ResetState() {
         GamePaused.instance.InitializeGameState();
     }
 
-    /// <summary> Updates the state of the game paused screen based on the active menu button, and
-    ///          sets the color of the active menu button to green and the inactive button to white. 
+    /// <summary> 
+    /// Updates the state of the game paused screen based on the active menu button, and
+    /// sets the color of the active menu button to green and the inactive button to white. 
     /// </summary>
-    /// <returns> Void. </returns>
     public void UpdateState() {
         switch (activeMenuButton) {
             case 0:
