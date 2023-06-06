@@ -25,7 +25,7 @@ public class Lives : IGameEventProcessor{
     /// Initializes a new instance of the Lives class with a starting number of lives 
     /// </summary>
     /// <param name="playerLives"> The beginning number of lives </param>
-    public Lives(uint playerLives){
+    public Lives(uint playerLives) {
 
         BreakoutBus.GetBus().Subscribe(GameEventType.PlayerEvent, this);
         lives = playerLives;
@@ -35,14 +35,14 @@ public class Lives : IGameEventProcessor{
     /// <summary> Calculates the position of the next heart </summary>
     /// <param name="heartIndex"> the index of the heart </param>
     /// <return> Returns a Vec2F position. </return>
-    private Vec2F nextHeartPos(int heartIndex){
+    private Vec2F nextHeartPos(int heartIndex) {
         float distance = (float)originalLives + NumberOfExtraLives() - 1 -heartIndex;
         float newHeartX = (lastHeartPos.X-(heartSize.X*distance)-0.01f);
         return new Vec2F(newHeartX,lastHeartPos.Y);
     } 
 
     /// <summary> Updates the lifecontainer according to how many lives are left </summary>
-    public void UpdateLifeContainer(){
+    public void UpdateLifeContainer() {
         lifeContainer.ClearContainer();
         for (int i = originalLives + NumberOfExtraLives() - 1; i >= 0; i--){
             if (i >= lives){
@@ -66,7 +66,7 @@ public class Lives : IGameEventProcessor{
     }
     
     /// <summary> Decrement lives by one </summary>
-    public void LoseLife(){
+    public void LoseLife() {
         if (lives>0)
         {lives--;}
     }

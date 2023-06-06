@@ -53,7 +53,6 @@ public class MainMenuTesting {
         Assert.That(initialButtonPossition, Is.Not.EqualTo(menu.ActiveMenuButton));
     }
 
-
     [Test]
     public void TestStateChangeToMainMenu() {
         stateMachine.ProcessEvent(

@@ -9,11 +9,11 @@ public static class EffectFactory {
     private const float WIDTH = 0.05f;
     private const float HEIGTH = 0.05f;
 
-    ///<summary>
+    /// <summary>
     /// Returns a randomly selected power-up effect at the specified position.
-    ///</summary>
-    ///<param name="pos">The position where the power-up effect will be spawned.</param>
-    ///<returns>The randomly selected power-up effect.</returns>
+    /// </summary>
+    ///<param name="pos"> The position where the power-up effect will be spawned. </param>
+    ///<returns> The randomly selected power-up effect. </returns>
     public static IEffect GetRandomEffect(Vec2F pos) {
         int randomNumber = rnd.Next(1,9);
         switch (randomNumber) {
@@ -39,9 +39,9 @@ public static class EffectFactory {
                                     EffectTransformer.TransformEffectToPath(Effects.LifeDown))));
             case 5:
                 return new SpeedyGonzales
-                                    (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
-                                    new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
-                                    EffectTransformer.TransformEffectToPath(Effects.SpeedyGonzales))));
+                                (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 
+                                new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
+                                EffectTransformer.TransformEffectToPath(Effects.SpeedyGonzales))));
             case 6:
                 return new BigBalls
                                     (new DynamicShape(pos, new Vec2F(WIDTH, HEIGTH)), 

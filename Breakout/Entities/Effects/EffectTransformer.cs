@@ -1,8 +1,9 @@
 namespace Breakout.Effect;
 public static class EffectTransformer {
 
-    /// <summary> Transforms a string representation of an effect into the corresponding 
-    ///           effect type. </summary>
+    /// <summary> 
+    /// Transforms a string representation of an effect into the corresponding effect type. 
+    /// </summary>
     /// <param name="state"> The string representation of the effect. </param>
     /// <returns> The corresponding effect enum. </returns>
     public static Effects TransformStringToEffect(string effect) {
@@ -26,8 +27,8 @@ public static class EffectTransformer {
         }
     }
 
-    /// <summary> Transforms an effect into the corresponding string representation of an 
-    ///       effect </summary>
+    /// <summary> Transforms an effect into the corresponding string representation of an effect. 
+    /// </summary>
     /// <param name="state"> The effect type to be transformed into its string representation. 
     /// </param>
     /// <returns> The corresponding effect string representation. </returns>
@@ -53,28 +54,26 @@ public static class EffectTransformer {
     }
  
     /// <summary> Given an effect enum returns the file path to the asset for that effect </summary>
-    /// <param name="effect"> the effect enum. 
-    /// </param>
+    /// <param name="effect"> the effect enum. </param>
     /// <returns> The corresponding file path for the effect. </returns>
     public static string TransformEffectToPath(Effects effect) {
-            switch (effect){
-                case Effects.BigJim:
-                    return "WidePowerUp.png";
-                case Effects.SlimJim:
-                    return "SlimJim.png";
-                case Effects.Splitzy:
-                    return "SplitPowerUp.png";
-                case Effects.LifeUp:
-                    return "LifePickUp.png";
-                case Effects.LifeDown:
-                    return "LoseLife.png";
-                case Effects.SpeedyGonzales:
-                    return "SpeedPickUp.png";
-                case Effects.BigBalls:
-                    return "BigPowerUp.png";
-                default:
-                    throw new NotImplementedException();
-            }
+        switch (effect){
+            case Effects.BigJim:
+                return "WidePowerUp.png";
+            case Effects.SlimJim:
+                return "SlimJim.png";
+            case Effects.Splitzy:
+                return "SplitPowerUp.png";
+            case Effects.LifeUp:
+                return "LifePickUp.png";
+            case Effects.LifeDown:
+                return "LoseLife.png";
+            case Effects.SpeedyGonzales:
+                return "SpeedPickUp.png";
+            case Effects.BigBalls:
+                return "BigPowerUp.png";
+            default:
+                throw new NotImplementedException();
         }
-
+    }
 }

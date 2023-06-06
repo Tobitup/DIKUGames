@@ -21,88 +21,83 @@ using breakoutTests.TestPlayer;
 namespace breakoutTests.EffectTest;
 
 [TestFixture]
-    public class SpeedyGonzalesTesting {
-            Vec2F Effectsize;
-            Vec2F Effectpos;
-            DynamicShape EffectShape;
-            IBaseImage Effectimage;
-
-            Vec2F PlayerSize;
-            Vec2F PlayerPos;
-            DynamicShape PlayerShape;
-            IBaseImage PlayerImage;
-
-
-        [SetUp]
-        public void Init() {
-            DIKUArcade.GUI.Window.CreateOpenGLContext();
-
-            Effectsize = new Vec2F(0.0f, 0.0f);
-            Effectpos = new Vec2F(0.0f, 0.0f);
-            EffectShape = new DynamicShape(Effectsize, Effectpos);
-            Effectimage = new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
-                                    EffectTransformer.TransformEffectToPath(Effects.BigJim)));
-
-            PlayerPos = new Vec2F(0.4f, 0.1f);
-            PlayerSize = new Vec2F(0.22f, 0.025f);
-            PlayerShape = new DynamicShape(PlayerPos, PlayerSize);
-            PlayerImage = new Image(Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Images",
-                                                                                    "player.png"));
-        }
+public class SpeedyGonzalesTesting {
+    Vec2F Effectsize;
+    Vec2F Effectpos;
+    DynamicShape EffectShape;
+    IBaseImage Effectimage;
+    Vec2F PlayerSize;
+    Vec2F PlayerPos;
+    DynamicShape PlayerShape;
+    IBaseImage PlayerImage;
 
 
-        // BigJim testing
-        [Test]
-        public void TestSpeedyGonzalesInitiated() {
-            // ARRANGE
-            Player player = new Player(PlayerShape, PlayerImage);
-
-            // ACT
-            player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), "START");
-
-            // Assert
-            Assert.That(player.MovementSpeedMultiplier, Is.EqualTo(2.0f));
-        }
-
-        [Test]
-        public void TestSpeedyGonzalesNotStacking() {
-            // ARRANGE
-            Player player = new Player(PlayerShape, PlayerImage);
-            
-            // ACT
-            player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), "START");
-            player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), "START");
-
-            // Assert
-            Assert.That(player.MovementSpeedMultiplier, Is.EqualTo(2.0f));
-        }
-
-        [Test]
-        public void TestSpeedyGonzalesReverse() {
-            // ARRANGE
-            Player player = new Player(PlayerShape, PlayerImage);
-
-            // ACT
-            player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), "START");
-            player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), "STOP");
-
-            // Assert
-            Assert.That(player.Shape.Extent.X, Is.EqualTo(PlayerSize.X));
-        }
-
-        [Test]
-        public void TestSpeedyGonzalesReverseNotStacking() {
-            // ARRANGE
-            Player player = new Player(PlayerShape, PlayerImage);
-
-            // ACT
-            player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), "START");
-            player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), "STOP");
-            player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), "STOP");
-
-            // Assert
-            Assert.That(player.MovementSpeedMultiplier, Is.EqualTo(1.0f));
-        }
+    [SetUp]
+    public void Init() {
+        DIKUArcade.GUI.Window.CreateOpenGLContext();
+        Effectsize = new Vec2F(0.0f, 0.0f);
+        Effectpos = new Vec2F(0.0f, 0.0f);
+        EffectShape = new DynamicShape(Effectsize, Effectpos);
+        Effectimage = new Image(Path.Combine(LevelLoader.MAIN_PATH,"Assets", "Images",
+                                EffectTransformer.TransformEffectToPath(Effects.BigJim)));
+        PlayerPos = new Vec2F(0.4f, 0.1f);
+        PlayerSize = new Vec2F(0.22f, 0.025f);
+        PlayerShape = new DynamicShape(PlayerPos, PlayerSize);
+        PlayerImage = new Image(Path.Combine(LevelLoader.MAIN_PATH, "Assets", "Images",
+                                                                                "player.png"));
+    }
 
 
+    // BigJim testing
+    [Test]
+    public void TestSpeedyGonzalesInitiated() {
+        // ARRANGE
+        Player player = new Player(PlayerShape, PlayerImage);
+        // ACT
+        player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), 
+                                                                                        "START");
+        // Assert
+        Assert.That(player.MovementSpeedMultiplier, Is.EqualTo(2.0f));
+    }
+
+    [Test]
+    public void TestSpeedyGonzalesNotStacking() {
+        // ARRANGE
+        Player player = new Player(PlayerShape, PlayerImage);
+        // ACT
+        player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), 
+                                                                                        "START");
+        player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), 
+                                                                                        "START");
+        // Assert
+        Assert.That(player.MovementSpeedMultiplier, Is.EqualTo(2.0f));
+    }
+
+    [Test]
+    public void TestSpeedyGonzalesReverse() {
+        // ARRANGE
+        Player player = new Player(PlayerShape, PlayerImage);
+        // ACT
+        player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), 
+                                                                                        "START");
+        player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), 
+                                                                                            "STOP");
+        // Assert
+        Assert.That(player.Shape.Extent.X, Is.EqualTo(PlayerSize.X));
+    }
+
+    [Test]
+    public void TestSpeedyGonzalesReverseNotStacking() {
+        // ARRANGE
+        Player player = new Player(PlayerShape, PlayerImage);
+        // ACT
+        player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), 
+                                                                                        "START");
+        player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), 
+                                                                                            "STOP");
+        player.initiateEffect(EffectTransformer.TransformEffectToString(Effects.SpeedyGonzales), 
+                                                                                            "STOP");
+        // Assert
+        Assert.That(player.MovementSpeedMultiplier, Is.EqualTo(1.0f));
+    }
 }

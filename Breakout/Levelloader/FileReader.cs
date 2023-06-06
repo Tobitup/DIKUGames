@@ -6,14 +6,13 @@ public static class FileReader {
     /// <param name="inputPath"> The path to the file to read. </param>
     /// <returns> An array of strings containing the lines of the file. </returns>
     public static string[] ReadFile(string inputPath) {
-        try{
+        try {
             string[] lines = File.ReadAllLines(inputPath);
             return lines;
         } catch(FileNotFoundException) {
             System.Console.WriteLine($"Could not open file {inputPath}");
             return new string[0];
-        }
-        
+        }  
     }
 
     /// <summary> Checks if the data is in a valid map format. </summary>

@@ -67,7 +67,6 @@ public class TestLevelParser {
     [TestCase(3,6, "0")]
     [TestCase(0,24, "-")]
     [TestCase(11,24, "-")]
-
     public void TestCorrectMapData(int x, int y, string expectedChar) {
         /// ARRANGE
         string[] readData = FileReader.ReadFile(

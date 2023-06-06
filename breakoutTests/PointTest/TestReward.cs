@@ -20,11 +20,6 @@ namespace breakoutTests.TestRewards;
 [TestFixture]
 public class TestReward {
 
-    [SetUp]
-    public void Test_Reward() {
-
-    }
-
     [Test]
     public void TestStartingScore() {
     /// ARANGE

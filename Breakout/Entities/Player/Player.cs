@@ -19,7 +19,6 @@ public class Player : IGameEventProcessor {
     private float moveRight = 0.0f;
     const float MOVEMENT_SPEED = 0.02f;
     float movementSpeedMultiplier = 1;
-
     public Entity GetEntity() => entity;
 
     // Used for testing.
@@ -99,7 +98,6 @@ public class Player : IGameEventProcessor {
             shape.Position.X += bigJimSize.X/2.0f;
             shape.Extent = bigJimSize;
         }
-        
     }
 
     /// <summary> Initializes the SlimJim effect according to state </summary> 
@@ -130,7 +128,6 @@ public class Player : IGameEventProcessor {
         } else if ((state == "STOP") && (isSpeedyAffected)) {
             isSpeedyAffected = false;
             movementSpeedMultiplier = 1.0f;
-
         }
     }
 
@@ -150,7 +147,6 @@ public class Player : IGameEventProcessor {
                 SpeedyGonzalesAffected(state);
             break;
         }
-
     }
 
     /// <summary> Processes a game event and updates the player's movement state. </summary>
@@ -176,7 +172,6 @@ public class Player : IGameEventProcessor {
                 case "EFFECT":
                     initiateEffect(gameEvent.StringArg1, gameEvent.StringArg2);
                     break;
-                
             }
         }
     }
