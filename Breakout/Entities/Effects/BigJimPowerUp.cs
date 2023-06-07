@@ -8,7 +8,7 @@ namespace Breakout.Effect;
 
 public class BigJimPowerUp : Entity, IEffect {
 
-    private TimePeriod EFFECT_DURATION = DIKUArcade.Timers.TimePeriod.NewSeconds(1.0);
+    private TimePeriod EFFECT_DURATION = DIKUArcade.Timers.TimePeriod.NewSeconds(5.0);
     Entity IEffect.GetEntity => this;
 
     /// <summary> Represents an effect that enlarges the player. </summary>
